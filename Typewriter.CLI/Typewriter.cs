@@ -1,4 +1,5 @@
-﻿using Typewriter.CodeModel.Configuration;
+﻿using System.Collections.Generic;
+using Typewriter.CodeModel.Configuration;
 using Typewriter.CodeModel.Implementation;
 using Typewriter.Generation;
 using Typewriter.Metadata.Roslyn;
@@ -7,10 +8,18 @@ namespace Typewriter.CLI
 {
     public class Typewriter
     {
-        public void Generate(string solutionPath, string templatePath)
+        public void Generate(string solutionPath, IEnumerable<string> templatePaths)
         {
             var solution = new Solution(solutionPath);
-            var template = new Template(templatePath);
+            foreach (var templatePath in templatePaths)
+            {
+                var template = new Template(templatePath);
+                RenderTemplate(solution, template);
+            }
+        }
+
+        private static void RenderTemplate(Solution solution, Template template)
+        {
             var includedProjects = (template.Settings as SettingsImpl).IncludedProjects;
 
             foreach (var project in solution.GetProjects(includedProjects))

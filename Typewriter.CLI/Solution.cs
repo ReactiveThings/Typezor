@@ -24,7 +24,15 @@ namespace Typewriter.CLI
 
             foreach (var analyzer in projects)
             {
-                yield return analyzer.AddToWorkspace(workspace);
+                var project = workspace.CurrentSolution.Projects.Where(p => p.Id.Id == analyzer.ProjectGuid).SingleOrDefault();
+                if (project != null)
+                {
+                    yield return project;
+                }
+                else
+                {
+                    yield return analyzer.AddToWorkspace(workspace);
+                }
             }
         }
     }

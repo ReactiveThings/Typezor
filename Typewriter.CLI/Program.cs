@@ -1,4 +1,6 @@
 ﻿using CommandLine;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Typewriter.CLI
 {
@@ -7,8 +9,8 @@ namespace Typewriter.CLI
         [Option('s', "solution", Required = true, HelpText = "Path to solution")]
         public string SolutionPath { get; set; }
 
-        [Option('t', "template", Required = true, HelpText = "Path to template")]
-        public string TemplatePath { get; set; }
+        [Option('t', "template", Required = true, HelpText = "Paths to templates")]
+        public IEnumerable<string> TemplatePaths { get; set; }
     }
 
     class Program
@@ -22,7 +24,7 @@ namespace Typewriter.CLI
         private static void Run(Options options)
         {
             var typewriter = new Typewriter();
-            typewriter.Generate(options.SolutionPath, options.TemplatePath);
+            typewriter.Generate(options.SolutionPath, options.TemplatePaths);
         }
     }
 }
