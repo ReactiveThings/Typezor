@@ -8,9 +8,9 @@ namespace Typewriter.CLI
 {
     public class Typewriter
     {
-        public void Generate(string solutionPath, IEnumerable<string> templatePaths)
+        public void Generate(string solutionPath, IEnumerable<string> templatePaths, BuildOptions buildOptions)
         {
-            var solution = new Solution(solutionPath);
+            var solution = new Solution(solutionPath, buildOptions);
             foreach (var templatePath in templatePaths)
             {
                 var template = new Template(templatePath);
