@@ -16,14 +16,12 @@ namespace Typewriter
 
             if (path.StartsWith("~\\"))
             {
-                var folder = Path.GetDirectoryName(projectItem);
-                return Path.Combine(folder, path.Substring(2));
+                throw new NotSupportedException("'~~\\'project path not supported");
             }
-            //else if (path.StartsWith("~~\\"))
-            //{
-            //    var folder = Path.GetDirectoryName(projectItem.Project.Solution.FilePath);
-            //    return Path.Combine(folder, path.Substring(3));
-            //}
+            else if (path.StartsWith("~~\\"))
+            {
+                throw new NotSupportedException("'~~\\'solution path not supported");
+            }
             else
             {
                 var folder = Path.GetDirectoryName(projectItem);
