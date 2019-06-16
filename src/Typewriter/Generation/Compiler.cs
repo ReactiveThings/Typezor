@@ -58,11 +58,11 @@ namespace Typewriter.Generation
 
                 if (error.Severity == DiagnosticSeverity.Error || error.IsWarningAsError)
                 {
-                    Console.WriteLine("Error: {0}", message);
+                    Log.Error(message);
                 }
                 else
                 {
-                    Console.WriteLine($"Warn: {message}");
+                    Log.Warn(message);
                 }
             }
             //if (hasErrors)

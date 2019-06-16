@@ -21,14 +21,14 @@ namespace Typewriter.CodeModel.Configuration
                 }
                 catch (Exception exception)
                 {
-                    Console.WriteLine($"Cannot add project named '{projectName}' ({exception.Message})");
+                    Log.Error($"Cannot add project named '{projectName}' ({exception.Message})");
                 }
             }
 
             string message = $"Cannot find project named '{projectName}'";
 
             //ErrorList.AddWarning(projectItem, message);
-            Console.WriteLine(message);
+            Log.Warn(message);
         }
 
         internal static void AddCurrentProject(ICollection<string> projectList, Document projectItem)
@@ -104,7 +104,7 @@ namespace Typewriter.CodeModel.Configuration
             }
             catch (Exception exception)
             {
-                Console.WriteLine($"Cannot add project ({exception.Message})");
+                Log.Error($"Cannot add project ({exception.Message})");
             }
         }
     }

@@ -2,6 +2,7 @@
 using Buildalyzer.Environment;
 using Buildalyzer.Workspaces;
 using Microsoft.CodeAnalysis;
+using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -9,13 +10,20 @@ namespace Typewriter.CLI
 {
     public class Solution
     {
-        private readonly BuildOptions options;
         private readonly AnalyzerManager manager;
-        private readonly AdhocWorkspace workspace = new AdhocWorkspace();
+        private readonly BuildOptions options;
+        private ILogger logger;
 
-        public Solution(string solutionPath, BuildOptions options)
+        public Solution(string solutionPath, BuildOptions options, ILoggerFactory loggerFactory)
         {
-            manager = new AnalyzerManager(solutionPath);
+            logger = loggerFactory.CreateLogger("");
+
+            AnalyzerManagerOptions analyzerOptions = new AnalyzerManagerOptions
+            {
+                LoggerFactory = loggerFactory,
+            };
+
+            manager = new AnalyzerManager(solutionPath, analyzerOptions);
             this.options = options;
         }
 
@@ -27,28 +35,31 @@ namespace Typewriter.CLI
 
             foreach (var projectAnalyzer in projects)
             {
-                var project = GetProject(projectAnalyzer);
-                if (project != null)
-                {
-                    yield return project;
-                }
-                else
-                {
-                    yield return Build(projectAnalyzer).First().AddToWorkspace(workspace);
-                }
+                yield return BuildAndGetProject(projectAnalyzer);
             }
         }
 
-        private Project GetProject(ProjectAnalyzer projectAnalyzer)
+        public Project GetProject(string projectPath)
         {
-            return workspace.CurrentSolution.Projects.Where(p => p.Id.Id == projectAnalyzer.ProjectGuid).SingleOrDefault();
+            ProjectAnalyzer projectAnalyzer = manager.GetProject(projectPath);
+
+            return BuildAndGetProject(projectAnalyzer);
+        }
+
+        private Project BuildAndGetProject(ProjectAnalyzer projectAnalyzer)
+        {
+            logger.LogInformation($"Building project {projectAnalyzer.ProjectInSolution.ProjectName} and dependencies");
+            AdhocWorkspace workspace = new AdhocWorkspace();
+            var build = Build(projectAnalyzer).First().AddToWorkspace(workspace, true);
+            logger.LogInformation($"Builded {workspace.CurrentSolution.ProjectIds.Count()} projects");
+            return build;
         }
 
         private AnalyzerResults Build(ProjectAnalyzer projectAnalyzer)
         {
             EnvironmentOptions environmentOptions = new EnvironmentOptions();
             environmentOptions.DesignTime = options.DesignTime;
-            if (!this.options.CleanBeforeCompile)
+            if (!options.CleanBeforeCompile)
             {
                 environmentOptions.TargetsToBuild.Remove("Clean");
             }

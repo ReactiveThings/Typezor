@@ -44,8 +44,7 @@ namespace Typewriter.Generation
 
 
             stopwatch.Stop();
-            //Log.Debug("Template ctor {0} ms", stopwatch.ElapsedMilliseconds);
-            //Console.WriteLine("Template ctor {0} ms", stopwatch.ElapsedMilliseconds);
+            Log.Debug("Template ctor {0} ms", stopwatch.ElapsedMilliseconds);
         }
 
         private Lazy<SettingsImpl> LazyConfiguration()
@@ -117,7 +116,7 @@ namespace Typewriter.Generation
             catch (Exception ex)
             {
                 //Log.Error(ex.Message + " Template: " + _templatePath);
-                Console.WriteLine($"Error:{ex.Message + " Template: " + _templatePath}");
+                Log.Error(ex.Message + " Template: " + _templatePath);
                 success = false;
                 return null;
             }
@@ -152,7 +151,7 @@ namespace Typewriter.Generation
             if (string.Equals(file.FullName, outputPath, StringComparison.InvariantCultureIgnoreCase))
             {
                 //Log.Error(");
-                Console.WriteLine($"Output filename cannot match source filename.");
+                Log.Error($"Output filename cannot match source filename.");
                 success = false;
                 return;
             }
@@ -173,7 +172,7 @@ namespace Typewriter.Generation
             {
                 //CheckOutFileFromSourceControl(outputPath);
                 WriteFile(outputPath, output);
-                Console.WriteLine($"Generated: {outputPath}");
+                Log.Information($"Generated: {outputPath}");
                 //                item = FindProjectItem(outputPath);
                 //
                 //                if (item == null)
@@ -190,7 +189,7 @@ namespace Typewriter.Generation
             }
             else
             {
-                Console.WriteLine($"No changes: {outputPath}");
+                Log.Information($"No changes: {outputPath}");
             }
 
             //SetMappedSourceFile(item, file.FullName);
@@ -204,7 +203,7 @@ namespace Typewriter.Generation
             if (System.IO.File.Exists(outputPath))
             {
                 System.IO.File.Delete(outputPath);
-                Console.WriteLine($"Deleted: {outputPath}");
+                Log.Debug($"Deleted: {outputPath}");
             }
         }
 
@@ -348,7 +347,7 @@ namespace Typewriter.Generation
             catch (Exception exception)
             {
                 //Log.Warn($"Can't get output filename for '{sourcePath}' ({exception.Message})");
-                Console.WriteLine($"Warn: Can't get output filename for '{sourcePath}' ({exception.Message})");
+                Log.Warn($"Warn: Can't get output filename for '{sourcePath}' ({exception.Message})");
             }
 
             return sourceFilename + extension;

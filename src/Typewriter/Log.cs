@@ -1,32 +1,28 @@
-﻿using System;
+﻿using Microsoft.Extensions.Logging;
 
 namespace Typewriter
 {
-    class Log
+    public class Log
     {
-        internal static void Warn(string v, string id, string message)
+        public static ILogger Logger;
+        internal static void Warn(string message, params object[] args)
         {
-            Console.WriteLine($"Warn: {v} {id} {message}");
+            Logger.LogWarning(message, args);
         }
 
-        internal static void Warn(string v)
+        internal static void Error(string message, params object[] args)
         {
-            Console.WriteLine($"Warn: {v}");
+            Logger.LogError(message, args);
         }
 
-        internal static void Error(string logMessage)
+        internal static void Debug(string message, params object[] args)
         {
-            Console.WriteLine($"Error: {logMessage}");
+            Logger.LogDebug(message, args);
         }
 
-        internal static void Debug(string v, long elapsedMilliseconds)
+        internal static void Information(string message, params object[] args)
         {
-            Console.WriteLine($"Debug: {v} {elapsedMilliseconds}");
-        }
-
-        internal static void Debug(string v)
-        {
-            Console.WriteLine($"Debug: {v}");
+            Logger.LogInformation(message, args);
         }
     }
 }
