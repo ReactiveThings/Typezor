@@ -20,7 +20,7 @@ namespace Typewriter.Generation
         private readonly string _templatePath;
         //private readonly string _projectPath;
         private readonly string _projectFullName;
-        // private readonly ProjectItem _projectItem;
+        private readonly TemplateInfo _projectItem;
         private Lazy<string> _template;
         private Lazy<SettingsImpl> _configuration;
         private bool _templateCompileException;
@@ -28,13 +28,13 @@ namespace Typewriter.Generation
 
         public Settings Settings => _configuration.Value;
 
-        public Template(string path)
+        public Template(TemplateInfo projectItem)
         {
             var stopwatch = Stopwatch.StartNew();
 
-            //_projectItem = projectItem;
-            _templatePath = path;//projectItem.Path();
-            _projectFullName = Path.GetFileName(path); //projectItem.ContainingProject.FullName;
+            _projectItem = projectItem;
+            _templatePath = projectItem.Path;//projectItem.Path();
+            //_projectFullName = projectItem.ContainingProject.FullName;
             //_projectPath = Path.GetDirectoryName(_projectFullName);
 
 
@@ -82,7 +82,7 @@ namespace Typewriter.Generation
                 var code = System.IO.File.ReadAllText(_templatePath);
                 try
                 {
-                    var result = TemplateCodeParser.Parse(_templatePath, code, _customExtensions);
+                    var result = TemplateCodeParser.Parse(_projectItem, code, _customExtensions);
                     _templateCompiled = true;
 
                     return result;

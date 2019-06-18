@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using System.Text;
+using Typewriter.Generation;
 //using EnvDTE;
 //using Typewriter.Generation.Controllers;
 //using Typewriter.VisualStudio;
@@ -19,7 +20,7 @@ namespace Typewriter.TemplateEditor.Lexing
 
         private SemanticModel semanticModel;
         private Stack<Context> context;
-        private string templateProjectItem;
+        private TemplateInfo templateProjectItem;
 
         public CodeLexer(Contexts contexts)
         {
@@ -27,7 +28,7 @@ namespace Typewriter.TemplateEditor.Lexing
             fileContext = contexts.Find(nameof(File));
         }
 
-        public void Tokenize(SemanticModel semanticModel, string code, string templateProjectItem)
+        public void Tokenize(SemanticModel semanticModel, string code, TemplateInfo templateProjectItem)
         {
             this.semanticModel = semanticModel;
             this.templateProjectItem = templateProjectItem;

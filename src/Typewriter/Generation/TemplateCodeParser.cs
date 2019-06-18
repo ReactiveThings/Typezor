@@ -19,7 +19,7 @@ namespace Typewriter.Generation
     {
         private static int counter;
 
-        public static string Parse(string templateProjectItem, string template, List<Type> extensions)
+        public static string Parse(TemplateInfo templateProjectItem, string template, List<Type> extensions)
         {
             if (string.IsNullOrWhiteSpace(template)) return null;
 
@@ -177,7 +177,7 @@ namespace Typewriter.Generation
             return false;
         }
 
-        private static bool ParseReference(Stream stream, ShadowClass shadowClass, string templateProjectItem)
+        private static bool ParseReference(Stream stream, ShadowClass shadowClass, TemplateInfo templateProjectItem)
         {
             const string keyword = "reference";
 

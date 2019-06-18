@@ -32,7 +32,12 @@ namespace Typewriter.CLI
             IEnumerable<Project> projects = !String.IsNullOrWhiteSpace(projectPath) ? solution.GetProject(projectPath).Solution.Projects : null;
             foreach (var templatePath in templatePaths)
             {
-                var template = new Template(templatePath);
+                var templateInfo = new TemplateInfo {
+                    Path = templatePath,
+                    ProjectPath = projectPath,
+                    SolutionPath = solutionPath,
+                };
+                var template = new Template(templateInfo);
                 var settings = (template.Settings as SettingsImpl);
                 var includedProjects = settings.IncludedProjects;
 
