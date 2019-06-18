@@ -33,17 +33,67 @@ namespace Typewriter.CLI
             foreach (var templatePath in templatePaths)
             {
                 var template = new Template(templatePath);
-                var included = (template.Settings as SettingsImpl).IncludedProjects;
+                var settings = (template.Settings as SettingsImpl);
+                var includedProjects = settings.IncludedProjects;
+
                 if (projects == null)
                 {
-                    var includedProjects = (template.Settings as SettingsImpl).IncludedProjects;
+                    if (settings.ShouldIncludeAllProjects)
+                    {
+                        includedProjects = null; // include all projects
+                    }
+                    if (settings.ShouldIncludeCurrentProject && !settings.ShouldIncludeAllProjects)
+                    {
+                        logger.LogError("IncludeCurrentProject is not supported. Please use IncludeProject");
+                        return;
+                    }
+                    if (settings.ShouldIncludeReferencedProjects)
+                    {
+                        logger.LogError("IncludeReferencedProjects is not supported. Please use IncludeProject");
+                        return;
+                    }
                     projects = solution.GetProjects(includedProjects);
                 }
-                RenderTemplateForAllProjects(template, projects.Where(p=> included.Contains(p.Name)));
+                else
+                {
+                    if (settings.ShouldIncludeCurrentProject)
+                    {
+                        logger.LogWarning("IncludeCurrentProject is not supported. Project provided in projectPath parameter will be used");
+                        var currentProject = GetCurrentProject(projectPath, projects);
+                        includedProjects.Add(currentProject.Name);
+                    }
+                    if (settings.ShouldIncludeReferencedProjects)
+                    {
+                        logger.LogWarning("IncludeReferencedProjects is not supported. Referenced Projects for Project provided in projectPath parameter will be used");
+                        var currentProject = GetCurrentProject(projectPath, projects);
+                        foreach (var referencedProject in GetReferencedProjects(projects, currentProject))
+                        {
+                            includedProjects.Add(referencedProject.Name);
+                        }
+                    }
+                    if (settings.ShouldIncludeAllProjects)
+                    {
+                        logger.LogError("IncludeAllProjects is not supported when project parameter is provided");
+                        return;
+                    }
+                }
+                RenderTemplateForAllProjects(template, projects.Where(p => includedProjects == null || includedProjects.Contains(p.Name)));
             }
 
             globalStopWatch.Stop();
             logger.LogInformation($"Done in {TimeSpan.FromMilliseconds(globalStopWatch.ElapsedMilliseconds).TotalSeconds} seconds");
+        }
+
+        private static IEnumerable<Project> GetReferencedProjects(IEnumerable<Project> projects, Project currentProject)
+        {
+            var referencesId = currentProject.ProjectReferences.Select(r => r.ProjectId);
+            var referencedProjects = projects.Where(p => referencesId.Contains(p.Id));
+            return referencedProjects;
+        }
+
+        private static Project GetCurrentProject(string projectPath, IEnumerable<Project> projects)
+        {
+            return projects.Where(p => p.FilePath.Equals(projectPath, StringComparison.InvariantCultureIgnoreCase)).Single();
         }
 
         private void RenderTemplateForAllProjects(Template template, IEnumerable<Project> projects)

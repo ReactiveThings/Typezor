@@ -6,7 +6,10 @@ namespace Typewriter.CodeModel.Configuration
     public class SettingsImpl : Settings
     {
         //private readonly Document _projectItem;
+        public bool ShouldIncludeReferencedProjects { get; private set; }
+        public bool ShouldIncludeCurrentProject { get; private set; }
 
+        public bool ShouldIncludeAllProjects { get; private set; }
         public SettingsImpl()
         {
             //_projectItem = projectItem;
@@ -29,7 +32,7 @@ namespace Typewriter.CodeModel.Configuration
             if (_includedProjects == null)
                 _includedProjects = new List<string>();
 
-            //ProjectHelpers.AddReferencedProjects(_includedProjects, _projectItem);
+            ShouldIncludeReferencedProjects = true;
             return this;
         }
 
@@ -38,7 +41,7 @@ namespace Typewriter.CodeModel.Configuration
             if (_includedProjects == null)
                 _includedProjects = new List<string>();
 
-            //ProjectHelpers.AddCurrentProject(_includedProjects, _projectItem);
+            ShouldIncludeCurrentProject = true;
             return this;
         }
 
@@ -47,7 +50,7 @@ namespace Typewriter.CodeModel.Configuration
             if (_includedProjects == null)
                 _includedProjects = new List<string>();
 
-            //ProjectHelpers.AddAllProjects(_projectItem, _includedProjects);
+            ShouldIncludeAllProjects = true;
             return this;
         }
 
