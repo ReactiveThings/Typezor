@@ -13,6 +13,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Typewriter.CLI", "Typewrite
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Typewriter", "src\Typewriter\Typewriter.csproj", "{9F23E73E-8017-4AA7-AEBA-6413A59FE414}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Typewriter.Tests", "src\Tests\Typewriter.Tests.csproj", "{6A183330-C257-47F2-BDD3-F27795D54EE7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{9F23E73E-8017-4AA7-AEBA-6413A59FE414}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9F23E73E-8017-4AA7-AEBA-6413A59FE414}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9F23E73E-8017-4AA7-AEBA-6413A59FE414}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6A183330-C257-47F2-BDD3-F27795D54EE7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6A183330-C257-47F2-BDD3-F27795D54EE7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6A183330-C257-47F2-BDD3-F27795D54EE7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6A183330-C257-47F2-BDD3-F27795D54EE7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
