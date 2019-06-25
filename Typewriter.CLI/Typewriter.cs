@@ -82,9 +82,10 @@ namespace Typewriter.CLI
 
         private void RenderProject(Template template, Project project)
         {
+            var metadataProvider = new RoslynMetadataProvider(project.Solution);
             foreach (var projectFile in project.Documents)
             {
-                var fileMetadata = new RoslynFileMetadata(projectFile, template.Settings, null /*todo*/);
+                var fileMetadata = metadataProvider.GetFile(projectFile.FilePath, template.Settings, null /*todo*/);
                 if (fileMetadata == null)
                 {
                     // the cs-file was found, but the build-action is not set to compile.
