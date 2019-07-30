@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using Microsoft.CodeAnalysis;
 using Microsoft.Extensions.Logging;
@@ -68,7 +69,7 @@ namespace Typewriter.CLI
 
         private static Project GetCurrentProject(string projectPath, IEnumerable<Project> projects)
         {
-            return projects.Where(p => p.FilePath.Equals(projectPath, StringComparison.InvariantCultureIgnoreCase)).Single();
+            return projects.Where(p => p.FilePath.Equals(new FileInfo(projectPath).FullName, StringComparison.InvariantCultureIgnoreCase)).Single();
         }
     }
 }
