@@ -51,7 +51,7 @@ namespace Typewriter.CLI
             logger.LogInformation($"Building project {projectAnalyzer.ProjectInSolution.ProjectName} and dependencies");
             AdhocWorkspace workspace = new AdhocWorkspace();
             var build = Build(projectAnalyzer).First().AddToWorkspace(workspace, true);
-            logger.LogInformation($"Builded {workspace.CurrentSolution.ProjectIds.Count()} projects");
+            logger.LogInformation($"Built {workspace.CurrentSolution.ProjectIds.Count()} projects");
             return build;
         }
 
