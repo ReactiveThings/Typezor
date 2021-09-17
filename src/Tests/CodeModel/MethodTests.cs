@@ -1,10 +1,10 @@
 ﻿using System.Linq;
 using Should;
-using Typewriter.CodeModel;
-using Typewriter.Tests.TestInfrastructure;
+using Typezor.CodeModel;
+using Typezor.Tests.TestInfrastructure;
 using Xunit;
 
-namespace Typewriter.Tests.CodeModel
+namespace Typezor.Tests.CodeModel
 {
 
     public abstract class MethodTests : TestBase
@@ -13,7 +13,7 @@ namespace Typewriter.Tests.CodeModel
 
         protected MethodTests(ITestFixture fixture) : base(fixture)
         {
-            fileInfo = GetFile(@"Tests\CodeModel\Support\MethodInfo.cs");
+            fileInfo = GetFile(@"CodeModel\Support\MethodInfo.cs");
         }
 
         [Fact]
@@ -23,7 +23,7 @@ namespace Typewriter.Tests.CodeModel
             var methodInfo = GetMethod("Method");
 
             methodInfo.Name.ShouldEqual("Method");
-            methodInfo.FullName.ShouldEqual("Typewriter.Tests.CodeModel.Support.MethodInfo.Method");
+            methodInfo.FullName.ShouldEqual("Typezor.Tests.CodeModel.Support.MethodInfo.Method");
             methodInfo.Parent.ShouldEqual(classInfo);
         }
 
@@ -43,9 +43,9 @@ namespace Typewriter.Tests.CodeModel
             var methodInfo = GetMethod("Method");
             var attributeInfo = methodInfo.Attributes.First();
 
-            methodInfo.Attributes.Count.ShouldEqual(1);
+            methodInfo.Attributes.Count().ShouldEqual(1);
             attributeInfo.Name.ShouldEqual("AttributeInfo");
-            attributeInfo.FullName.ShouldEqual("Typewriter.Tests.CodeModel.Support.AttributeInfoAttribute");
+            attributeInfo.FullName.ShouldEqual("Typezor.Tests.CodeModel.Support.AttributeInfoAttribute");
         }
 
         [Fact]
@@ -54,7 +54,7 @@ namespace Typewriter.Tests.CodeModel
             var methodInfo = GetMethod("Method");
             var parameterInfo = methodInfo.Parameters.First();
 
-            methodInfo.Parameters.Count.ShouldEqual(1);
+            methodInfo.Parameters.Count().ShouldEqual(1);
             parameterInfo.Name.ShouldEqual("parameter");
         }
 
@@ -65,9 +65,9 @@ namespace Typewriter.Tests.CodeModel
             var parameterInfo = methodInfo.Parameters.First();
             var attributeInfo = parameterInfo.Attributes.First();
 
-            parameterInfo.Attributes.Count.ShouldEqual(1);
+            parameterInfo.Attributes.Count().ShouldEqual(1);
             attributeInfo.Name.ShouldEqual("AttributeInfo");
-            attributeInfo.FullName.ShouldEqual("Typewriter.Tests.CodeModel.Support.AttributeInfoAttribute");
+            attributeInfo.FullName.ShouldEqual("Typezor.Tests.CodeModel.Support.AttributeInfoAttribute");
         }
 
         [Fact]
@@ -94,7 +94,7 @@ namespace Typewriter.Tests.CodeModel
             var parameterTypeInfo = methodInfo.Parameters.First().Type;
 
             methodInfo.IsGeneric.ShouldBeTrue("IsGeneric");
-            methodInfo.TypeParameters.Count.ShouldEqual(1);
+            methodInfo.TypeParameters.Count().ShouldEqual(1);
 
             methodInfo.Type.Name.ShouldEqual("T");
             methodInfo.Type.FullName.ShouldEqual("T");
@@ -111,7 +111,7 @@ namespace Typewriter.Tests.CodeModel
             var parameterTypeInfo = methodInfo.Parameters.First().Type;
 
             methodInfo.IsGeneric.ShouldBeFalse("IsGeneric");
-            methodInfo.TypeParameters.Count.ShouldEqual(0);
+            methodInfo.TypeParameters.Count().ShouldEqual(0);
 
             methodInfo.Type.Name.ShouldEqual("T");
             methodInfo.Type.FullName.ShouldEqual("T");
@@ -128,7 +128,7 @@ namespace Typewriter.Tests.CodeModel
             var secondParameterTypeInfo = methodInfo.Parameters.First(p => p.Name == "parameter2").Type;
 
             methodInfo.IsGeneric.ShouldBeTrue("IsGeneric");
-            methodInfo.TypeParameters.Count.ShouldEqual(1);
+            methodInfo.TypeParameters.Count().ShouldEqual(1);
 
             methodInfo.Type.Name.ShouldEqual("T1");
             methodInfo.Type.FullName.ShouldEqual("T1");

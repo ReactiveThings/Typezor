@@ -1,11 +1,11 @@
 ﻿using System.Linq;
 using Should;
-using Typewriter.CodeModel;
-using Typewriter.Tests.CodeModel.Support;
-using Typewriter.Tests.TestInfrastructure;
+using Typezor.CodeModel;
+using Typezor.Tests.CodeModel.Support;
+using Typezor.Tests.TestInfrastructure;
 using Xunit;
 
-namespace Typewriter.Tests.CodeModel
+namespace Typezor.Tests.CodeModel
 {
     [Trait("CodeModel", "AttributeArguments"), Collection(nameof(RoslynFixture))]
     public class RoslynAttributeArgumentTests : AttributeArgumentTests
@@ -21,7 +21,7 @@ namespace Typewriter.Tests.CodeModel
 
         protected AttributeArgumentTests(ITestFixture fixture) : base(fixture)
         {
-            var fileInfo = GetFile(@"Tests\CodeModel\Support\AttributeInfo.cs");
+            var fileInfo = GetFile(@"CodeModel\Support\AttributeInfo.cs");
             classInfo = fileInfo.Classes.First(c => c.Name == nameof(AttributeTestClass));
         }
 

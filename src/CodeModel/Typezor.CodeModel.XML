@@ -1,0 +1,1160 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Typezor.CodeModel</name>
+    </assembly>
+    <members>
+        <member name="P:Typezor.Abstractions.IAnnotated.Attributes">
+            <summary>
+            All attributes defined
+            </summary>
+        </member>
+        <member name="T:Typezor.CodeModel.Attribute">
+            <summary>
+            Represents an attribute.
+            </summary>
+        </member>
+        <member name="P:Typezor.CodeModel.Attribute.FullName">
+            <summary>
+            The full original name of the attribute including namespace and containing class names.
+            </summary>
+        </member>
+        <member name="P:Typezor.CodeModel.Attribute.name">
+            <summary>
+            The name of the attribute (camelCased).
+            </summary>
+        </member>
+        <member name="P:Typezor.CodeModel.Attribute.Name">
+            <summary>
+            The name of the attribute.
+            </summary>
+        </member>
+        <member name="P:Typezor.CodeModel.Attribute.Parent">
+            <summary>
+            The parent context of the attribute.
+            </summary>
+        </member>
+        <member name="P:Typezor.CodeModel.Attribute.Value">
+            <summary>
+            The value of the attribute as string.
+            </summary>
+        </member>
+        <member name="P:Typezor.CodeModel.Attribute.Arguments">
+            <summary>
+            The arguments of the attribute.
+            </summary>
+        </member>
+        <member name="M:Typezor.CodeModel.Attribute.op_Implicit(Typezor.CodeModel.Attribute)~System.String">
+            <summary>
+            Converts the current instance to string.
+            </summary>
+        </member>
+        <member name="T:Typezor.CodeModel.AttributeArgument">
+            <summary>
+            Represents an attribute argument.
+            </summary>
+        </member>
+        <member name="P:Typezor.CodeModel.AttributeArgument.Type">
+            <summary>
+            The type of the argument.
+            </summary>
+        </member>
+        <member name="P:Typezor.CodeModel.AttributeArgument.TypeValue">
+            <summary>
+            The type value of the argument.
+            </summary>
+        </member>
+        <member name="P:Typezor.CodeModel.AttributeArgument.Value">
+            <summary>
+            The value of the argument.
+            </summary>
+        </member>
+        <member name="T:Typezor.CodeModel.Class">
+            <summary>
+            Represents a class.
+            </summary>
+        </member>
+        <member name="P:Typezor.CodeModel.Class.Attributes">
+            <summary>
+            All attributes defined on the class.
+            </summary>
+        </member>
+        <member name="P:Typezor.CodeModel.Class.BaseClass">
+            <summary>
+            The base class of the class.
+            </summary>
+        </member>
+        <member name="P:Typezor.CodeModel.Class.Constants">
+            <summary>
+            All constants defined in the class.
+            </summary>
+        </member>
+        <member name="P:Typezor.CodeModel.Class.ContainingClass">
+            <summary>
+            The containing class of the class if it's nested.
+            </summary>
+        </member>
+        <member name="P:Typezor.CodeModel.Class.Delegates">
+            <summary>
+            All delegates defined in the class.
+            </summary>
+        </member>
+        <member name="P:Typezor.CodeModel.Class.DocComment">
+            <summary>
+            The XML documentation comment of the class.
+            </summary>
+        </member>
+        <member name="P:Typezor.CodeModel.Class.Events">
+            <summary>
+            All events defined in the class.
+            </summary>
+        </member>
+        <member name="P:Typezor.CodeModel.Class.Fields">
+            <summary>
+            All fields defined in the class.
+            </summary>
+        </member>
+        <member name="P:Typezor.CodeModel.Class.FullName">
+            <summary>
+            The full original name of the class including namespace and containing class names.
+            </summary>
+        </member>
+        <member name="P:Typezor.CodeModel.Class.Interfaces">
+            <summary>
+            All interfaces implemented by the class.
+            </summary>
+        </member>
+        <member name="P:Typezor.CodeModel.Class.IsAbstract">
+            <summary>
+            Determines if the class is abstract.
+            </summary>
+        </member>
+        <member name="P:Typezor.CodeModel.Class.IsGeneric">
+            <summary>
+            Determines if the class is generic.
+            </summary>
+        </member>
+        <member name="P:Typezor.CodeModel.Class.Methods">
+            <summary>
+            All methods defined in the class.
+            </summary>
+        </member>
+        <member name="P:Typezor.CodeModel.Class.StaticMethods">
+            <summary>
+            All static methods defined in the class.
+            </summary>
+        </member>
+        <member name="P:Typezor.CodeModel.Class.name">
+            <summary>
+            The name of the class (camelCased).
+            </summary>
+        </member>
+        <member name="P:Typezor.CodeModel.Class.Name">
+            <summary>
+            The name of the class.
+            </summary>
+        </member>
+        <member name="P:Typezor.CodeModel.Class.Namespace">
+            <summary>
+            The namespace of the class.
+            </summary>
+        </member>
+        <member name="P:Typezor.CodeModel.Class.NestedClasses">
+            <summary>
+            All classes defined in the class.
+            </summary>
+        </member>
+        <member name="P:Typezor.CodeModel.Class.NestedEnums">
+            <summary>
+            All enums defined in the class.
+            </summary>
+        </member>
+        <member name="P:Typezor.CodeModel.Class.NestedInterfaces">
+            <summary>
+            All interfaces defined in the class.
+            </summary>
+        </member>
+        <member name="P:Typezor.CodeModel.Class.Parent">
+            <summary>
+            The parent context of the class.
+            </summary>
+        </member>
+        <member name="P:Typezor.CodeModel.Class.Properties">
+            <summary>
+            All properties defined in the class.
+            </summary>
+        </member>
+        <member name="P:Typezor.CodeModel.Class.TypeArguments">
+            <summary>
+            All generic type arguments of the class.
+            TypeArguments are the specified arguments for the TypeParametes on a generic class e.g. &lt;string&gt;.
+            (In Visual Studio 2013 TypeParameters and TypeArguments are the same)
+            </summary>
+        </member>
+        <member name="P:Typezor.CodeModel.Class.TypeParameters">
+            <summary>
+            All generic type parameters of the class.
+            TypeParameters are the type placeholders of a generic class e.g. &lt;T&gt;.
+            (In Visual Studio 2013 TypeParameters and TypeArguments are the same)
+            </summary>
+        </member>
+        <member name="M:Typezor.CodeModel.Class.op_Implicit(Typezor.CodeModel.Class)~System.String">
+            <summary>
+            Converts the current instance to string.
+            </summary>
+        </member>
+        <member name="M:Typezor.CodeModel.Class.op_Implicit(Typezor.CodeModel.Class)~Typezor.CodeModel.Type">
+            <summary>
+            Converts the current instance to a Type.
+            </summary>
+        </member>
+        <member name="T:Typezor.CodeModel.Constant">
+            <summary>
+            Represents a constant.
+            </summary>
+        </member>
+        <member name="P:Typezor.CodeModel.Constant.Attributes">
+            <summary>
+            All attributes defined on the constant.
+            </summary>
+        </member>
+        <member name="P:Typezor.CodeModel.Constant.DocComment">
+            <summary>
+            The XML documentation comment of the constant.
+            </summary>
+        </member>
+        <member name="P:Typezor.CodeModel.Constant.FullName">
+            <summary>
+            The full original name of the constant including namespace and containing class names.
+            </summary>
+        </member>
+        <member name="P:Typezor.CodeModel.Constant.name">
+            <summary>
+            The name of the constant (camelCased).
+            </summary>
+        </member>
+        <member name="P:Typezor.CodeModel.Constant.Name">
+            <summary>
+            The name of the constant.
+            </summary>
+        </member>
+        <member name="P:Typezor.CodeModel.Constant.Parent">
+            <summary>
+            The parent context of the constant.
+            </summary>
+        </member>
+        <member name="P:Typezor.CodeModel.Constant.Type">
+            <summary>
+            The type of the constant.
+            </summary>
+        </member>
+        <member name="P:Typezor.CodeModel.Constant.Value">
+            <summary>
+            The value of the constant.
+            </summary>
+        </member>
+        <member name="M:Typezor.CodeModel.Constant.op_Implicit(Typezor.CodeModel.Constant)~System.String">
+            <summary>
+            Converts the current instance to string.
+            </summary>
+        </member>
+        <member name="T:Typezor.CodeModel.Delegate">
+            <summary>
+            Represents a delegate.
+            </summary>
+        </member>
+        <member name="P:Typezor.CodeModel.Delegate.Attributes">
+            <summary>
+            All attributes defined on the delegate.
+            </summary>
+        </member>
+        <member name="P:Typezor.CodeModel.Delegate.DocComment">
+            <summary>
+            The XML documentation comment of the delegate.
+            </summary>
+        </member>
+        <member name="P:Typezor.CodeModel.Delegate.FullName">
+            <summary>
+            The full original name of the delegate including namespace and containing class names.
+            </summary>
+        </member>
+        <member name="P:Typezor.CodeModel.Delegate.IsGeneric">
+            <summary>
+            Determines if the delegate is generic.
+            </summary>
+        </member>
+        <member name="P:Typezor.CodeModel.Delegate.name">
+            <summary>
+            The name of the delegate (camelCased).
+            </summary>
+        </member>
+        <member name="P:Typezor.CodeModel.Delegate.Name">
+            <summary>
+            The name of the delegate.
+            </summary>
+        </member>
+        <member name="P:Typezor.CodeModel.Delegate.Parameters">
+            <summary>
+            All parameters of the delegate.
+            </summary>
+        </member>
+        <member name="P:Typezor.CodeModel.Delegate.Parent">
+            <summary>
+            The parent context of the delegate.
+            </summary>
+        </member>
+        <member name="P:Typezor.CodeModel.Delegate.Type">
+            <summary>
+            The type of the delegate.
+            </summary>
+        </member>
+        <member name="P:Typezor.CodeModel.Delegate.TypeParameters">
+            <summary>
+            All generic type parameters of the delegate.
+            TypeParameters are the type placeholders of a generic delegate e.g. &lt;T&gt;.
+            </summary>
+        </member>
+        <member name="M:Typezor.CodeModel.Delegate.op_Implicit(Typezor.CodeModel.Delegate)~System.String">
+            <summary>
+            Converts the current instance to string.
+            </summary>
+        </member>
+        <member name="T:Typezor.CodeModel.DocComment">
+            <summary>
+            Represents an XML documentation comment.
+            </summary>
+        </member>
+        <member name="P:Typezor.CodeModel.DocComment.Summary">
+            <summary>
+            The contents of the summary tag.
+            </summary>
+        </member>
+        <member name="P:Typezor.CodeModel.DocComment.Returns">
+            <summary>
+            The contents of the returns tag.
+            </summary>
+        </member>
+        <member name="P:Typezor.CodeModel.DocComment.Parameters">
+            <summary>
+            All parameter tags of the documentation comment.
+            </summary>
+        </member>
+        <member name="P:Typezor.CodeModel.DocComment.Parent">
+            <summary>
+            The parent context of the documentation comment.
+            </summary>
+        </member>
+        <member name="M:Typezor.CodeModel.DocComment.op_Implicit(Typezor.CodeModel.DocComment)~System.String">
+            <summary>
+            Converts the current instance to string.
+            </summary>
+        </member>
+        <member name="T:Typezor.CodeModel.ParameterComment">
+            <summary>
+            Represents an XML documentation comment parameter tag.
+            </summary>
+        </member>
+        <member name="P:Typezor.CodeModel.ParameterComment.Name">
+            <summary>
+            The name of the parameter.
+            </summary>
+        </member>
+        <member name="P:Typezor.CodeModel.ParameterComment.Description">
+            <summary>
+            The parameter description.
+            </summary>
+        </member>
+        <member name="P:Typezor.CodeModel.ParameterComment.Parent">
+            <summary>
+            The parent context of the documentation comment parameter.
+            </summary>
+        </member>
+        <member name="M:Typezor.CodeModel.ParameterComment.op_Implicit(Typezor.CodeModel.ParameterComment)~System.String">
+            <summary>
+            Converts the current instance to string.
+            </summary>
+        </member>
+        <member name="T:Typezor.CodeModel.Enum">
+            <summary>
+            Represents an enum.
+            </summary>
+        </member>
+        <member name="P:Typezor.CodeModel.Enum.Attributes">
+            <summary>
+            All attributes defined on the enum.
+            </summary>
+        </member>
+        <member name="P:Typezor.CodeModel.Enum.ContainingClass">
+            <summary>
+            The containing class of the enum if it is nested.
+            </summary>
+        </member>
+        <member name="P:Typezor.CodeModel.Enum.DocComment">
+            <summary>
+            The XML documentation comment of the enum.
+            </summary>
+        </member>
+        <member name="P:Typezor.CodeModel.Enum.FullName">
+            <summary>
+            The full original name of the enum including namespace and containing class names.
+            </summary>
+        </member>
+        <member name="P:Typezor.CodeModel.Enum.IsFlags">
+            <summary>
+            Determines if the enum is decorated with the Flags attribute.
+            </summary>
+        </member>
+        <member name="P:Typezor.CodeModel.Enum.name">
+            <summary>
+            The name of the enum (camelCased).
+            </summary>
+        </member>
+        <member name="P:Typezor.CodeModel.Enum.Name">
+            <summary>
+            The name of the enum.
+            </summary>
+        </member>
+        <member name="P:Typezor.CodeModel.Enum.Namespace">
+            <summary>
+            The namespace of the enum.
+            </summary>
+        </member>
+        <member name="P:Typezor.CodeModel.Enum.Parent">
+            <summary>
+            The parent context of the enum.
+            </summary>
+        </member>
+        <member name="P:Typezor.CodeModel.Enum.Values">
+            <summary>
+            All values defined in the enum.
+            </summary>
+        </member>
+        <member name="M:Typezor.CodeModel.Enum.op_Implicit(Typezor.CodeModel.Enum)~System.String">
+            <summary>
+            Converts the current instance to string.
+            </summary>
+        </member>
+        <member name="M:Typezor.CodeModel.Enum.op_Implicit(Typezor.CodeModel.Enum)~Typezor.CodeModel.Type">
+            <summary>
+            Converts the current instance to a Type.
+            </summary>
+        </member>
+        <member name="T:Typezor.CodeModel.EnumValue">
+            <summary>
+            Represents an enum value.
+            </summary>
+        </member>
+        <member name="P:Typezor.CodeModel.EnumValue.Attributes">
+            <summary>
+            All attributes defined on the enum value.
+            </summary>
+        </member>
+        <member name="P:Typezor.CodeModel.EnumValue.DocComment">
+            <summary>
+            The XML documentation comment of the enum value.
+            </summary>
+        </member>
+        <member name="P:Typezor.CodeModel.EnumValue.FullName">
+            <summary>
+            The full original name of the enum value including namespace and containing class names.
+            </summary>
+        </member>
+        <member name="P:Typezor.CodeModel.EnumValue.name">
+            <summary>
+            The name of the enum value (camelCased).
+            </summary>
+        </member>
+        <member name="P:Typezor.CodeModel.EnumValue.Name">
+            <summary>
+            The name of the enum value.
+            </summary>
+        </member>
+        <member name="P:Typezor.CodeModel.EnumValue.Parent">
+            <summary>
+            The parent context of the enum value.
+            </summary>
+        </member>
+        <member name="P:Typezor.CodeModel.EnumValue.Value">
+            <summary>
+            The numeric value.
+            </summary>
+        </member>
+        <member name="M:Typezor.CodeModel.EnumValue.op_Implicit(Typezor.CodeModel.EnumValue)~System.String">
+            <summary>
+            Converts the current instance to string.
+            </summary>
+        </member>
+        <member name="T:Typezor.CodeModel.Event">
+            <summary>
+            Represents an event.
+            </summary>
+        </member>
+        <member name="P:Typezor.CodeModel.Event.Attributes">
+            <summary>
+            All attributes defined on the event.
+            </summary>
+        </member>
+        <member name="P:Typezor.CodeModel.Event.DocComment">
+            <summary>
+            The XML documentation comment of the event.
+            </summary>
+        </member>
+        <member name="P:Typezor.CodeModel.Event.FullName">
+            <summary>
+            The full original name of the event including namespace and containing class names.
+            </summary>
+        </member>
+        <member name="P:Typezor.CodeModel.Event.name">
+            <summary>
+            The name of the event (camelCased).
+            </summary>
+        </member>
+        <member name="P:Typezor.CodeModel.Event.Name">
+            <summary>
+            The name of the event.
+            </summary>
+        </member>
+        <member name="P:Typezor.CodeModel.Event.Parent">
+            <summary>
+            The parent context of the event.
+            </summary>
+        </member>
+        <member name="P:Typezor.CodeModel.Event.Type">
+            <summary>
+            The type of the event.
+            </summary>
+        </member>
+        <member name="M:Typezor.CodeModel.Event.op_Implicit(Typezor.CodeModel.Event)~System.String">
+            <summary>
+            Converts the current instance to string.
+            </summary>
+        </member>
+        <member name="T:Typezor.CodeModel.Field">
+            <summary>
+            Represents a field.
+            </summary>
+        </member>
+        <member name="P:Typezor.CodeModel.Field.Attributes">
+            <summary>
+            All attributes defined on the field.
+            </summary>
+        </member>
+        <member name="P:Typezor.CodeModel.Field.DocComment">
+            <summary>
+            The XML documentation comment of the field.
+            </summary>
+        </member>
+        <member name="P:Typezor.CodeModel.Field.FullName">
+            <summary>
+            The full original name of the field including namespace and containing class names.
+            </summary>
+        </member>
+        <member name="P:Typezor.CodeModel.Field.name">
+            <summary>
+            The name of the field (camelCased).
+            </summary>
+        </member>
+        <member name="P:Typezor.CodeModel.Field.Name">
+            <summary>
+            The name of the field.
+            </summary>
+        </member>
+        <member name="P:Typezor.CodeModel.Field.Parent">
+            <summary>
+            The parent context of the field.
+            </summary>
+        </member>
+        <member name="P:Typezor.CodeModel.Field.Type">
+            <summary>
+            The type of the field.
+            </summary>
+        </member>
+        <member name="M:Typezor.CodeModel.Field.op_Implicit(Typezor.CodeModel.Field)~System.String">
+            <summary>
+            Converts the current instance to string.
+            </summary>
+        </member>
+        <member name="T:Typezor.CodeModel.File">
+            <summary>
+            Represents a file.
+            </summary>
+        </member>
+        <member name="P:Typezor.CodeModel.File.Classes">
+            <summary>
+            All public classes defined in the file.
+            </summary>
+        </member>
+        <member name="P:Typezor.CodeModel.File.Delegates">
+            <summary>
+            All public delegates defined in the file.
+            </summary>
+        </member>
+        <member name="P:Typezor.CodeModel.File.Enums">
+            <summary>
+            All public enums defined in the file.
+            </summary>
+        </member>
+        <member name="P:Typezor.CodeModel.File.Interfaces">
+            <summary>
+            All public interfaces defined in the file.
+            </summary>
+        </member>
+        <member name="T:Typezor.CodeModel.Interface">
+            <summary>
+            Represents an interface.
+            </summary>
+        </member>
+        <member name="P:Typezor.CodeModel.Interface.Attributes">
+            <summary>
+            All attributes defined on the interface.
+            </summary>
+        </member>
+        <member name="P:Typezor.CodeModel.Interface.ContainingClass">
+            <summary>
+            The containing class of the interface if it is nested.
+            </summary>
+        </member>
+        <member name="P:Typezor.CodeModel.Interface.DocComment">
+            <summary>
+            The XML documentation comment of the interface.
+            </summary>
+        </member>
+        <member name="P:Typezor.CodeModel.Interface.Events">
+            <summary>
+            All events defined in the interface.
+            </summary>
+        </member>
+        <member name="P:Typezor.CodeModel.Interface.FullName">
+            <summary>
+            The full original name of the interface including namespace and containing class names.
+            </summary>
+        </member>
+        <member name="P:Typezor.CodeModel.Interface.Interfaces">
+            <summary>
+            All interfaces implemented by the interface.
+            </summary>
+        </member>
+        <member name="P:Typezor.CodeModel.Interface.IsGeneric">
+            <summary>
+            Determines if the interface is generic.
+            </summary>
+        </member>
+        <member name="P:Typezor.CodeModel.Interface.Methods">
+            <summary>
+            All methods defined in the interface.
+            </summary>
+        </member>
+        <member name="P:Typezor.CodeModel.Interface.name">
+            <summary>
+            The name of the interface (camelCased).
+            </summary>
+        </member>
+        <member name="P:Typezor.CodeModel.Interface.Name">
+            <summary>
+            The name of the interface.
+            </summary>
+        </member>
+        <member name="P:Typezor.CodeModel.Interface.Namespace">
+            <summary>
+            The namespace of the interface.
+            </summary>
+        </member>
+        <member name="P:Typezor.CodeModel.Interface.Parent">
+            <summary>
+            The parent context of the interface.
+            </summary>
+        </member>
+        <member name="P:Typezor.CodeModel.Interface.Properties">
+            <summary>
+            All properties defined in the interface.
+            </summary>
+        </member>
+        <member name="P:Typezor.CodeModel.Interface.TypeArguments">
+            <summary>
+            All generic type arguments of the interface.
+            TypeArguments are the specified arguments for the TypeParametes on a generic interface e.g. &lt;string&gt;.
+            (In Visual Studio 2013 TypeParameters and TypeArguments are the same)
+            </summary>
+        </member>
+        <member name="P:Typezor.CodeModel.Interface.TypeParameters">
+            <summary>
+            All generic type parameters of the interface.
+            TypeParameters are the type placeholders of a generic interface e.g. &lt;T&gt;.
+            (In Visual Studio 2013 TypeParameters and TypeArguments are the same)
+            </summary>
+        </member>
+        <member name="M:Typezor.CodeModel.Interface.op_Implicit(Typezor.CodeModel.Interface)~System.String">
+            <summary>
+            Converts the current instance to string.
+            </summary>
+        </member>
+        <member name="M:Typezor.CodeModel.Interface.op_Implicit(Typezor.CodeModel.Interface)~Typezor.CodeModel.Type">
+            <summary>
+            Converts the current instance to a Type.
+            </summary>
+        </member>
+        <member name="T:Typezor.CodeModel.Item">
+            <summary>
+            Represents an code model item.
+            </summary>
+        </member>
+        <member name="T:Typezor.CodeModel.Method">
+            <summary>
+            Represents a method.
+            </summary>
+        </member>
+        <member name="P:Typezor.CodeModel.Method.Attributes">
+            <summary>
+            All attributes defined on the method.
+            </summary>
+        </member>
+        <member name="P:Typezor.CodeModel.Method.DocComment">
+            <summary>
+            The XML documentation comment of the method.
+            </summary>
+        </member>
+        <member name="P:Typezor.CodeModel.Method.FullName">
+            <summary>
+            The full original name of the method including namespace and containing class names.
+            </summary>
+        </member>
+        <member name="P:Typezor.CodeModel.Method.IsAbstract">
+            <summary>
+            Determines if the method is abstract.
+            </summary>
+        </member>
+        <member name="P:Typezor.CodeModel.Method.IsGeneric">
+            <summary>
+            Determines if the method is generic.
+            </summary>
+        </member>
+        <member name="P:Typezor.CodeModel.Method.name">
+            <summary>
+            The name of the method (camelCased).
+            </summary>
+        </member>
+        <member name="P:Typezor.CodeModel.Method.Name">
+            <summary>
+            The name of the method.
+            </summary>
+        </member>
+        <member name="P:Typezor.CodeModel.Method.Parameters">
+            <summary>
+            All parameters of the method.
+            </summary>
+        </member>
+        <member name="P:Typezor.CodeModel.Method.Parent">
+            <summary>
+            The parent context of the method.
+            </summary>
+        </member>
+        <member name="P:Typezor.CodeModel.Method.Type">
+            <summary>
+            The type of the method.
+            </summary>
+        </member>
+        <member name="P:Typezor.CodeModel.Method.TypeParameters">
+            <summary>
+            All generic type parameters of the method.
+            TypeParameters are the type placeholders of a generic method e.g. &lt;T&gt;.
+            </summary>
+        </member>
+        <member name="M:Typezor.CodeModel.Method.op_Implicit(Typezor.CodeModel.Method)~System.String">
+            <summary>
+            Converts the current instance to string.
+            </summary>
+        </member>
+        <member name="T:Typezor.CodeModel.Parameter">
+            <summary>
+            Represents a parameter.
+            </summary>
+        </member>
+        <member name="P:Typezor.CodeModel.Parameter.Attributes">
+            <summary>
+            All attributes defined on the parameter.
+            </summary>
+        </member>
+        <member name="P:Typezor.CodeModel.Parameter.FullName">
+            <summary>
+            The full original name of the parameter.
+            </summary>
+        </member>
+        <member name="P:Typezor.CodeModel.Parameter.DefaultValue">
+            <summary>
+            The default value of the parameter if it's optional.
+            </summary>
+        </member>
+        <member name="P:Typezor.CodeModel.Parameter.HasDefaultValue">
+            <summary>
+            Determines if the parameter has a default value.
+            </summary>
+        </member>
+        <member name="P:Typezor.CodeModel.Parameter.name">
+            <summary>
+            The name of the parameter (camelCased).
+            </summary>
+        </member>
+        <member name="P:Typezor.CodeModel.Parameter.Name">
+            <summary>
+            The name of the parameter.
+            </summary>
+        </member>
+        <member name="P:Typezor.CodeModel.Parameter.Parent">
+            <summary>
+            The parent context of the parameter.
+            </summary>
+        </member>
+        <member name="P:Typezor.CodeModel.Parameter.Type">
+            <summary>
+            The type of the parameter.
+            </summary>
+        </member>
+        <member name="M:Typezor.CodeModel.Parameter.op_Implicit(Typezor.CodeModel.Parameter)~System.String">
+            <summary>
+            Converts the current instance to string.
+            </summary>
+        </member>
+        <member name="T:Typezor.CodeModel.Property">
+            <summary>
+            Represents a property.
+            </summary>
+        </member>
+        <member name="P:Typezor.CodeModel.Property.Attributes">
+            <summary>
+            All attributes defined on the property.
+            </summary>
+        </member>
+        <member name="P:Typezor.CodeModel.Property.DocComment">
+            <summary>
+            The XML documentation comment of the property.
+            </summary>
+        </member>
+        <member name="P:Typezor.CodeModel.Property.FullName">
+            <summary>
+            The full original name of the property including namespace and containing class names.
+            </summary>
+        </member>
+        <member name="P:Typezor.CodeModel.Property.HasGetter">
+            <summary>
+            Determines if the property has a getter.
+            </summary>
+        </member>
+        <member name="P:Typezor.CodeModel.Property.HasSetter">
+            <summary>
+            Determines if the property has a setter.
+            </summary>
+        </member>
+        <member name="P:Typezor.CodeModel.Property.IsAbstract">
+            <summary>
+            Determines if the property is abstract.
+            </summary>
+        </member>
+        <member name="P:Typezor.CodeModel.Property.name">
+            <summary>
+            The name of the property (camelCased).
+            </summary>
+        </member>
+        <member name="P:Typezor.CodeModel.Property.Name">
+            <summary>
+            The name of the property.
+            </summary>
+        </member>
+        <member name="P:Typezor.CodeModel.Property.Parent">
+            <summary>
+            The parent context of the property.
+            </summary>
+        </member>
+        <member name="P:Typezor.CodeModel.Property.Type">
+            <summary>
+            The type of the property.
+            </summary>
+        </member>
+        <member name="M:Typezor.CodeModel.Property.op_Implicit(Typezor.CodeModel.Property)~System.String">
+            <summary>
+            Converts the current instance to string.
+            </summary>
+        </member>
+        <member name="T:Typezor.CodeModel.Type">
+            <summary>
+            Represents a type.
+            </summary>
+        </member>
+        <member name="P:Typezor.CodeModel.Type.Attributes">
+            <summary>
+            All attributes defined on the type.
+            </summary>
+        </member>
+        <member name="P:Typezor.CodeModel.Type.BaseClass">
+            <summary>
+            The base class of the type.
+            </summary>
+        </member>
+        <member name="P:Typezor.CodeModel.Type.Constants">
+            <summary>
+            All constants defined in the type.
+            </summary>
+        </member>
+        <member name="P:Typezor.CodeModel.Type.ContainingClass">
+            <summary>
+            The containing class of the type if it's nested.
+            </summary>
+        </member>
+        <member name="P:Typezor.CodeModel.Type.Delegates">
+            <summary>
+            All delegates defined in the type.
+            </summary>
+        </member>
+        <member name="P:Typezor.CodeModel.Type.DocComment">
+            <summary>
+            The XML documentation comment of the type.
+            </summary>
+        </member>
+        <member name="P:Typezor.CodeModel.Type.Fields">
+            <summary>
+            All fields defined in the type.
+            </summary>
+        </member>
+        <member name="P:Typezor.CodeModel.Type.FullName">
+            <summary>
+            The full original name of the type including namespace and containing class names.
+            </summary>
+        </member>
+        <member name="P:Typezor.CodeModel.Type.Interfaces">
+            <summary>
+            All interfaces implemented by the type.
+            (In Visual Studio 2013 Interfaces are not available on Types)
+            </summary>
+        </member>
+        <member name="P:Typezor.CodeModel.Type.IsDate">
+            <summary>
+            Determines if the type is a DateTime.
+            </summary>
+        </member>
+        <member name="P:Typezor.CodeModel.Type.IsDefined">
+            <summary>
+            Determines if the type is defined in the current solution.
+            (In Visual Studio 2013 IsDefined returns false for generic types)
+            </summary>
+        </member>
+        <member name="P:Typezor.CodeModel.Type.IsEnum">
+            <summary>
+            Determines if the type is an enum.
+            </summary>
+        </member>
+        <member name="P:Typezor.CodeModel.Type.IsEnumerable">
+            <summary>
+            Determines if the type is enumerable.
+            </summary>
+        </member>
+        <member name="P:Typezor.CodeModel.Type.IsGeneric">
+            <summary>
+            Determines if the type is generic.
+            </summary>
+        </member>
+        <member name="P:Typezor.CodeModel.Type.IsGuid">
+            <summary>
+            Determines if the type is a Guid.
+            </summary>
+        </member>
+        <member name="P:Typezor.CodeModel.Type.IsNullable">
+            <summary>
+            Determines if the type is nullable.
+            </summary>
+        </member>
+        <member name="P:Typezor.CodeModel.Type.IsPrimitive">
+            <summary>
+            Determines if the type is primitive.
+            </summary>
+        </member>
+        <member name="P:Typezor.CodeModel.Type.IsTask">
+            <summary>
+            Determines if the type is a Task.
+            </summary>
+        </member>
+        <member name="P:Typezor.CodeModel.Type.IsTimeSpan">
+            <summary>
+            Determines if the type is a TimeSpan.
+            </summary>
+        </member>
+        <member name="P:Typezor.CodeModel.Type.IsValueTuple">
+            <summary>
+            Determines if the type is a ValueTuple.
+            </summary>
+        </member>
+        <member name="P:Typezor.CodeModel.Type.Methods">
+            <summary>
+            All methods defined in the type.
+            </summary>
+        </member>
+        <member name="P:Typezor.CodeModel.Type.name">
+            <summary>
+            The name of the type (camelCased).
+            </summary>
+        </member>
+        <member name="P:Typezor.CodeModel.Type.Name">
+            <summary>
+            The name of the type.
+            </summary>
+        </member>
+        <member name="P:Typezor.CodeModel.Type.Namespace">
+            <summary>
+            The namespace of the type.
+            </summary>
+        </member>
+        <member name="P:Typezor.CodeModel.Type.NestedClasses">
+            <summary>
+            All classes defined in the type.
+            </summary>
+        </member>
+        <member name="P:Typezor.CodeModel.Type.NestedEnums">
+            <summary>
+            All enums defined in the type.
+            </summary>
+        </member>
+        <member name="P:Typezor.CodeModel.Type.NestedInterfaces">
+            <summary>
+            All interfaces defined in the type.
+            </summary>
+        </member>
+        <member name="P:Typezor.CodeModel.Type.OriginalName">
+            <summary>
+            The original C# name of the type.
+            </summary>
+        </member>
+        <member name="P:Typezor.CodeModel.Type.Parent">
+            <summary>
+            The parent context of the type.
+            </summary>
+        </member>
+        <member name="P:Typezor.CodeModel.Type.Properties">
+            <summary>
+            All properties defined in the type.
+            </summary>
+        </member>
+        <member name="P:Typezor.CodeModel.Type.TypeArguments">
+            <summary>
+            All generic type parameters of the type.
+            TypeArguments are the specified arguments for the TypeParametes on a generic type e.g. &lt;string&gt;.
+            (In Visual Studio 2013 TypeParameters and TypeArguments are the same)
+            </summary>
+        </member>
+        <member name="P:Typezor.CodeModel.Type.TypeParameters">
+            <summary>
+            All generic type parameters of the type.
+            TypeParameters are the type placeholders of a generic type e.g. &lt;T&gt;.
+            (In Visual Studio 2013 TypeParameters and TypeArguments are the same)
+            </summary>
+        </member>
+        <member name="P:Typezor.CodeModel.Type.TupleElements">
+            <summary>
+            The named ValueTuple fields of the type.
+            </summary>
+        </member>
+        <member name="M:Typezor.CodeModel.Type.op_Implicit(Typezor.CodeModel.Type)~System.String">
+            <summary>
+            Converts the current instance to string.
+            </summary>
+        </member>
+        <member name="T:Typezor.CodeModel.TypeParameter">
+            <summary>
+            Represents a generic type parameter.
+            </summary>
+        </member>
+        <member name="P:Typezor.CodeModel.TypeParameter.name">
+            <summary>
+            The name of the type parameter (camelCased).
+            </summary>
+        </member>
+        <member name="P:Typezor.CodeModel.TypeParameter.Name">
+            <summary>
+            The name of the type parameter.
+            </summary>
+        </member>
+        <member name="P:Typezor.CodeModel.TypeParameter.Parent">
+            <summary>
+            The parent context of the type parameter.
+            </summary>
+        </member>
+        <member name="T:Typezor.Extensions.Types.TypeExtensions">
+            <summary>
+            Extension methods for working with types.
+            </summary>
+        </member>
+        <member name="M:Typezor.Extensions.Types.TypeExtensions.ClassName(Typezor.CodeModel.Type)">
+            <summary>
+            Returns the name of the type without []
+            </summary>
+        </member>
+        <member name="M:Typezor.Extensions.Types.TypeExtensions.Default(Typezor.CodeModel.Type)">
+            <summary>
+            The default value of the type.
+            (Dictionary types returns {}, enumerable types returns [],
+            boolean types returns false, numeric types returns 0, void returns void(0),
+            Guid types return empty guid string, Date types return new Date(0),
+            all other types return null)
+            </summary>
+        </member>
+        <member name="M:Typezor.Extensions.Types.TypeExtensions.Unwrap(Typezor.CodeModel.Type)">
+            <summary>
+            Returns the first TypeArgument of a generic type or the type itself if it's not generic.
+            </summary>
+        </member>
+        <member name="T:Typezor.Extensions.WebApi.HttpMethodExtensions">
+            <summary>
+            Extension methods for extracting Web API http method.
+            </summary>
+        </member>
+        <member name="M:Typezor.Extensions.WebApi.HttpMethodExtensions.HttpMethod(Typezor.CodeModel.Method)">
+            <summary>
+            Returns the http method from a Web API action.
+            The http method is extracted from Http* or AcceptVerbs attribute or by naming convension if no attributes are specified.
+            </summary>
+        </member>
+        <member name="T:Typezor.Extensions.WebApi.RequestDataExtensions">
+            <summary>
+            Extension methods for extracting Web API parameters.
+            </summary>
+        </member>
+        <member name="M:Typezor.Extensions.WebApi.RequestDataExtensions.RequestData(Typezor.CodeModel.Method)">
+            <summary>
+            Creates an object literal containing the parameters that should be sent in the request body of a Web API request.
+            If no parameters are required the literal "null" is returned.
+            </summary>
+        </member>
+        <member name="M:Typezor.Extensions.WebApi.RequestDataExtensions.RequestData(Typezor.CodeModel.Method,System.String)">
+            <summary>
+            Creates an object literal containing the parameters that should be sent in the request body of a Web API request.
+            If no parameters are required the literal "null" is returned.
+            </summary>
+        </member>
+        <member name="T:Typezor.Extensions.WebApi.UrlExtensions">
+            <summary>
+            Extension methods for extracting Web API url.
+            </summary>
+        </member>
+        <member name="M:Typezor.Extensions.WebApi.UrlExtensions.Url(Typezor.CodeModel.Method)">
+            <summary>
+            Returns the url for the Web API action based on route attributes (or "api/{controller}/{id?}" if no attributes are present).
+            Route parameters are converted to TypeScript string interpolation syntax by prefixing all parameters with $ e.g. ${id}.
+            Optional parameters are added as QueryString parameters for GET and HEAD requests.
+            </summary>
+        </member>
+        <member name="M:Typezor.Extensions.WebApi.UrlExtensions.Url(Typezor.CodeModel.Method,System.String)">
+            <summary>
+            Returns the url for the Web API action based on route attributes (or the supplied convension route if no attributes are present).
+            Route parameters are converted to TypeScript string interpolation syntax by prefixing all parameters with $ e.g. ${id}.
+            Optional parameters are added as QueryString parameters for GET and HEAD requests.
+            </summary>
+        </member>
+        <member name="M:Typezor.Extensions.WebApi.UrlExtensions.Route(Typezor.CodeModel.Method)">
+            <summary>
+            Returns the route for the Web API action based on route attributes (or "api/{controller}/{id?}" if no attributes are present).
+            </summary>
+        </member>
+        <member name="M:Typezor.Extensions.WebApi.UrlExtensions.Route(Typezor.CodeModel.Method,System.String)">
+            <summary>
+            Returns the route for the Web API action based on route attributes (or the supplied convension route if no attributes are present).
+            </summary>
+        </member>
+    </members>
+</doc>

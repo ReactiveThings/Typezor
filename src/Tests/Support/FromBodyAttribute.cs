@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Typewriter.Tests.Support
+namespace Typezor.Tests.Support
 {
     public class FromBodyAttribute : Attribute
     {

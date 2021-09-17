@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Net;
-using Typewriter.Tests.Render.RoutedApiController.Support;
-using Typewriter.Tests.Support;
+using Typezor.Tests.Render.RoutedApiController.Support;
+using Typezor.Tests.Support;
 
-namespace Typewriter.Tests.Render.RoutedApiController
+namespace Typezor.Tests.Render.RoutedApiController
 {
     [RoutePrefix("api/library/{libraryId:int}/books")]
     public class BooksController

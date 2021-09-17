@@ -1,17 +1,19 @@
-﻿using Typewriter.CodeModel.Attributes;
+﻿
 
-namespace Typewriter.CodeModel
+using System.Collections.Generic;
+using Typezor.Abstractions;
+
+namespace Typezor.CodeModel
 {
     /// <summary>
     /// Represents an interface.
     /// </summary>
-    [Context("Interface", "Interfaces")]
-    public abstract class Interface : Item
+    public abstract class Interface : Item, IAnnotated
     {
         /// <summary>
         /// All attributes defined on the interface.
         /// </summary>
-        public abstract AttributeCollection Attributes { get; }
+        public abstract IEnumerable<Attribute> Attributes { get; }
 
         /// <summary>
         /// The containing class of the interface if it is nested.
@@ -26,7 +28,7 @@ namespace Typewriter.CodeModel
         /// <summary>
         /// All events defined in the interface.
         /// </summary>
-        public abstract EventCollection Events { get; }
+        public abstract IEnumerable<Event> Events { get; }
 
         /// <summary>
         /// The full original name of the interface including namespace and containing class names.
@@ -36,7 +38,7 @@ namespace Typewriter.CodeModel
         /// <summary>
         /// All interfaces implemented by the interface.
         /// </summary>
-        public abstract InterfaceCollection Interfaces { get; }
+        public abstract IEnumerable<Interface> Interfaces { get; }
 
         /// <summary>
         /// Determines if the interface is generic.
@@ -46,7 +48,7 @@ namespace Typewriter.CodeModel
         /// <summary>
         /// All methods defined in the interface.
         /// </summary>
-        public abstract MethodCollection Methods { get; }
+        public abstract IEnumerable<Method> Methods { get; }
 
         /// <summary>
         /// The name of the interface (camelCased).
@@ -71,21 +73,21 @@ namespace Typewriter.CodeModel
         /// <summary>
         /// All properties defined in the interface.
         /// </summary>
-        public abstract PropertyCollection Properties { get; }
+        public abstract IEnumerable<CodeModel.Property> Properties { get; }
 
         /// <summary>
         /// All generic type arguments of the interface.
         /// TypeArguments are the specified arguments for the TypeParametes on a generic interface e.g. &lt;string&gt;.
         /// (In Visual Studio 2013 TypeParameters and TypeArguments are the same)
         /// </summary>
-        public abstract TypeCollection TypeArguments { get; }
+        public abstract IEnumerable<CodeModel.Type> TypeArguments { get; }
 
         /// <summary>
         /// All generic type parameters of the interface.
         /// TypeParameters are the type placeholders of a generic interface e.g. &lt;T&gt;.
         /// (In Visual Studio 2013 TypeParameters and TypeArguments are the same)
         /// </summary>
-        public abstract TypeParameterCollection TypeParameters { get; }
+        public abstract IEnumerable<TypeParameter> TypeParameters { get; }
 
         /// <summary>
         /// Converts the current instance to string.
@@ -104,12 +106,5 @@ namespace Typewriter.CodeModel
         {
             return instance?.Type;
         }
-    }
-
-    /// <summary>
-    /// Represents a collection of interfaces.
-    /// </summary>
-    public interface InterfaceCollection : ItemCollection<Interface>
-    {
     }
 }

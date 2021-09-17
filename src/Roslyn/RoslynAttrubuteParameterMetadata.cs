@@ -1,8 +1,8 @@
 ﻿using Microsoft.CodeAnalysis;
 using System.Linq;
-using Typewriter.Metadata.Interfaces;
+using Typezor.Metadata.Interfaces;
 
-namespace Typewriter.Metadata.Roslyn
+namespace Typezor.Metadata.Roslyn
 {
     public class RoslynAttrubuteArgumentMetadata : IAttributeArgumentMetadata
     {

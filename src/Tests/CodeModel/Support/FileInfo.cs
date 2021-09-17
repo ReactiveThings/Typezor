@@ -39,7 +39,7 @@ internal interface InternalInterfaceNoNamespace
 {
 }
 
-namespace Typewriter.Tests.CodeModel.Support
+namespace Typezor.Tests.CodeModel.Support
 {
     public class PublicClass
     {

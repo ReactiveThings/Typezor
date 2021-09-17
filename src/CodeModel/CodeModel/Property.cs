@@ -1,17 +1,19 @@
-﻿using Typewriter.CodeModel.Attributes;
+﻿
 
-namespace Typewriter.CodeModel
+using System.Collections.Generic;
+using Typezor.Abstractions;
+
+namespace Typezor.CodeModel
 {
     /// <summary>
     /// Represents a property.
     /// </summary>
-    [Context("Property", "Properties")]
-    public abstract class Property : Item
+    public abstract class Property : Item, IAnnotated
     {
         /// <summary>
         /// All attributes defined on the property.
         /// </summary>
-        public abstract AttributeCollection Attributes { get; }
+        public abstract IEnumerable<Attribute> Attributes { get; }
 
         /// <summary>
         /// The XML documentation comment of the property.
@@ -65,12 +67,5 @@ namespace Typewriter.CodeModel
         {
             return instance.ToString();
         }
-    }
-
-    /// <summary>
-    /// Represents a collection of properties.
-    /// </summary>
-    public interface PropertyCollection : ItemCollection<Property>
-    {
     }
 }

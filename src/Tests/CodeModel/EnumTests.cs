@@ -1,10 +1,10 @@
 ﻿using System.Linq;
 using Should;
-using Typewriter.CodeModel;
-using Typewriter.Tests.TestInfrastructure;
+using Typezor.CodeModel;
+using Typezor.Tests.TestInfrastructure;
 using Xunit;
 
-namespace Typewriter.Tests.CodeModel
+namespace Typezor.Tests.CodeModel
 {
 
     [Trait("CodeModel", "Enums"), Collection(nameof(RoslynFixture))]
@@ -21,7 +21,7 @@ namespace Typewriter.Tests.CodeModel
 
         protected EnumTests(ITestFixture fixture) : base(fixture)
         {
-            fileInfo = GetFile(@"Tests\CodeModel\Support\EnumInfo.cs");
+            fileInfo = GetFile(@"CodeModel\Support\EnumInfo.cs", @"CodeModel\Support\AttributeInfo.cs");
         }
 
         [Fact]
@@ -30,8 +30,8 @@ namespace Typewriter.Tests.CodeModel
             var enumInfo = fileInfo.Enums.First();
 
             enumInfo.Name.ShouldEqual("EnumInfo");
-            enumInfo.FullName.ShouldEqual("Typewriter.Tests.CodeModel.Support.EnumInfo");
-            enumInfo.Namespace.ShouldEqual("Typewriter.Tests.CodeModel.Support");
+            enumInfo.FullName.ShouldEqual("Typezor.Tests.CodeModel.Support.EnumInfo");
+            enumInfo.Namespace.ShouldEqual("Typezor.Tests.CodeModel.Support");
             enumInfo.Parent.ShouldEqual(fileInfo);
         }
 
@@ -48,9 +48,9 @@ namespace Typewriter.Tests.CodeModel
             var enumInfo = fileInfo.Enums.First();
             var attributeInfo = enumInfo.Attributes.First();
 
-            enumInfo.Attributes.Count.ShouldEqual(1);
+            enumInfo.Attributes.Count().ShouldEqual(1);
             attributeInfo.Name.ShouldEqual("AttributeInfo");
-            attributeInfo.FullName.ShouldEqual("Typewriter.Tests.CodeModel.Support.AttributeInfoAttribute");
+            attributeInfo.FullName.ShouldEqual("Typezor.Tests.CodeModel.Support.AttributeInfoAttribute");
         }
 
         [Fact]
@@ -60,9 +60,9 @@ namespace Typewriter.Tests.CodeModel
             var valueInfo = enumInfo.Values.First();
             var attributeInfo = valueInfo.Attributes.First();
 
-            enumInfo.Attributes.Count.ShouldEqual(1);
+            enumInfo.Attributes.Count().ShouldEqual(1);
             attributeInfo.Name.ShouldEqual("AttributeInfo");
-            attributeInfo.FullName.ShouldEqual("Typewriter.Tests.CodeModel.Support.AttributeInfoAttribute");
+            attributeInfo.FullName.ShouldEqual("Typezor.Tests.CodeModel.Support.AttributeInfoAttribute");
         }
 
         [Fact]
@@ -130,7 +130,7 @@ namespace Typewriter.Tests.CodeModel
         [Fact]
         public void Expect_to_find_containing_class_on_nested_enum()
         {
-            var classInfo = fileInfo.Classes.First();
+            var classInfo = fileInfo.Classes.Where(p => p.Name == "EnumContiningClassInfo").First();
             var nestedEnumInfo = classInfo.NestedEnums.First();
             var containingClassInfo = nestedEnumInfo.ContainingClass;
 

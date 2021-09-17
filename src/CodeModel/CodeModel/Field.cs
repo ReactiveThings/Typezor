@@ -1,17 +1,19 @@
-﻿using Typewriter.CodeModel.Attributes;
+﻿
 
-namespace Typewriter.CodeModel
+using System.Collections.Generic;
+using Typezor.Abstractions;
+
+namespace Typezor.CodeModel
 {
     /// <summary>
     /// Represents a field.
     /// </summary>
-    [Context("Field", "Fields")]
-    public abstract class Field : Item
+    public abstract class Field : Item, IAnnotated
     {
         /// <summary>
         /// All attributes defined on the field.
         /// </summary>
-        public abstract AttributeCollection Attributes { get; }
+        public abstract IEnumerable<Attribute> Attributes { get; }
 
         /// <summary>
         /// The XML documentation comment of the field.
@@ -43,6 +45,8 @@ namespace Typewriter.CodeModel
         /// </summary>
         public abstract Type Type { get; }
 
+        public abstract bool IsReadonly { get; }
+
         /// <summary>
         /// Converts the current instance to string.
         /// </summary>
@@ -50,12 +54,5 @@ namespace Typewriter.CodeModel
         {
             return instance.ToString();
         }
-    }
-
-    /// <summary>
-    /// Represents a collection of fields.
-    /// </summary>
-    public interface FieldCollection : ItemCollection<Field>
-    {
     }
 }

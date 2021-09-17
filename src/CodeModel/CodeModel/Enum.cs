@@ -1,17 +1,19 @@
-﻿using Typewriter.CodeModel.Attributes;
+﻿
 
-namespace Typewriter.CodeModel
+using System.Collections.Generic;
+using Typezor.Abstractions;
+
+namespace Typezor.CodeModel
 {
     /// <summary>
     /// Represents an enum.
     /// </summary>
-    [Context("Enum", "Enums")]
-    public abstract class Enum : Item
+    public abstract class Enum : Item, IAnnotated
     {
         /// <summary>
         /// All attributes defined on the enum.
         /// </summary>
-        public abstract AttributeCollection Attributes { get; }
+        public abstract IEnumerable<Attribute> Attributes { get; }
 
         /// <summary>
         /// The containing class of the enum if it is nested.
@@ -56,7 +58,7 @@ namespace Typewriter.CodeModel
         /// <summary>
         /// All values defined in the enum.
         /// </summary>
-        public abstract EnumValueCollection Values { get; }
+        public abstract IEnumerable<EnumValue> Values { get; }
 
         /// <summary>
         /// Converts the current instance to string.
@@ -75,12 +77,5 @@ namespace Typewriter.CodeModel
         {
             return instance?.Type;
         }
-    }
-
-    /// <summary>
-    /// Represents a collection of enums.
-    /// </summary>
-    public interface EnumCollection : ItemCollection<Enum>
-    {
     }
 }

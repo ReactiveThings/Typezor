@@ -1,0 +1,484 @@
+﻿
+@using System
+@using System.Collections
+@using System.Collections.Generic
+@using System.IO
+@using System.Linq
+@using System.Text
+@using Typezor.CodeModel
+@using Typezor.Extensions.Types
+@using Type = Typezor.CodeModel.Type
+@inherits Typezor.TemplateBase<Typezor.CodeModel.File>
+@namespace Typezor.CodeGen.Demo.Templates
+@{
+
+}
+
+@functions
+{
+    private Queue<MappingMethod> mappingQueue = new Queue<MappingMethod>();
+    private HashSet<MappingMethod> generated = new HashSet<MappingMethod>();
+    public List<IMethodMapper> Mappers = new List<IMethodMapper>();
+    public class MappingMethod
+    {
+        public MappingMethod(string name, MethodParameter from, MethodParameter to, bool isPartial = false)
+        {
+            Name = name;
+            this.from = from;
+            this.to = to;
+            IsPartial = isPartial;
+        }
+
+        public string Name { get;}
+        public MethodParameter from { get; }
+        public MethodParameter to { get; }
+        public bool IsPartial { get;}
+
+        public MappingMethod(Method method)
+        {
+            Name = method.Name;
+            from = method.Parameters.Select(p => new MethodParameter(p)).FirstOrDefault();
+            to = method.Parameters.Skip(1).Select(p => new MethodParameter(p)).FirstOrDefault();
+            IsPartial = true;
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(null, obj)) return false;
+            if (ReferenceEquals(this, obj)) return true;
+            if (obj.GetType() != this.GetType()) return false;
+            return Equals((MappingMethod) obj);
+        }
+
+        protected bool Equals(MappingMethod other)
+        {
+            return Name == other.Name && Equals(from, other.from) && Equals(to, other.to);
+        }
+
+        public override int GetHashCode()
+        {
+            unchecked
+            {
+                var hashCode = (Name != null ? Name.GetHashCode() : 0);
+                hashCode = (hashCode * 397) ^ (@from != null ? @from.GetHashCode() : 0);
+                hashCode = (hashCode * 397) ^ (to != null ? to.GetHashCode() : 0);
+                return hashCode;
+            }
+        }
+    }
+
+    public class MethodParameter
+    {
+        public MethodParameter(string name, Type type)
+        {
+            Name = name;
+            Type = type;
+        }
+
+        public MethodParameter(Parameter parameter)
+        {
+            Name = parameter.Name;
+            Type = parameter.Type;
+        }
+
+        public string Name { get; }
+        public Type Type { get; }
+
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(null, obj)) return false;
+            if (ReferenceEquals(this, obj)) return true;
+            if (obj.GetType() != this.GetType()) return false;
+            return Equals((MethodParameter) obj);
+        }
+
+        protected bool Equals(MethodParameter other)
+        {
+            return Type.FullName == other.Type.FullName;
+        }
+
+        public override int GetHashCode()
+        {
+            return Type?.FullName != null ? Type.FullName.GetHashCode() : 0;
+        }
+    }
+
+    public class ComplexType
+    {
+        public Type Type { get; set; }
+        public bool HasSetter { get; set; }
+        public string Name { get; set; }
+        public ComplexType(Property property)
+        {
+            Type = property.Type;
+            Name = property.Name;
+            HasSetter = property.HasSetter;
+        }
+
+        public ComplexType(Field field)
+        {
+            Type = field.Type;
+            HasSetter = !field.IsReadonly;
+            Name = field.Name;
+        }
+    }
+    private static IEnumerable<(ComplexType from, ComplexType to)> MParameters(Type source, Type destination)
+    {
+        var sourceProperties = source.Properties.Select(p => new ComplexType(p))
+            .Concat(source.Fields.Select(p => new ComplexType(p)));
+        var destinationProperties = destination.Properties.Select(p => new ComplexType(p))
+            .Concat(destination.Fields.Select(p => new ComplexType(p)));
+
+        var properties = from p in sourceProperties
+            join p1 in destinationProperties on p.Name equals p1.Name
+            select (p , p1);
+
+        foreach (var valueTuple in properties)
+        {
+            yield return valueTuple;
+        }
+    }
+
+    private static string SelectMap(string mapMethodName, Type from, Type to)
+    {
+        if(from.TypeArguments.FirstOrDefault()?.FullName != to.TypeArguments.FirstOrDefault()?.FullName)
+        {
+            return $".Select(p => p.{mapMethodName}(default({to.Unwrap().FullName})))";
+        }
+        return String.Empty;
+    }
+
+    private static bool GeneratePartialMethod(MappingMethod m)
+    {
+        return !(m.from.Type.IsEnumerable && m.to.Type.IsEnumerable) && ((m.from.Type.IsPrimitive || m.to.Type.IsPrimitive) && m.from.Type.FullName.TrimEnd('?') != m.to.Type.FullName.TrimEnd('?') && (!m.from.Type.IsEnum && !m.to.Type.IsEnum));
+    }
+
+
+
+    private static IEnumerable<Interface> TypeInterfaces(Type m)
+    {
+        foreach (var @interface in m.Interfaces)
+        {
+            yield return @interface;
+        }
+        
+
+        if (m.BaseClass != null)
+        {
+            foreach (var baseClassInterface in TypeInterfaces(m.BaseClass))
+            {
+                yield return baseClassInterface;
+            }
+        }
+    }
+
+    private static bool IsMutableCollection(Type m)
+    {
+        return TypeInterfaces(m).Any(i => i.FullName.StartsWith("System.Collections.Generic.ICollection"));
+    }
+
+    private IEnumerable<Class> GetMappingClasses()
+    {
+        return @Model.Classes.Where(p => p.Attributes.Any(a => a.Name == "GenerateMapping"));
+    }
+
+    private static IEnumerable<MappingMethod> GetPartialMethodsToGenerate(Class c)
+    {
+        return c.StaticMethods.Where(m => m.Attributes.Any(a => a.Name == "GenerateMapping")).Select(m => new MappingMethod(m));
+    }
+
+    private static IEnumerable<MappingMethod> GetOverridenMethods(Class c)
+    {
+        return c.StaticMethods.Where(m => m.Attributes.Any(a => a.Name == "OverrideMapping")).Select(m => new MappingMethod(m));
+    }
+
+    public interface IMethodMapper
+    {
+        bool CanMap(MappingMethod m);
+        IEnumerable<string> Map(MappingMethod m);
+        IEnumerable<MappingMethod> Dependencies(MappingMethod m);
+    }
+
+    public abstract class PrimitiveMethodMapper : IMethodMapper
+    {
+        public virtual bool CanMap(MappingMethod m)
+        {
+            return m.from.Type.IsPrimitive && m.to.Type.IsPrimitive;
+        }
+
+        public abstract IEnumerable<string> Map(MappingMethod m);
+
+        public IEnumerable<MappingMethod> Dependencies(MappingMethod m)
+        {
+            yield break;
+        }
+    }
+
+    public class TheSamePrimitiveTypeMethodMapper : PrimitiveMethodMapper
+    {
+        public override bool CanMap(MappingMethod m)
+        {
+            return base.CanMap(m) && m.from.Type.FullName.TrimEnd('?') == m.to.Type.FullName.TrimEnd('?');
+        }
+
+        public override IEnumerable<string> Map(MappingMethod m)
+        {
+            yield return $"return {m.from.Name}{(!m.to.Type.IsNullable && m.from.Type.IsNullable ? "?? default" : "")};";
+        }
+    }
+
+    public class EnumMethodMapper : PrimitiveMethodMapper
+    {
+        public override bool CanMap(MappingMethod m)
+        {
+            return base.CanMap(m) && m.from.Type.IsEnum && m.to.Type.IsEnum;
+        }
+
+        public override IEnumerable<string> Map(MappingMethod m)
+        {
+            yield return $"return (({m.to.Type.FullName}{(!m.to.Type.IsNullable ? "?" : "")})(int?){m.from.Name}) ?? default({m.to.Type.FullName});";
+        }
+    }
+
+    public abstract class EnumerableMethodMapper : IMethodMapper
+    {
+        public virtual bool CanMap(MappingMethod m)
+        {
+            return m.from.Type.IsEnumerable && m.to.Type.IsEnumerable;
+        }
+
+        public abstract IEnumerable<string> Map(MappingMethod m);
+
+        public IEnumerable<MappingMethod> Dependencies(MappingMethod m)
+        {
+            yield return new MappingMethod(
+                m.Name, 
+                new MethodParameter("from", m.from.Type.TypeArguments.First()), 
+                new MethodParameter("to", m.to.Type.TypeArguments.First())
+                );
+        }
+    }
+
+    public class MutableCollectionMapper : EnumerableMethodMapper
+    {
+        public override bool CanMap(MappingMethod m)
+        {
+            return base.CanMap(m) && IsMutableCollection(m.to.Type);
+        }
+
+        public override IEnumerable<string> Map(MappingMethod m)
+        {
+            yield return $"{m.to.Name} ??= new {m.to.Type.FullName}();";
+            yield return $"foreach(var p in {m.from.Name}) {m.to.Name}.Add(p.{m.Name}(default({m.to.Type.TypeArguments.First().FullName})));";
+            yield return $"return {m.to.Name};";
+        }
+    }
+
+    public class ImmutableCollectionMapper : EnumerableMethodMapper
+    {
+        public override bool CanMap(MappingMethod m)
+        {
+            return base.CanMap(m) && !IsMutableCollection(m.to.Type);
+        }
+
+        public override IEnumerable<string> Map(MappingMethod m)
+        {
+            yield return $"return {m.from.Name}?{SelectMap(m.Name, m.from.Type, m.to.Type)}.ToArray();";
+        }
+    }
+
+    private void GenerateMappingMethod(string methodName, Type from, Type to)
+    {
+        var newMethod = new MappingMethod(methodName, new MethodParameter("from", from), new MethodParameter("to", to));
+        GenerateMappingMethod(newMethod);
+    }
+
+    private void GenerateMappingMethod(MappingMethod mappingMethod)
+    {
+        if (!generated.Contains(mappingMethod))
+        {
+            generated.Add(mappingMethod);
+            mappingQueue.Enqueue(mappingMethod);
+        }
+    }
+
+    public interface IPropertyMapper
+    {
+        bool CanMap((ComplexType from, ComplexType to) p);
+        IEnumerable<string> Map(MappingMethod m, (ComplexType from, ComplexType to) p);
+        IEnumerable<MappingMethod> Dependencies(MappingMethod m, (ComplexType from, ComplexType to) p);
+    }
+
+
+
+    public class ComplexTypeMapper : IMethodMapper
+    {
+        private readonly IEnumerable<IPropertyMapper> mappers;
+
+        public ComplexTypeMapper(IEnumerable<IPropertyMapper> mappers)
+        {
+            this.mappers = mappers;
+        }
+        public bool CanMap(MappingMethod m)
+        {
+            return !m.from.Type.IsPrimitive && !m.from.Type.IsEnumerable &&
+                   !m.to.Type.IsPrimitive && !m.to.Type.IsEnumerable
+                   && MParameters(m.from.Type, m.to.Type)
+                       .Any(p => mappers.Any(pm => pm.CanMap(p)));
+        }
+
+        public IEnumerable<string> Map(MappingMethod m)
+        {
+            yield return $"{m.to.Name} ??= new {m.to.Type.FullName}();";
+
+            foreach (var parameter in MParameters(m.from.Type,m.to.Type))
+            {
+                var lines = mappers
+                    .Where(pm => pm.CanMap(parameter))
+                    .Take(1)
+                    .SelectMany(pm => pm.Map(m, parameter));
+
+                foreach (var mapping in lines)
+                {
+                    yield return mapping;
+                }
+            }
+
+            yield return $"return {m.to.Name};";
+        }
+
+        public IEnumerable<MappingMethod> Dependencies(MappingMethod m)
+        {
+            return MParameters(m.from.Type, m.to.Type)
+                .SelectMany(p =>
+                    mappers.Where(pm => pm.CanMap(p))
+                        .Take(1)
+                        .SelectMany(pm => pm.Dependencies(m, p))
+                );
+        }
+    }
+
+    public abstract class PropertyMapper : IPropertyMapper
+    {
+        public abstract bool CanMap((ComplexType @from, ComplexType to) p);
+
+        public abstract IEnumerable<string> Map(MappingMethod m, (ComplexType @from, ComplexType to) p);
+
+        public IEnumerable<MappingMethod> Dependencies(MappingMethod m, (ComplexType @from, ComplexType to) p)
+        {
+            yield return new MappingMethod(m.Name, 
+                new MethodParameter("from", p.from.Type), 
+                new MethodParameter("to",p.to.Type)
+                );
+        }
+    }
+
+    public class PrimitivePropertyMapper : PropertyMapper
+    {
+        public override bool CanMap((ComplexType @from, ComplexType to) p)
+        {
+            return p.to.HasSetter && !(p.from.Type.IsEnumerable && p.to.Type.IsEnumerable);
+        }
+
+        public override IEnumerable<string> Map(MappingMethod m, (ComplexType @from, ComplexType to) p)
+        {
+            yield return $"{m.to.Name}.{p.to.Name} = {m.from.Name}?.{p.from.Name}.{m.Name}({m.to.Name}.{p.to.Name}) ?? default({p.to.Type.FullName});";
+        }
+    }
+
+    public abstract class EnumerablePropertyMapper : PropertyMapper
+    {
+        public override bool CanMap((ComplexType @from, ComplexType to) p)
+        {
+            return p.from.Type.IsEnumerable && p.to.Type.IsEnumerable;
+        }
+    }
+
+    public class ImmutableEnumerablePropertyMapper : EnumerablePropertyMapper
+    {
+        public override bool CanMap((ComplexType @from, ComplexType to) p)
+        {
+            return base.CanMap(p) && !p.to.HasSetter && IsMutableCollection(p.to.Type);
+        }
+
+        public override IEnumerable<string> Map(MappingMethod m,(ComplexType @from, ComplexType to) p)
+        {
+            yield return $"{m.Name}({m.from.Name}?.{p.from.Name}, {m.to.Name}.{p.to.Name});";
+        }
+
+    }
+
+    public class MutableEnumerablePropertyMapper : EnumerablePropertyMapper
+    {
+        public override bool CanMap((ComplexType @from, ComplexType to) p)
+        {
+            return base.CanMap(p) && p.to.HasSetter;
+        }
+
+        public override IEnumerable<string> Map(MappingMethod m,(ComplexType @from, ComplexType to) p)
+        {
+            yield return $"{m.to.Name}.{p.to.Name} = {m.Name}({m.from.Name}?.{p.from.Name}, {m.to.Name}.{p.to.Name});";
+        }
+    }
+}
+@("using System.Linq;")
+@foreach(var c in GetMappingClasses()){
+
+    @foreach (var m in GetPartialMethodsToGenerate(c))
+    {
+        mappingQueue.Enqueue(m);
+    }
+
+    @foreach (var m in GetOverridenMethods(c))
+    {
+        generated.Add(m);
+    }
+
+    Mappers.Add(new MutableCollectionMapper());
+    Mappers.Add(new ImmutableCollectionMapper());
+    Mappers.Add(new TheSamePrimitiveTypeMethodMapper());
+    Mappers.Add(new EnumMethodMapper());
+    Mappers.Add(new ComplexTypeMapper(new IPropertyMapper[]
+    {
+        new ImmutableEnumerablePropertyMapper(),
+        new MutableEnumerablePropertyMapper(),
+        new PrimitivePropertyMapper()
+    }));
+    
+    <text>namespace @c.Namespace</text>
+@:{
+    @:public static partial class @c.Name {
+
+    @while(mappingQueue.Any())
+    {
+        var m = mappingQueue.Dequeue();
+        
+        if(m.from == null || m.to == null) continue;
+        generated.Add(m);
+
+        @: public static@(m.IsPartial || GeneratePartialMethod(m) ? " partial" : "") @m.to.Type.FullName @(m.Name)(this @m.from.Type.FullName @m.from.Name, @m.to.Type.FullName @m.to.Name)
+        if (GeneratePartialMethod(m))
+        {
+            @:;
+            continue;
+        }
+
+        @: {
+        var mapper = Mappers.FirstOrDefault(mapper => mapper.CanMap(m));
+        if (mapper != null)
+        {
+            foreach (var line in @mapper.Map(m))
+            {
+            @: @line
+            }
+
+            foreach (var mappingMethod in mapper.Dependencies(m))
+            {
+                GenerateMappingMethod(mappingMethod);
+            }
+        }
+        @: }
+    }
+    @:}
+@:}
+}@Output.SaveAs(Path.Combine(Path.GetDirectoryName(TemplatePath),$"MappingExtensions1.cs"))

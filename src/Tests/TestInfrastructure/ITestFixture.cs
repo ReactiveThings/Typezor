@@ -1,13 +1,9 @@
-﻿using Microsoft.CodeAnalysis;
-using System;
-using Typewriter.Metadata.Providers;
+﻿using System;
 
-namespace Typewriter.Tests.TestInfrastructure
+namespace Typezor.Tests.TestInfrastructure
 {
     public interface ITestFixture : IDisposable
     {
-        string SolutionPath { get; set; }
-        Solution Dte { get; }
-        IMetadataProvider Provider { get; }
+        RoslynMetadataProviderStub Provider { get; }
     }
 }

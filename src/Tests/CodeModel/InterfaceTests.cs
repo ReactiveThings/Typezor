@@ -1,10 +1,10 @@
 ﻿using System.Linq;
 using Should;
-using Typewriter.CodeModel;
-using Typewriter.Tests.TestInfrastructure;
+using Typezor.CodeModel;
+using Typezor.Tests.TestInfrastructure;
 using Xunit;
 
-namespace Typewriter.Tests.CodeModel
+namespace Typezor.Tests.CodeModel
 {
 
     public abstract class InterfaceTests : TestBase
@@ -13,7 +13,7 @@ namespace Typewriter.Tests.CodeModel
 
         protected InterfaceTests(ITestFixture fixture) : base(fixture)
         {
-            fileInfo = GetFile(@"Tests\CodeModel\Support\IInterfaceInfo.cs");
+            fileInfo = GetFile(@"CodeModel\Support\IInterfaceInfo.cs");
         }
 
         [Fact]
@@ -22,8 +22,8 @@ namespace Typewriter.Tests.CodeModel
             var interfaceInfo = fileInfo.Interfaces.First();
 
             interfaceInfo.Name.ShouldEqual("IInterfaceInfo");
-            interfaceInfo.FullName.ShouldEqual("Typewriter.Tests.CodeModel.Support.IInterfaceInfo");
-            interfaceInfo.Namespace.ShouldEqual("Typewriter.Tests.CodeModel.Support");
+            interfaceInfo.FullName.ShouldEqual("Typezor.Tests.CodeModel.Support.IInterfaceInfo");
+            interfaceInfo.Namespace.ShouldEqual("Typezor.Tests.CodeModel.Support");
             interfaceInfo.Parent.ShouldEqual(fileInfo);
         }
 
@@ -40,9 +40,9 @@ namespace Typewriter.Tests.CodeModel
             var interfaceInfo = fileInfo.Interfaces.First();
             var attributeInfo = interfaceInfo.Attributes.First();
 
-            interfaceInfo.Attributes.Count.ShouldEqual(1);
+            interfaceInfo.Attributes.Count().ShouldEqual(1);
             attributeInfo.Name.ShouldEqual("AttributeInfo");
-            attributeInfo.FullName.ShouldEqual("Typewriter.Tests.CodeModel.Support.AttributeInfoAttribute");
+            attributeInfo.FullName.ShouldEqual("Typezor.Tests.CodeModel.Support.AttributeInfoAttribute");
         }
 
         [Fact]
@@ -51,7 +51,7 @@ namespace Typewriter.Tests.CodeModel
             var interfaceInfo = fileInfo.Interfaces.First();
 
             interfaceInfo.IsGeneric.ShouldBeFalse();
-            interfaceInfo.TypeParameters.Count.ShouldEqual(0);
+            interfaceInfo.TypeParameters.Count().ShouldEqual(0);
         }
 
         [Fact]
@@ -61,7 +61,7 @@ namespace Typewriter.Tests.CodeModel
             var genericTypeArgument = interfaceInfo.TypeParameters.First();
 
             interfaceInfo.IsGeneric.ShouldBeTrue();
-            interfaceInfo.TypeParameters.Count.ShouldEqual(1);
+            interfaceInfo.TypeParameters.Count().ShouldEqual(1);
             genericTypeArgument.Name.ShouldEqual("T");
         }
 
@@ -71,7 +71,7 @@ namespace Typewriter.Tests.CodeModel
             var interfaceInfo = fileInfo.Interfaces.First();
             var delegateInfo = interfaceInfo.Events.First();
 
-            interfaceInfo.Events.Count.ShouldEqual(1);
+            interfaceInfo.Events.Count().ShouldEqual(1);
             delegateInfo.Name.ShouldEqual("PublicEvent");
         }
 
@@ -82,10 +82,10 @@ namespace Typewriter.Tests.CodeModel
             var implementedInterfaceInfo = interfaceInfo.Interfaces.First();
             var propertyInfo = implementedInterfaceInfo.Properties.First();
 
-            interfaceInfo.Interfaces.Count.ShouldEqual(1);
+            interfaceInfo.Interfaces.Count().ShouldEqual(1);
             implementedInterfaceInfo.Name.ShouldEqual("IBaseInterfaceInfo");
 
-            implementedInterfaceInfo.Properties.Count.ShouldEqual(1);
+            implementedInterfaceInfo.Properties.Count().ShouldEqual(1);
             propertyInfo.Name.ShouldEqual("PublicBaseProperty");
         }
 
@@ -95,7 +95,7 @@ namespace Typewriter.Tests.CodeModel
             var interfaceInfo = fileInfo.Interfaces.First();
             var methodInfo = interfaceInfo.Methods.First();
 
-            interfaceInfo.Methods.Count.ShouldEqual(1);
+            interfaceInfo.Methods.Count().ShouldEqual(1);
             methodInfo.Name.ShouldEqual("PublicMethod");
         }
 
@@ -105,7 +105,7 @@ namespace Typewriter.Tests.CodeModel
             var interfaceInfo = fileInfo.Interfaces.First();
             var propertyInfo = interfaceInfo.Properties.First();
 
-            interfaceInfo.Properties.Count.ShouldEqual(1);
+            interfaceInfo.Properties.Count().ShouldEqual(1);
             propertyInfo.Name.ShouldEqual("PublicProperty");
         }
 
@@ -135,16 +135,13 @@ namespace Typewriter.Tests.CodeModel
             var genericTypeArgument = interfaceInfo.Interfaces.First().TypeArguments.First();
 
             interfaceInfo.Interfaces.First().IsGeneric.ShouldBeTrue();
-            interfaceInfo.Interfaces.First().TypeArguments.Count.ShouldEqual(1);
+            interfaceInfo.Interfaces.First().TypeArguments.Count().ShouldEqual(1);
 
             genericTypeArgument.Name.ShouldEqual("string");
 
-            if (isRoslyn)
-            {
-                var genericTypeParameter = interfaceInfo.Interfaces.First().TypeParameters.First();
-                interfaceInfo.Interfaces.First().TypeParameters.Count.ShouldEqual(1);
-                genericTypeParameter.Name.ShouldEqual("T");
-            }
+            var genericTypeParameter = interfaceInfo.Interfaces.First().TypeParameters.First();
+            interfaceInfo.Interfaces.First().TypeParameters.Count().ShouldEqual(1);
+            genericTypeParameter.Name.ShouldEqual("T");
         }
     }
 }

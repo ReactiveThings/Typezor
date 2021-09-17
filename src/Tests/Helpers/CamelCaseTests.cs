@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Should;
 using Xunit;
 
-namespace Typewriter.Tests.Helpers
+namespace Typezor.Tests.Helpers
 {
     [Trait("Helpers", "CamelCase")]
     public class CamelCaseTests
@@ -16,30 +16,30 @@ namespace Typewriter.Tests.Helpers
         {
             // Tests from Json.NET
             // https://github.com/JamesNK/Newtonsoft.Json/blob/master/Src/Newtonsoft.Json.Tests/Utilities/StringUtilsTests.cs
-            Typewriter.CodeModel.Helpers.CamelCase("URLValue").ShouldEqual("urlValue");
-            Typewriter.CodeModel.Helpers.CamelCase("URL").ShouldEqual("url");
-            Typewriter.CodeModel.Helpers.CamelCase("ID").ShouldEqual("id");
-            Typewriter.CodeModel.Helpers.CamelCase("I").ShouldEqual("i");
-            Typewriter.CodeModel.Helpers.CamelCase("").ShouldEqual("");
-            Typewriter.CodeModel.Helpers.CamelCase(null).ShouldEqual(null);
-            Typewriter.CodeModel.Helpers.CamelCase("Person").ShouldEqual("person");
-            Typewriter.CodeModel.Helpers.CamelCase("iPhone").ShouldEqual("iPhone");
-            Typewriter.CodeModel.Helpers.CamelCase("IPhone").ShouldEqual("iPhone");
-            Typewriter.CodeModel.Helpers.CamelCase("I Phone").ShouldEqual("i Phone");
-            Typewriter.CodeModel.Helpers.CamelCase("I  Phone").ShouldEqual("i  Phone");
-            Typewriter.CodeModel.Helpers.CamelCase(" IPhone").ShouldEqual(" IPhone");
-            Typewriter.CodeModel.Helpers.CamelCase(" IPhone ").ShouldEqual(" IPhone ");
-            Typewriter.CodeModel.Helpers.CamelCase("IsCIA").ShouldEqual("isCIA");
-            Typewriter.CodeModel.Helpers.CamelCase("VmQ").ShouldEqual("vmQ");
-            Typewriter.CodeModel.Helpers.CamelCase("Xml2Json").ShouldEqual("xml2Json");
-            Typewriter.CodeModel.Helpers.CamelCase("SnAkEcAsE").ShouldEqual("snAkEcAsE");
-            Typewriter.CodeModel.Helpers.CamelCase("SnA__kEcAsE").ShouldEqual("snA__kEcAsE");
-            Typewriter.CodeModel.Helpers.CamelCase("SnA__ kEcAsE").ShouldEqual("snA__ kEcAsE");
-            Typewriter.CodeModel.Helpers.CamelCase("already_snake_case_ ").ShouldEqual("already_snake_case_ ");
-            Typewriter.CodeModel.Helpers.CamelCase("IsJSONProperty").ShouldEqual("isJSONProperty");
-            Typewriter.CodeModel.Helpers.CamelCase("SHOUTING_CASE").ShouldEqual("shoutinG_CASE");
-            Typewriter.CodeModel.Helpers.CamelCase("9999-12-31T23:59:59.9999999Z").ShouldEqual("9999-12-31T23:59:59.9999999Z");
-            Typewriter.CodeModel.Helpers.CamelCase("Hi!! This is text. Time to test.").ShouldEqual("hi!! This is text. Time to test.");
+            Typezor.CodeModel.Helpers.CamelCase("URLValue").ShouldEqual("urlValue");
+            Typezor.CodeModel.Helpers.CamelCase("URL").ShouldEqual("url");
+            Typezor.CodeModel.Helpers.CamelCase("ID").ShouldEqual("id");
+            Typezor.CodeModel.Helpers.CamelCase("I").ShouldEqual("i");
+            Typezor.CodeModel.Helpers.CamelCase("").ShouldEqual("");
+            Typezor.CodeModel.Helpers.CamelCase(null).ShouldEqual(null);
+            Typezor.CodeModel.Helpers.CamelCase("Person").ShouldEqual("person");
+            Typezor.CodeModel.Helpers.CamelCase("iPhone").ShouldEqual("iPhone");
+            Typezor.CodeModel.Helpers.CamelCase("IPhone").ShouldEqual("iPhone");
+            Typezor.CodeModel.Helpers.CamelCase("I Phone").ShouldEqual("i Phone");
+            Typezor.CodeModel.Helpers.CamelCase("I  Phone").ShouldEqual("i  Phone");
+            Typezor.CodeModel.Helpers.CamelCase(" IPhone").ShouldEqual(" IPhone");
+            Typezor.CodeModel.Helpers.CamelCase(" IPhone ").ShouldEqual(" IPhone ");
+            Typezor.CodeModel.Helpers.CamelCase("IsCIA").ShouldEqual("isCIA");
+            Typezor.CodeModel.Helpers.CamelCase("VmQ").ShouldEqual("vmQ");
+            Typezor.CodeModel.Helpers.CamelCase("Xml2Json").ShouldEqual("xml2Json");
+            Typezor.CodeModel.Helpers.CamelCase("SnAkEcAsE").ShouldEqual("snAkEcAsE");
+            Typezor.CodeModel.Helpers.CamelCase("SnA__kEcAsE").ShouldEqual("snA__kEcAsE");
+            Typezor.CodeModel.Helpers.CamelCase("SnA__ kEcAsE").ShouldEqual("snA__ kEcAsE");
+            Typezor.CodeModel.Helpers.CamelCase("already_snake_case_ ").ShouldEqual("already_snake_case_ ");
+            Typezor.CodeModel.Helpers.CamelCase("IsJSONProperty").ShouldEqual("isJSONProperty");
+            Typezor.CodeModel.Helpers.CamelCase("SHOUTING_CASE").ShouldEqual("shoutinG_CASE");
+            Typezor.CodeModel.Helpers.CamelCase("9999-12-31T23:59:59.9999999Z").ShouldEqual("9999-12-31T23:59:59.9999999Z");
+            Typezor.CodeModel.Helpers.CamelCase("Hi!! This is text. Time to test.").ShouldEqual("hi!! This is text. Time to test.");
         }
     }
 }

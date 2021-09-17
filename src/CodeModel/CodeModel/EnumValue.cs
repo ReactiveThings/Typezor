@@ -1,17 +1,19 @@
-﻿using Typewriter.CodeModel.Attributes;
+﻿
 
-namespace Typewriter.CodeModel
+using System.Collections.Generic;
+using Typezor.Abstractions;
+
+namespace Typezor.CodeModel
 {
     /// <summary>
     /// Represents an enum value.
     /// </summary>
-    [Context("EnumValue", "Values")]
-    public abstract class EnumValue : Item
+    public abstract class EnumValue : Item, IAnnotated
     {
         /// <summary>
         /// All attributes defined on the enum value.
         /// </summary>
-        public abstract AttributeCollection Attributes { get; }
+        public abstract IEnumerable<Attribute> Attributes { get; }
 
         /// <summary>
         /// The XML documentation comment of the enum value.
@@ -52,10 +54,4 @@ namespace Typewriter.CodeModel
         }
     }
 
-    /// <summary>
-    /// Represents a collection of enum values.
-    /// </summary>
-    public interface EnumValueCollection : ItemCollection<EnumValue>
-    {
-    }
 }

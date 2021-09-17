@@ -1,7 +1,7 @@
 ﻿using System.Linq;
-using Typewriter.CodeModel;
+using Typezor.CodeModel;
 
-namespace Typewriter.Extensions.WebApi
+namespace Typezor.Extensions.WebApi
 {
     /// <summary>
     /// Extension methods for extracting Web API http method.

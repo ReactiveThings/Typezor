@@ -1,11 +1,12 @@
-﻿using Typewriter.CodeModel.Attributes;
+﻿
 
-namespace Typewriter.CodeModel
+using System.Collections.Generic;
+
+namespace Typezor.CodeModel
 {
     /// <summary>
     /// Represents an XML documentation comment.
     /// </summary>
-    [Context("DocComment", "DocComments")]
     public abstract class DocComment : Item
     {
         /// <summary>
@@ -21,7 +22,7 @@ namespace Typewriter.CodeModel
         /// <summary>
         /// All parameter tags of the documentation comment.
         /// </summary>
-        public abstract ParameterCommentCollection Parameters { get; }
+        public abstract IEnumerable<CodeModel.ParameterComment> Parameters { get; }
 
         /// <summary>
         /// The parent context of the documentation comment.
@@ -40,7 +41,6 @@ namespace Typewriter.CodeModel
     /// <summary>
     /// Represents an XML documentation comment parameter tag.
     /// </summary>
-    [Context("ParameterComment", "ParameterComments")]
     public abstract class ParameterComment : Item
     {
         /// <summary>
@@ -65,12 +65,5 @@ namespace Typewriter.CodeModel
         {
             return instance.ToString();
         }
-    }
-
-    /// <summary>
-    /// Represents a collection of parameter comments.
-    /// </summary>
-    public interface ParameterCommentCollection : ItemCollection<ParameterComment>
-    {
     }
 }

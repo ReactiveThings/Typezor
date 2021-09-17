@@ -1,10 +1,10 @@
 ﻿using System.Linq;
 using Should;
-using Typewriter.CodeModel;
-using Typewriter.Tests.TestInfrastructure;
+using Typezor.CodeModel;
+using Typezor.Tests.TestInfrastructure;
 using Xunit;
 
-namespace Typewriter.Tests.CodeModel
+namespace Typezor.Tests.CodeModel
 {
 
     [Trait("CodeModel", "Classes"), Collection(nameof(RoslynFixture))]
@@ -21,7 +21,10 @@ namespace Typewriter.Tests.CodeModel
 
         protected ClassTests(ITestFixture fixture) : base(fixture)
         {
-            fileInfo = GetFile(@"Tests\CodeModel\Support\ClassInfo.cs");
+            fileInfo = GetFile(@"CodeModel\Support\ClassInfo.cs", 
+                @"CodeModel\Support\AttributeInfo.cs", 
+                @"CodeModel\Support\IInterfaceInfo.cs"
+                );
         }
 
         [Fact]
@@ -30,8 +33,8 @@ namespace Typewriter.Tests.CodeModel
             var classInfo = fileInfo.Classes.First();
 
             classInfo.Name.ShouldEqual("ClassInfo");
-            classInfo.FullName.ShouldEqual("Typewriter.Tests.CodeModel.Support.ClassInfo");
-            classInfo.Namespace.ShouldEqual("Typewriter.Tests.CodeModel.Support");
+            classInfo.FullName.ShouldEqual("Typezor.Tests.CodeModel.Support.ClassInfo");
+            classInfo.Namespace.ShouldEqual("Typezor.Tests.CodeModel.Support");
             classInfo.Parent.ShouldEqual(fileInfo);
         }
 
@@ -48,9 +51,9 @@ namespace Typewriter.Tests.CodeModel
             var classInfo = fileInfo.Classes.First();
             var attributeInfo = classInfo.Attributes.First();
 
-            classInfo.Attributes.Count.ShouldEqual(1);
+            classInfo.Attributes.Count().ShouldEqual(1);
             attributeInfo.Name.ShouldEqual("AttributeInfo");
-            attributeInfo.FullName.ShouldEqual("Typewriter.Tests.CodeModel.Support.AttributeInfoAttribute");
+            attributeInfo.FullName.ShouldEqual("Typezor.Tests.CodeModel.Support.AttributeInfoAttribute");
         }
 
         [Fact]
@@ -62,7 +65,7 @@ namespace Typewriter.Tests.CodeModel
 
             baseClassInfo.Name.ShouldEqual("BaseClassInfo");
 
-            baseClassInfo.Properties.Count.ShouldEqual(1);
+            baseClassInfo.Properties.Count().ShouldEqual(1);
             propertyInfo.Name.ShouldEqual("PublicBaseProperty");
         }
 
@@ -81,10 +84,10 @@ namespace Typewriter.Tests.CodeModel
             var interfaceInfo = classInfo.Interfaces.First();
             var propertyInfo = interfaceInfo.Properties.First();
 
-            classInfo.Interfaces.Count.ShouldEqual(1);
+            classInfo.Interfaces.Count().ShouldEqual(1);
             interfaceInfo.Name.ShouldEqual("IInterfaceInfo");
 
-            interfaceInfo.Properties.Count.ShouldEqual(1);
+            interfaceInfo.Properties.Count().ShouldEqual(1);
             propertyInfo.Name.ShouldEqual("PublicProperty");
         }
 
@@ -94,7 +97,7 @@ namespace Typewriter.Tests.CodeModel
             var classInfo = fileInfo.Classes.First();
 
             classInfo.IsGeneric.ShouldBeFalse();
-            classInfo.TypeParameters.Count.ShouldEqual(0);
+            classInfo.TypeParameters.Count().ShouldEqual(0);
         }
 
         [Fact]
@@ -104,7 +107,7 @@ namespace Typewriter.Tests.CodeModel
             var genericTypeArgument = classInfo.TypeParameters.First();
 
             classInfo.IsGeneric.ShouldBeTrue();
-            classInfo.TypeParameters.Count.ShouldEqual(1);
+            classInfo.TypeParameters.Count().ShouldEqual(1);
             genericTypeArgument.Name.ShouldEqual("T");
         }
 
@@ -114,7 +117,7 @@ namespace Typewriter.Tests.CodeModel
             var classInfo = fileInfo.Classes.First();
             var constantInfo = classInfo.Constants.First();
 
-            classInfo.Constants.Count.ShouldEqual(1);
+            classInfo.Constants.Count().ShouldEqual(1);
             constantInfo.Name.ShouldEqual("PublicConstant");
         }
 
@@ -124,7 +127,7 @@ namespace Typewriter.Tests.CodeModel
             var classInfo = fileInfo.Classes.First();
             var delegateInfo = classInfo.Delegates.First();
 
-            classInfo.Delegates.Count.ShouldEqual(1);
+            classInfo.Delegates.Count().ShouldEqual(1);
             delegateInfo.Name.ShouldEqual("PublicDelegate");
         }
 
@@ -134,7 +137,7 @@ namespace Typewriter.Tests.CodeModel
             var classInfo = fileInfo.Classes.First();
             var delegateInfo = classInfo.Events.First();
 
-            classInfo.Events.Count.ShouldEqual(1);
+            classInfo.Events.Count().ShouldEqual(1);
             delegateInfo.Name.ShouldEqual("PublicEvent");
         }
 
@@ -144,7 +147,7 @@ namespace Typewriter.Tests.CodeModel
             var classInfo = fileInfo.Classes.First();
             var fieldInfo = classInfo.Fields.First();
 
-            classInfo.Fields.Count.ShouldEqual(1);
+            classInfo.Fields.Count().ShouldEqual(1);
             fieldInfo.Name.ShouldEqual("PublicField");
         }
 
@@ -154,7 +157,7 @@ namespace Typewriter.Tests.CodeModel
             var classInfo = fileInfo.Classes.First();
             var methodInfo = classInfo.Methods.First();
 
-            classInfo.Methods.Count.ShouldEqual(1);
+            classInfo.Methods.Count().ShouldEqual(1);
             methodInfo.Name.ShouldEqual("PublicMethod");
         }
 
@@ -164,7 +167,7 @@ namespace Typewriter.Tests.CodeModel
             var classInfo = fileInfo.Classes.First();
             var propertyInfo = classInfo.Properties.First();
 
-            classInfo.Properties.Count.ShouldEqual(1);
+            classInfo.Properties.Count().ShouldEqual(1);
             propertyInfo.Name.ShouldEqual("PublicProperty");
         }
 
@@ -175,10 +178,10 @@ namespace Typewriter.Tests.CodeModel
             var nestedClassInfo = classInfo.NestedClasses.First();
             var propertyInfo = nestedClassInfo.Properties.First();
 
-            classInfo.NestedClasses.Count.ShouldEqual(1);
+            classInfo.NestedClasses.Count().ShouldEqual(1);
             nestedClassInfo.Name.ShouldEqual("NestedClassInfo");
 
-            nestedClassInfo.Properties.Count.ShouldEqual(1);
+            nestedClassInfo.Properties.Count().ShouldEqual(1);
             propertyInfo.Name.ShouldEqual("PublicNestedProperty");
         }
 
@@ -189,10 +192,10 @@ namespace Typewriter.Tests.CodeModel
             var nestedEnumInfo = classInfo.NestedEnums.First();
             var valueInfo = nestedEnumInfo.Values.First();
 
-            classInfo.NestedEnums.Count.ShouldEqual(1);
+            classInfo.NestedEnums.Count().ShouldEqual(1);
             nestedEnumInfo.Name.ShouldEqual("NestedEnumInfo");
 
-            nestedEnumInfo.Values.Count.ShouldEqual(1);
+            nestedEnumInfo.Values.Count().ShouldEqual(1);
             valueInfo.Name.ShouldEqual("NestedValue");
         }
 
@@ -203,10 +206,10 @@ namespace Typewriter.Tests.CodeModel
             var nestedInterfaceInfo = classInfo.NestedInterfaces.First();
             var propertyInfo = nestedInterfaceInfo.Properties.First();
 
-            classInfo.NestedInterfaces.Count.ShouldEqual(1);
+            classInfo.NestedInterfaces.Count().ShouldEqual(1);
             nestedInterfaceInfo.Name.ShouldEqual("INestedInterfaceInfo");
 
-            nestedInterfaceInfo.Properties.Count.ShouldEqual(1);
+            nestedInterfaceInfo.Properties.Count().ShouldEqual(1);
             propertyInfo.Name.ShouldEqual("PublicNestedProperty");
         }
 
@@ -228,7 +231,7 @@ namespace Typewriter.Tests.CodeModel
 
             containingClassInfo.ShouldBeNull();
         }
-        
+
         [Fact]
         public void Expect_generic_baseclass_to_have_type_arguments()
         {
@@ -236,16 +239,15 @@ namespace Typewriter.Tests.CodeModel
             var genericTypeArgument = classInfo.BaseClass.TypeArguments.First();
 
             classInfo.BaseClass.IsGeneric.ShouldBeTrue();
-            classInfo.BaseClass.TypeArguments.Count.ShouldEqual(1);
+            classInfo.BaseClass.TypeArguments.Count().ShouldEqual(1);
 
             genericTypeArgument.Name.ShouldEqual("string");
 
-            if (isRoslyn)
-            {
-                var genericTypeParameter = classInfo.BaseClass.TypeParameters.First();
-                classInfo.BaseClass.TypeParameters.Count.ShouldEqual(1);
-                genericTypeParameter.Name.ShouldEqual("T");
-            }
+
+            var genericTypeParameter = classInfo.BaseClass.TypeParameters.First();
+            classInfo.BaseClass.TypeParameters.Count().ShouldEqual(1);
+            genericTypeParameter.Name.ShouldEqual("T");
+
         }
     }
 }

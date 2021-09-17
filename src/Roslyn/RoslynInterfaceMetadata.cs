@@ -1,21 +1,18 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.CodeAnalysis;
-using Typewriter.Configuration;
-using Typewriter.Metadata.Interfaces;
 
-namespace Typewriter.Metadata.Roslyn
+using Typezor.Metadata.Interfaces;
+
+namespace Typezor.Metadata.Roslyn
 {
     public class RoslynInterfaceMetadata : IInterfaceMetadata
     {
         private readonly INamedTypeSymbol _symbol;
-        private readonly RoslynFileMetadata _file;
 
-        public RoslynInterfaceMetadata(INamedTypeSymbol symbol, RoslynFileMetadata file)
+        public RoslynInterfaceMetadata(INamedTypeSymbol symbol)
         {
             _symbol = symbol;
-            _file = file;
         }
 
         private IReadOnlyCollection<ISymbol> _members;
@@ -25,14 +22,7 @@ namespace Typewriter.Metadata.Roslyn
             {
                 if (_members == null)
                 {
-                    if (_file?.Settings.PartialRenderingMode == PartialRenderingMode.Partial && _symbol.Locations.Length > 1)
-                    {
-                        _members = _symbol.GetMembers().Where(m => m.Locations.Any(l => string.Equals(l.SourceTree.FilePath, _file.FullName, StringComparison.OrdinalIgnoreCase))).ToArray();
-                    }
-                    else
-                    {
-                        _members = _symbol.GetMembers();
-                    }
+                    _members = _symbol.GetMembers();
                 }
                 return _members;
             }
@@ -57,7 +47,7 @@ namespace Typewriter.Metadata.Roslyn
 
         public static IEnumerable<IInterfaceMetadata> FromNamedTypeSymbols(IEnumerable<INamedTypeSymbol> symbols, RoslynFileMetadata file = null)
         {
-            return symbols.Where(s => s.DeclaredAccessibility == Accessibility.Public).Select(s => new RoslynInterfaceMetadata(s, file));
+            return symbols.Where(s => s.DeclaredAccessibility == Accessibility.Public).Select(s => new RoslynInterfaceMetadata(s));
         }
     }
 }

@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using Microsoft.CodeAnalysis;
 
-namespace Typewriter.Metadata.Roslyn
+namespace Typezor.Metadata.Roslyn
 {
     public static class Extensions
     {
@@ -31,7 +31,7 @@ namespace Typewriter.Metadata.Roslyn
             var array = symbol as IArrayTypeSymbol;
             if (array != null)
             {
-                return "System.Collections.Generic.ICollection<" + GetFullName(array.ElementType) + ">";
+                return GetFullName(array.ElementType) + "[]";
             }
 
             return GetFullName(symbol.ContainingSymbol) + "." + name;

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Typewriter.Metadata.Interfaces
+namespace Typezor.Metadata.Interfaces
 {
     public interface ITypeMetadata : IClassMetadata
     {

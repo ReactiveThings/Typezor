@@ -1,17 +1,18 @@
-﻿using Typewriter.CodeModel.Attributes;
+﻿using System.Collections.Generic;
+using Typezor.Abstractions;
 
-namespace Typewriter.CodeModel
+
+namespace Typezor.CodeModel
 {
     /// <summary>
     /// Represents a class.
     /// </summary>
-    [Context("Class", "Classes")]
-    public abstract class Class : Item
+    public abstract class Class : Item, IAnnotated
     {
         /// <summary>
         /// All attributes defined on the class.
         /// </summary>
-        public abstract AttributeCollection Attributes { get; }
+        public abstract IEnumerable<Attribute> Attributes { get; }
 
         /// <summary>
         /// The base class of the class.
@@ -21,7 +22,7 @@ namespace Typewriter.CodeModel
         /// <summary>
         /// All constants defined in the class.
         /// </summary>
-        public abstract ConstantCollection Constants { get; }
+        public abstract IEnumerable<Constant> Constants { get; }
 
         /// <summary>
         /// The containing class of the class if it's nested.
@@ -31,7 +32,7 @@ namespace Typewriter.CodeModel
         /// <summary>
         /// All delegates defined in the class.
         /// </summary>
-        public abstract DelegateCollection Delegates { get; }
+        public abstract IEnumerable<Delegate> Delegates { get; }
 
         /// <summary>
         /// The XML documentation comment of the class.
@@ -41,12 +42,12 @@ namespace Typewriter.CodeModel
         /// <summary>
         /// All events defined in the class.
         /// </summary>
-        public abstract EventCollection Events { get; }
+        public abstract IEnumerable<Event> Events { get; }
 
         /// <summary>
         /// All fields defined in the class.
         /// </summary>
-        public abstract FieldCollection Fields { get; }
+        public abstract IEnumerable<CodeModel.Field> Fields { get; }
 
         /// <summary>
         /// The full original name of the class including namespace and containing class names.
@@ -56,7 +57,7 @@ namespace Typewriter.CodeModel
         /// <summary>
         /// All interfaces implemented by the class.
         /// </summary>
-        public abstract InterfaceCollection Interfaces { get; }
+        public abstract IEnumerable<Interface> Interfaces { get; }
 
         /// <summary>
         /// Determines if the class is abstract.
@@ -71,7 +72,12 @@ namespace Typewriter.CodeModel
         /// <summary>
         /// All methods defined in the class.
         /// </summary>
-        public abstract MethodCollection Methods { get; }
+        public abstract IEnumerable<Method> Methods { get; }
+
+        /// <summary>
+        /// All static methods defined in the class.
+        /// </summary>
+        public abstract IEnumerable<Method> StaticMethods { get; }
 
         /// <summary>
         /// The name of the class (camelCased).
@@ -91,17 +97,17 @@ namespace Typewriter.CodeModel
         /// <summary>
         /// All classes defined in the class.
         /// </summary>
-        public abstract ClassCollection NestedClasses { get; }
+        public abstract IEnumerable<CodeModel.Class> NestedClasses { get; }
 
         /// <summary>
         /// All enums defined in the class.
         /// </summary>
-        public abstract EnumCollection NestedEnums { get; }
+        public abstract IEnumerable<Enum> NestedEnums { get; }
 
         /// <summary>
         /// All interfaces defined in the class.
         /// </summary>
-        public abstract InterfaceCollection NestedInterfaces { get; }
+        public abstract IEnumerable<Interface> NestedInterfaces { get; }
 
         /// <summary>
         /// The parent context of the class.
@@ -111,21 +117,21 @@ namespace Typewriter.CodeModel
         /// <summary>
         /// All properties defined in the class.
         /// </summary>
-        public abstract PropertyCollection Properties { get; }
+        public abstract IEnumerable<CodeModel.Property> Properties { get; }
 
         /// <summary>
         /// All generic type arguments of the class.
         /// TypeArguments are the specified arguments for the TypeParametes on a generic class e.g. &lt;string&gt;.
         /// (In Visual Studio 2013 TypeParameters and TypeArguments are the same)
         /// </summary>
-        public abstract TypeCollection TypeArguments { get; }
+        public abstract IEnumerable<CodeModel.Type> TypeArguments { get; }
 
         /// <summary>
         /// All generic type parameters of the class.
         /// TypeParameters are the type placeholders of a generic class e.g. &lt;T&gt;.
         /// (In Visual Studio 2013 TypeParameters and TypeArguments are the same)
         /// </summary>
-        public abstract TypeParameterCollection TypeParameters { get; }
+        public abstract IEnumerable<TypeParameter> TypeParameters { get; }
 
 
         /// <summary>
@@ -147,10 +153,4 @@ namespace Typewriter.CodeModel
         }
     }
 
-    /// <summary>
-    /// Represents a collection of classes.
-    /// </summary>
-    public interface ClassCollection : ItemCollection<Class>
-    {
-    }
 }

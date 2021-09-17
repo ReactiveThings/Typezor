@@ -1,11 +1,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.CodeAnalysis;
-using Typewriter.Metadata.Interfaces;
+using Typezor.Metadata.Interfaces;
 
-namespace Typewriter.Metadata.Roslyn
+namespace Typezor.Metadata.Roslyn
 {
-    public class RoslynFieldMetadata : IFieldMetadata
+    public class RoslynFieldMetadata : IClassFieldMetadata
     {
         private readonly IFieldSymbol symbol;
 
@@ -19,10 +19,13 @@ namespace Typewriter.Metadata.Roslyn
         public string FullName => symbol.ToDisplayString();
         public IEnumerable<IAttributeMetadata> Attributes => RoslynAttributeMetadata.FromAttributeData(symbol.GetAttributes());
         public ITypeMetadata Type => RoslynTypeMetadata.FromTypeSymbol(symbol.Type);
+        public bool IsReadOnly => symbol.IsReadOnly;
 
-        public static IEnumerable<IFieldMetadata> FromFieldSymbols(IEnumerable<IFieldSymbol> symbols)
+        public static IEnumerable<IClassFieldMetadata> FromFieldSymbols(IEnumerable<IFieldSymbol> symbols)
         {
             return symbols.Where(s => s.DeclaredAccessibility == Accessibility.Public && s.IsConst == false && s.IsStatic == false).Select(s => new RoslynFieldMetadata(s));
         }
+
+        
     }
 }

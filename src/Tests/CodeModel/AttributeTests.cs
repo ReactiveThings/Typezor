@@ -1,11 +1,11 @@
 ﻿using System.Linq;
 using Should;
-using Typewriter.CodeModel;
-using Typewriter.Tests.CodeModel.Support;
-using Typewriter.Tests.TestInfrastructure;
+using Typezor.CodeModel;
+using Typezor.Tests.CodeModel.Support;
+using Typezor.Tests.TestInfrastructure;
 using Xunit;
 
-namespace Typewriter.Tests.CodeModel
+namespace Typezor.Tests.CodeModel
 {
 
 
@@ -15,7 +15,7 @@ namespace Typewriter.Tests.CodeModel
 
         protected AttributeTests(ITestFixture fixture) : base(fixture)
         {
-            var fileInfo = GetFile(@"Tests\CodeModel\Support\AttributeInfo.cs");
+            var fileInfo = GetFile(@"CodeModel\Support\AttributeInfo.cs");
             classInfo = fileInfo.Classes.First(c => c.Name == nameof(AttributeTestClass));
         }
 
@@ -25,9 +25,9 @@ namespace Typewriter.Tests.CodeModel
             var propertyInfo = classInfo.Properties.First(p => p.Name == "NoParameters");
             var attributeInfo = propertyInfo.Attributes.First();
 
-            propertyInfo.Attributes.Count.ShouldEqual(1);
+            propertyInfo.Attributes.Count().ShouldEqual(1);
             attributeInfo.Name.ShouldEqual("AttributeInfo");
-            attributeInfo.FullName.ShouldEqual("Typewriter.Tests.CodeModel.Support.AttributeInfoAttribute");
+            attributeInfo.FullName.ShouldEqual("Typezor.Tests.CodeModel.Support.AttributeInfoAttribute");
         }
 
         [Fact]

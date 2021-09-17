@@ -1,11 +1,11 @@
 ﻿using System.Linq;
 using Should;
-using Typewriter.CodeModel;
-using Typewriter.Extensions.WebApi;
-using Typewriter.Tests.TestInfrastructure;
+using Typezor.CodeModel;
+using Typezor.Extensions.WebApi;
+using Typezor.Tests.TestInfrastructure;
 using Xunit;
 
-namespace Typewriter.Tests.Extensions
+namespace Typezor.Tests.Extensions
 {
 
     [Trait("Extensions", "WebApi"), Collection(nameof(RoslynFixture))]
@@ -23,8 +23,25 @@ namespace Typewriter.Tests.Extensions
 
         protected WebApiRouteExtensionsTests(ITestFixture fixture) : base(fixture)
         {
-            fileInfo = GetFile(@"Tests\Extensions\Support\RouteController.cs");
-            routeLessControllerInfo = GetFile(@"Tests\Extensions\Support\RouteLessController.cs");
+            fileInfo = GetFile(@"Extensions\Support\RouteController.cs", 
+                @"Support\RouteAttribute.cs",
+                @"Support\AcceptVerbsAttribute.cs",
+                @"Support\FromBodyAttribute.cs",
+                @"Support\HttpDeleteAttribute.cs",
+                @"Support\HttpGetAttribute.cs",
+                @"Support\HttpPostAttribute.cs",
+                @"Support\HttpPutAttribute.cs",
+                @"Support\RoutePrefixAttribute.cs");
+            routeLessControllerInfo = GetFile(
+                @"Extensions\Support\RouteLessController.cs", 
+                @"Support\RouteAttribute.cs",
+                @"Support\AcceptVerbsAttribute.cs",
+                @"Support\FromBodyAttribute.cs",
+                @"Support\HttpDeleteAttribute.cs",
+                @"Support\HttpGetAttribute.cs",
+                @"Support\HttpPostAttribute.cs",
+                @"Support\HttpPutAttribute.cs",
+                @"Support\RoutePrefixAttribute.cs");
         }
 
         [Fact]
@@ -67,7 +84,7 @@ namespace Typewriter.Tests.Extensions
         [Fact]
         public void Expect_to_find_parameters_on_wildcard_route_url()
         {
-            var classInfo = fileInfo.Classes.First();
+            var classInfo = fileInfo.Classes.First(p => p.Name == "RouteController");
             var methodInfo = classInfo.Methods.First(p => p.Name == "WildcardRoute");
 
             methodInfo.Url().ShouldEqual("api/${encodeURIComponent(key)}");
@@ -76,7 +93,7 @@ namespace Typewriter.Tests.Extensions
         [Fact]
         public void Expect_to_find_url_on_named_route()
         {
-            var classInfo = fileInfo.Classes.First();
+            var classInfo = fileInfo.Classes.First(p => p.Name == "RouteController");
             var methodInfo = classInfo.Methods.First(p => p.Name == "NamedRoute");
 
             methodInfo.Url().ShouldEqual("api/${id}");
@@ -85,7 +102,7 @@ namespace Typewriter.Tests.Extensions
         [Fact]
         public void Expect_to_find_url_on_httpget_route()
         {
-            var classInfo = fileInfo.Classes.First();
+            var classInfo = fileInfo.Classes.First(p => p.Name == "RouteController");
             var methodInfo = classInfo.Methods.First(p => p.Name == "HttpGetRoute");
 
             methodInfo.Url().ShouldEqual("api/${id}");

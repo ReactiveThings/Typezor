@@ -1,10 +1,10 @@
 ﻿using System.Linq;
 using Should;
-using Typewriter.CodeModel;
-using Typewriter.Tests.TestInfrastructure;
+using Typezor.CodeModel;
+using Typezor.Tests.TestInfrastructure;
 using Xunit;
 
-namespace Typewriter.Tests.CodeModel
+namespace Typezor.Tests.CodeModel
 {
 
 	 [Trait("CodeModel", "Properties"), Collection(nameof(RoslynFixture))]
@@ -22,8 +22,11 @@ namespace Typewriter.Tests.CodeModel
 
         protected PropertyTests(ITestFixture fixture) : base(fixture)
         {
-            fileInfo = GetFile(@"Tests\CodeModel\Support\PropertyInfo.cs");
-            classInfo = fileInfo.Classes.First();
+            fileInfo = GetFile(
+                @"CodeModel\Support\PropertyInfo.cs", 
+                @"CodeModel\Support\AttributeInfo.cs",
+                @"CodeModel\Support\EnumInfo.cs");
+            classInfo = fileInfo.Classes.First(p => p.Name == "PropertyInfo");
         }
 
         protected Property GetFirstProperty(string name) => classInfo.Properties.First(p => p.Name == name);
@@ -34,7 +37,7 @@ namespace Typewriter.Tests.CodeModel
             var propertyInfo = GetFirstProperty("Bool");
 
             propertyInfo.Name.ShouldEqual("Bool");
-            propertyInfo.FullName.ShouldEqual("Typewriter.Tests.CodeModel.Support.PropertyInfo.Bool");
+            propertyInfo.FullName.ShouldEqual("Typezor.Tests.CodeModel.Support.PropertyInfo.Bool");
             propertyInfo.Parent.ShouldEqual(classInfo);
         }
 
@@ -51,9 +54,9 @@ namespace Typewriter.Tests.CodeModel
             var propertyInfo = GetFirstProperty("Bool");
             var attributeInfo = propertyInfo.Attributes.First();
 
-            propertyInfo.Attributes.Count.ShouldEqual(1);
+            propertyInfo.Attributes.Count().ShouldEqual(1);
             attributeInfo.Name.ShouldEqual("AttributeInfo");
-            attributeInfo.FullName.ShouldEqual("Typewriter.Tests.CodeModel.Support.AttributeInfoAttribute");
+            attributeInfo.FullName.ShouldEqual("Typezor.Tests.CodeModel.Support.AttributeInfoAttribute");
         }
 
         [Fact]
@@ -208,9 +211,9 @@ namespace Typewriter.Tests.CodeModel
             var nullableEnumInfo1 = GetFirstProperty("NullableEnum1");
             var nullableEnumInfo2 = GetFirstProperty("NullableEnum2");
 
-            nullableEnumInfo1.Type.Name.ShouldEqual("ConsoleColor");
-            nullableEnumInfo1.Type.OriginalName.ShouldEqual("ConsoleColor?");
-            nullableEnumInfo1.Type.FullName.ShouldEqual("System.ConsoleColor?");
+            nullableEnumInfo1.Type.Name.ShouldEqual("EnumInfo");
+            nullableEnumInfo1.Type.OriginalName.ShouldEqual("EnumInfo?");
+            nullableEnumInfo1.Type.FullName.ShouldEqual("Typezor.Tests.CodeModel.Support.EnumInfo?");
 
             nullableEnumInfo1.Type.IsEnum.ShouldBeTrue("IsEnum");
             nullableEnumInfo1.Type.IsEnumerable.ShouldBeFalse("IsEnumerable");
@@ -222,9 +225,9 @@ namespace Typewriter.Tests.CodeModel
             nullableEnumInfo1.Type.IsGuid.ShouldBeFalse("IsGuid");
             nullableEnumInfo1.Type.IsTimeSpan.ShouldBeFalse("IsTimeSpan");
 
-            nullableEnumInfo2.Type.Name.ShouldEqual("ConsoleColor");
-            nullableEnumInfo2.Type.OriginalName.ShouldEqual("ConsoleColor?");
-            nullableEnumInfo2.Type.FullName.ShouldEqual("System.ConsoleColor?");
+            nullableEnumInfo2.Type.Name.ShouldEqual("EnumInfo");
+            nullableEnumInfo2.Type.OriginalName.ShouldEqual("EnumInfo?");
+            nullableEnumInfo2.Type.FullName.ShouldEqual("Typezor.Tests.CodeModel.Support.EnumInfo?");
 
             nullableEnumInfo2.Type.IsEnum.ShouldBeTrue("IsEnum");
             nullableEnumInfo2.Type.IsEnumerable.ShouldBeFalse("IsEnumerable");
@@ -330,7 +333,7 @@ namespace Typewriter.Tests.CodeModel
 
             arrayInfo.Type.FullName.ShouldEqual("System.Array");
             enumerableInfo.Type.FullName.ShouldEqual("System.Collections.IEnumerable");
-            stringArrayInfo.Type.FullName.ShouldEqual("System.Collections.Generic.ICollection<System.String>");
+            stringArrayInfo.Type.FullName.ShouldEqual("System.String[]");
             enumerableStringInfo.Type.FullName.ShouldEqual("System.Collections.Generic.IEnumerable<System.String>");
         }
 
@@ -382,7 +385,7 @@ namespace Typewriter.Tests.CodeModel
             genericInfo.Type.OriginalName.ShouldEqual("IEnumerable");
             genericInfo.Type.FullName.ShouldEqual("System.Collections.Generic.IEnumerable<T>");
 
-            genericInfo.Type.TypeArguments.Count.ShouldEqual(1);
+            genericInfo.Type.TypeArguments.Count().ShouldEqual(1);
             innerType.Name.ShouldEqual("T");
             innerType.FullName.ShouldEqual("T");
         }

@@ -1,0 +1,37 @@
+﻿
+@using System
+@using System.IO
+@using System.Linq
+@using Typezor.Tests.SourceGenerator.Demo.Templates
+@using Typezor.Tests.SourceGenerator.ReferencedProject
+@inherits Typezor.TemplateBase<Typezor.CodeModel.File>
+@namespace Typezor.CodeGen.Demo.Templates
+@functions
+{
+    
+
+
+
+
+
+}public class A<T>{
+@foreach (var className in Model.Classes.Select(p => p.Name).Take(2))
+{
+    var className1 = className + "000";
+    @:public string @(className1) = null;
+}
+}@Output.SaveAs(@"c:\Temp\a.txt")
+
+public class B<T>{
+@foreach (var className in Model.Classes.Select(p => p.Name).Take(2))
+{
+
+
+    @:public string @(className)1 = null;
+
+
+
+}
+
+@TestClassImport.TestIt()
+}@Output.SaveAs(@"c:\Temp\b.txt")

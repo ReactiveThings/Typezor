@@ -1,32 +1,29 @@
-﻿using System.Linq;
-using Typewriter.Metadata.Interfaces;
-using Typewriter.Metadata.Providers;
-using Typewriter.Metadata.Roslyn;
-using Typewriter.Configuration;
-using System;
-using Typewriter.CLI;
-using Microsoft.Extensions.Logging.Abstractions;
+﻿using System.IO;
+using System.Linq;
+using System.Reflection;
+using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.CSharp;
+using Typezor.Metadata.Interfaces;
+using Typezor.Metadata.Roslyn;
 
-namespace Typewriter.Tests.TestInfrastructure
+
+namespace Typezor.Tests.TestInfrastructure
 {
-    public class RoslynMetadataProviderStub : IMetadataProvider
+    public class RoslynMetadataProviderStub
     {
-        private readonly Microsoft.CodeAnalysis.Workspace workspace;
 
-        public RoslynMetadataProviderStub(Microsoft.CodeAnalysis.Solution dte)
+        public RoslynMetadataProviderStub()
         {
-            workspace = dte.Workspace;
+
         }
 
-        public IFileMetadata GetFile(string path, Settings settings, Action<string[]> requestRender)
+        public IFileMetadata GetFile(params string[] path)
         {
-            var document = workspace.CurrentSolution.GetDocumentIdsWithFilePath(path).FirstOrDefault();
-            if (document != null)
-            {
-                return new RoslynFileMetadata(workspace.CurrentSolution.GetDocument(document), settings, requestRender);
-            }
-
-            return null;
+            var compilation = CSharpCompilation.Create("compilation",
+                path.Select(fileName => CSharpSyntaxTree.ParseText(File.ReadAllText(fileName))),
+                new[] { MetadataReference.CreateFromFile(typeof(Binder).GetTypeInfo().Assembly.Location) },
+                new CSharpCompilationOptions(OutputKind.ConsoleApplication));
+            return new RoslynGlobalNamespaceMetadata(compilation.GlobalNamespace);
         }
     }
 }

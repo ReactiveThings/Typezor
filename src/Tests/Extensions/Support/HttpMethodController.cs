@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using Typewriter.Tests.Support;
+using Typezor.Tests.Support;
 
-namespace Typewriter.Tests.Extensions.Support
+namespace Typezor.Tests.Extensions.Support
 {
     public class HttpMethodController
     {

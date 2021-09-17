@@ -1,17 +1,18 @@
-﻿using Typewriter.CodeModel.Attributes;
+﻿using System.Collections.Generic;
+using Typezor.Abstractions;
 
-namespace Typewriter.CodeModel
+
+namespace Typezor.CodeModel
 {
     /// <summary>
     /// Represents a constant.
     /// </summary>
-    [Context("Constant", "Constants")]
-    public abstract class Constant : Item
+    public abstract class Constant : Item, IAnnotated
     {
         /// <summary>
         /// All attributes defined on the constant.
         /// </summary>
-        public abstract AttributeCollection Attributes { get; }
+        public abstract IEnumerable<CodeModel.Attribute> Attributes { get; }
 
         /// <summary>
         /// The XML documentation comment of the constant.
@@ -57,10 +58,4 @@ namespace Typewriter.CodeModel
         }
     }
 
-    /// <summary>
-    /// Represents a collection of constants.
-    /// </summary>
-    public interface ConstantCollection : ItemCollection<Constant>
-    {
-    }
 }

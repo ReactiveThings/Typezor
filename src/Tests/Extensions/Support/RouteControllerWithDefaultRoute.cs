@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Typewriter.Tests.Support;
+using Typezor.Tests.Support;
 
-namespace Typewriter.Tests.Extensions.Support
+namespace Typezor.Tests.Extensions.Support
 {
     [Route("api/[controller]")]
     public class RouteControllerWithDefaultRouteController

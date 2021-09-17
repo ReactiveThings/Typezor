@@ -1,10 +1,10 @@
 ﻿using System.Linq;
 using Should;
-using Typewriter.CodeModel;
-using Typewriter.Tests.TestInfrastructure;
+using Typezor.CodeModel;
+using Typezor.Tests.TestInfrastructure;
 using Xunit;
 
-namespace Typewriter.Tests.CodeModel
+namespace Typezor.Tests.CodeModel
 {
 
     [Trait("CodeModel", "Events"), Collection(nameof(RoslynFixture))]
@@ -21,7 +21,9 @@ namespace Typewriter.Tests.CodeModel
 
         protected EventTests(ITestFixture fixture) : base(fixture)
         {
-            fileInfo = GetFile(@"Tests\CodeModel\Support\EventInfo.cs");
+            fileInfo = GetFile(@"CodeModel\Support\EventInfo.cs", 
+                @"CodeModel\Support\AttributeInfo.cs",
+                @"CodeModel\Support\DelegateInfo.cs");
         }
 
         [Fact]
@@ -31,7 +33,7 @@ namespace Typewriter.Tests.CodeModel
             var enumInfo = classInfo.Events.First(p => p.Name == "DelegateEvent");
             
             enumInfo.Name.ShouldEqual("DelegateEvent");
-            enumInfo.FullName.ShouldEqual("Typewriter.Tests.CodeModel.Support.EventInfo.DelegateEvent");
+            enumInfo.FullName.ShouldEqual("Typezor.Tests.CodeModel.Support.EventInfo.DelegateEvent");
             enumInfo.Parent.ShouldEqual(classInfo);
         }
 
@@ -50,28 +52,25 @@ namespace Typewriter.Tests.CodeModel
             var enumInfo = classInfo.Events.First(p => p.Name == "DelegateEvent");
             var attributeInfo = enumInfo.Attributes.First();
 
-            enumInfo.Attributes.Count.ShouldEqual(1);
+            enumInfo.Attributes.Count().ShouldEqual(1);
             attributeInfo.Name.ShouldEqual("AttributeInfo");
-            attributeInfo.FullName.ShouldEqual("Typewriter.Tests.CodeModel.Support.AttributeInfoAttribute");
+            attributeInfo.FullName.ShouldEqual("Typezor.Tests.CodeModel.Support.AttributeInfoAttribute");
         }
 
         [Fact]
         public void Expect_generic_delegate_type_type_to_match_generic_argument()
         {
-            var classInfo = fileInfo.Classes.First();
+            var classInfo = fileInfo.Classes.First(p => p.Name == "EventInfo");
             var eventInfo = classInfo.Events.First(e => e.Name == "GenericDelegateEvent");
             var typeInfo = eventInfo.Type;
 
             typeInfo.Name.ShouldEqual("GenericDelegate<string>");
 
-            typeInfo.TypeArguments.Count.ShouldEqual(1);
-            typeInfo.TypeParameters.Count.ShouldEqual(1);
+            typeInfo.TypeArguments.Count().ShouldEqual(1);
+            typeInfo.TypeParameters.Count().ShouldEqual(1);
 
             typeInfo.TypeArguments.First().Name.ShouldEqual("string");
-            if (isRoslyn)
-            {
-                typeInfo.TypeParameters.First().Name.ShouldEqual("T");
-            }
+            typeInfo.TypeParameters.First().Name.ShouldEqual("T");
         }
     }
 }

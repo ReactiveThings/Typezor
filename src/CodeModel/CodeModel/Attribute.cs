@@ -1,12 +1,11 @@
 ﻿using System.Collections.Generic;
-using Typewriter.CodeModel.Attributes;
 
-namespace Typewriter.CodeModel
+
+namespace Typezor.CodeModel
 {
     /// <summary>
     /// Represents an attribute.
     /// </summary>
-    [Context("Attribute", "Attributes")]
     public abstract class Attribute : Item
     {
         /// <summary>
@@ -37,7 +36,7 @@ namespace Typewriter.CodeModel
         /// <summary>
         /// The arguments of the attribute.
         /// </summary>
-        public abstract AttributeArgumentCollection Arguments { get; }
+        public abstract IEnumerable<AttributeArgument> Arguments { get; }
 
         /// <summary>
         /// Converts the current instance to string.
@@ -46,12 +45,5 @@ namespace Typewriter.CodeModel
         {
             return instance.ToString();
         }
-    }
-
-    /// <summary>
-    /// Represents a collection of attributes.
-    /// </summary>
-    public interface AttributeCollection : ItemCollection<Attribute>
-    {
     }
 }

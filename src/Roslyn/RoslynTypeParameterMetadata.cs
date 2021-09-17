@@ -1,9 +1,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.CodeAnalysis;
-using Typewriter.Metadata.Interfaces;
+using Typezor.Metadata.Interfaces;
 
-namespace Typewriter.Metadata.Roslyn
+namespace Typezor.Metadata.Roslyn
 {
     public class RoslynTypeParameterMetadata : ITypeParameterMetadata
     {

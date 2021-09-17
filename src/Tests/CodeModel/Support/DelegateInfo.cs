@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 
-namespace Typewriter.Tests.CodeModel.Support
+namespace Typezor.Tests.CodeModel.Support
 {
     public delegate void Delegate();
     public delegate void GenericDelegate<T>();

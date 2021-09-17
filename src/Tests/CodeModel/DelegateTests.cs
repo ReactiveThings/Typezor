@@ -1,10 +1,10 @@
 ﻿using System.Linq;
 using Should;
-using Typewriter.CodeModel;
-using Typewriter.Tests.TestInfrastructure;
+using Typezor.CodeModel;
+using Typezor.Tests.TestInfrastructure;
 using Xunit;
 
-namespace Typewriter.Tests.CodeModel
+namespace Typezor.Tests.CodeModel
 {
 
     [Trait("CodeModel", "Delegates"), Collection(nameof(RoslynFixture))]
@@ -21,24 +21,24 @@ namespace Typewriter.Tests.CodeModel
 
         protected DelegateTests(ITestFixture fixture) : base(fixture)
         {
-            fileInfo = GetFile(@"Tests\CodeModel\Support\DelegateInfo.cs");
+            fileInfo = GetFile(@"CodeModel\Support\DelegateInfo.cs", @"CodeModel\Support\AttributeInfo.cs");
         }
 
         [Fact]
         public void Expect_name_to_match_delegate_name()
         {
-            var classInfo = fileInfo.Classes.First();
+            var classInfo = fileInfo.Classes.First(p => p.Name == "DelegateInfo");
             var delegateInfo = classInfo.Delegates.First(p => p.Name == "Delegate");
 
             delegateInfo.Name.ShouldEqual("Delegate");
-            delegateInfo.FullName.ShouldEqual("Typewriter.Tests.CodeModel.Support.DelegateInfo.Delegate");
+            delegateInfo.FullName.ShouldEqual("Typezor.Tests.CodeModel.Support.DelegateInfo.Delegate");
             delegateInfo.Parent.ShouldEqual(classInfo);
         }
 
         [Fact]
         public void Expect_to_find_doc_comment()
         {
-            var classInfo = fileInfo.Classes.First();
+            var classInfo = fileInfo.Classes.First(p => p.Name == "DelegateInfo");
             var delegateInfo = classInfo.Delegates.First(p => p.Name == "Delegate");
             delegateInfo.DocComment.Summary.ShouldEqual("summary");
             delegateInfo.DocComment.Parameters.First().Name.ShouldEqual("parameter");
@@ -48,43 +48,43 @@ namespace Typewriter.Tests.CodeModel
         [Fact]
         public void Expect_to_find_attributes()
         {
-            var classInfo = fileInfo.Classes.First();
+            var classInfo = fileInfo.Classes.First(p => p.Name == "DelegateInfo");
             var delegateInfo = classInfo.Delegates.First(p => p.Name == "Delegate");
             var attributeInfo = delegateInfo.Attributes.First();
 
-            delegateInfo.Attributes.Count.ShouldEqual(1);
+            delegateInfo.Attributes.Count().ShouldEqual(1);
             attributeInfo.Name.ShouldEqual("AttributeInfo");
-            attributeInfo.FullName.ShouldEqual("Typewriter.Tests.CodeModel.Support.AttributeInfoAttribute");
+            attributeInfo.FullName.ShouldEqual("Typezor.Tests.CodeModel.Support.AttributeInfoAttribute");
         }
 
         [Fact]
         public void Expect_to_find_parameters()
         {
-            var classInfo = fileInfo.Classes.First();
+            var classInfo = fileInfo.Classes.First(p => p.Name == "DelegateInfo");
             var delegateInfo = classInfo.Delegates.First(p => p.Name == "Delegate");
             var parameterInfo = delegateInfo.Parameters.First();
 
-            delegateInfo.Parameters.Count.ShouldEqual(1);
+            delegateInfo.Parameters.Count().ShouldEqual(1);
             parameterInfo.Name.ShouldEqual("parameter");
         }
 
         [Fact]
         public void Expect_to_find_parameter_attributes()
         {
-            var classInfo = fileInfo.Classes.First();
+            var classInfo = fileInfo.Classes.First(p => p.Name == "DelegateInfo");
             var delegateInfo = classInfo.Delegates.First(p => p.Name == "Delegate");
             var parameterInfo = delegateInfo.Parameters.First();
             var attributeInfo = parameterInfo.Attributes.First();
 
-            parameterInfo.Attributes.Count.ShouldEqual(1);
+            parameterInfo.Attributes.Count().ShouldEqual(1);
             attributeInfo.Name.ShouldEqual("AttributeInfo");
-            attributeInfo.FullName.ShouldEqual("Typewriter.Tests.CodeModel.Support.AttributeInfoAttribute");
+            attributeInfo.FullName.ShouldEqual("Typezor.Tests.CodeModel.Support.AttributeInfoAttribute");
         }
 
         [Fact]
         public void Expect_void_delegates_to_return_void()
         {
-            var classInfo = fileInfo.Classes.First();
+            var classInfo = fileInfo.Classes.First(p => p.Name == "DelegateInfo");
             var delegateInfo = classInfo.Delegates.First(p => p.Name == "Delegate");
             
             delegateInfo.Type.FullName.ShouldEqual("System.Void");
@@ -101,13 +101,13 @@ namespace Typewriter.Tests.CodeModel
         [Fact]
         public void Expect_generic_delegates_to_handle_generic_type_arguments()
         {
-            var classInfo = fileInfo.Classes.First();
+            var classInfo = fileInfo.Classes.First(p => p.Name == "DelegateInfo");
             var delegateInfo = classInfo.Delegates.First(p => p.Name == "Generic");
             var genericTypeInfo = delegateInfo.TypeParameters.First();
             var parameterTypeInfo = delegateInfo.Parameters.First().Type;
 
             delegateInfo.IsGeneric.ShouldBeTrue("IsGeneric");
-            delegateInfo.TypeParameters.Count.ShouldEqual(1);
+            delegateInfo.TypeParameters.Count().ShouldEqual(1);
 
             delegateInfo.Type.Name.ShouldEqual("T");
             delegateInfo.Type.FullName.ShouldEqual("T");
@@ -124,7 +124,7 @@ namespace Typewriter.Tests.CodeModel
             var parameterTypeInfo = delegateInfo.Parameters.First().Type;
 
             delegateInfo.IsGeneric.ShouldBeFalse("IsGeneric");
-            delegateInfo.TypeParameters.Count.ShouldEqual(0);
+            delegateInfo.TypeParameters.Count().ShouldEqual(0);
 
             delegateInfo.Type.Name.ShouldEqual("T");
             delegateInfo.Type.FullName.ShouldEqual("T");
@@ -141,7 +141,7 @@ namespace Typewriter.Tests.CodeModel
             var secondParameterTypeInfo = delegateInfo.Parameters.First(p => p.Name == "parameter2").Type;
 
             delegateInfo.IsGeneric.ShouldBeTrue("IsGeneric");
-            delegateInfo.TypeParameters.Count.ShouldEqual(1);
+            delegateInfo.TypeParameters.Count().ShouldEqual(1);
 
             delegateInfo.Type.Name.ShouldEqual("T1");
             delegateInfo.Type.FullName.ShouldEqual("T1");
@@ -154,7 +154,7 @@ namespace Typewriter.Tests.CodeModel
         [Fact]
         public void Expect_task_delegates_to_return_void()
         {
-            var classInfo = fileInfo.Classes.First();
+            var classInfo = fileInfo.Classes.First(p => p.Name == "DelegateInfo");
             var delegateInfo = classInfo.Delegates.First(p => p.Name == "Task");
 
             delegateInfo.Type.FullName.ShouldEqual("System.Void");
@@ -171,7 +171,7 @@ namespace Typewriter.Tests.CodeModel
         [Fact]
         public void Expect_task_string_delegates_to_return_string()
         {
-            var classInfo = fileInfo.Classes.First();
+            var classInfo = fileInfo.Classes.First(p => p.Name == "DelegateInfo");
             var delegateInfo = classInfo.Delegates.First(p => p.Name == "TaskString");
 
             delegateInfo.Type.FullName.ShouldEqual("System.String");
@@ -188,7 +188,7 @@ namespace Typewriter.Tests.CodeModel
         [Fact]
         public void Expect_task_nullable_int_delegates_to_return_int()
         {
-            var classInfo = fileInfo.Classes.First();
+            var classInfo = fileInfo.Classes.First(p => p.Name == "DelegateInfo");
             var delegateInfo = classInfo.Delegates.First(p => p.Name == "TaskNullableInt");
 
             delegateInfo.Type.FullName.ShouldEqual("System.Int32?");

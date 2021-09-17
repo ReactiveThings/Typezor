@@ -1,11 +1,10 @@
-﻿using Typewriter.CodeModel.Attributes;
+﻿
 
-namespace Typewriter.CodeModel
+namespace Typezor.CodeModel
 {
     /// <summary>
     /// Represents a generic type parameter.
     /// </summary>
-    [Context("TypeParameter", "TypeParameters")]
     public abstract class TypeParameter : Item
     {
         /// <summary>
@@ -24,10 +23,4 @@ namespace Typewriter.CodeModel
         public abstract Item Parent { get; }
     }
 
-    /// <summary>
-    /// Represents a collection of generic type parameters.
-    /// </summary>
-    public interface TypeParameterCollection : ItemCollection<TypeParameter>, IStringConvertable
-    {
-    }
 }

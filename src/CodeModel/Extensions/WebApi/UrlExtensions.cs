@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Linq;
 using System.Text.RegularExpressions;
-using Typewriter.CodeModel;
+using Typezor.CodeModel;
 
-namespace Typewriter.Extensions.WebApi
+namespace Typezor.Extensions.WebApi
 {
     /// <summary>
     /// Extension methods for extracting Web API url.

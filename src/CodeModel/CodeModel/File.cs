@@ -1,41 +1,32 @@
-﻿using Typewriter.CodeModel.Attributes;
+﻿
 
-namespace Typewriter.CodeModel
+using System.Collections.Generic;
+
+namespace Typezor.CodeModel
 {
     /// <summary>
     /// Represents a file.
     /// </summary>
-    [Context("File", "Files")]
     public abstract class File : Item
     {
         /// <summary>
         /// All public classes defined in the file.
         /// </summary>
-        public abstract ClassCollection Classes { get; }
+        public abstract IEnumerable<CodeModel.Class> Classes { get; }
 
         /// <summary>
         /// All public delegates defined in the file.
         /// </summary>
-        public abstract DelegateCollection Delegates { get; }
+        public abstract IEnumerable<CodeModel.Delegate> Delegates { get; }
 
         /// <summary>
         /// All public enums defined in the file.
         /// </summary>
-        public abstract EnumCollection Enums { get; }
+        public abstract IEnumerable<Enum> Enums { get; }
 
         /// <summary>
         /// All public interfaces defined in the file.
         /// </summary>
-        public abstract InterfaceCollection Interfaces { get; }
-        
-        /// <summary>
-        /// The full path of the file.
-        /// </summary>
-        public abstract string FullName { get; }
-
-        /// <summary>
-        /// The name of the file.
-        /// </summary>
-        public abstract string Name { get; }
+        public abstract IEnumerable<Interface> Interfaces { get; }
     }
 }

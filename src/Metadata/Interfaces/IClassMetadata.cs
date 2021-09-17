@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Typewriter.Metadata.Interfaces
+namespace Typezor.Metadata.Interfaces
 {
     public interface IClassMetadata : INamedItem
     {
@@ -15,9 +15,10 @@ namespace Typewriter.Metadata.Interfaces
         IEnumerable<IConstantMetadata> Constants { get; }
         IEnumerable<IDelegateMetadata> Delegates { get; }
         IEnumerable<IEventMetadata> Events { get; }
-        IEnumerable<IFieldMetadata> Fields { get; }
+        IEnumerable<IClassFieldMetadata> Fields { get; }
         IEnumerable<IInterfaceMetadata> Interfaces { get; }
         IEnumerable<IMethodMetadata> Methods { get; }
+        IEnumerable<IMethodMetadata> StaticMethods { get; }
         IEnumerable<IPropertyMetadata> Properties { get; }
         IEnumerable<ITypeParameterMetadata> TypeParameters { get; }
         IEnumerable<ITypeMetadata> TypeArguments { get; }

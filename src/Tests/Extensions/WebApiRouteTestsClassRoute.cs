@@ -1,11 +1,11 @@
 ﻿using System.Linq;
 using Should;
-using Typewriter.CodeModel;
-using Typewriter.Extensions.WebApi;
-using Typewriter.Tests.TestInfrastructure;
+using Typezor.CodeModel;
+using Typezor.Extensions.WebApi;
+using Typezor.Tests.TestInfrastructure;
 using Xunit;
 
-namespace Typewriter.Tests.Extensions
+namespace Typezor.Tests.Extensions
 {
 
     [Trait("Extensions", "WebApi"), Collection(nameof(RoslynFixture))]
@@ -24,14 +24,33 @@ namespace Typewriter.Tests.Extensions
 
         protected WebApiRouteClassRouteExtensionsTests(ITestFixture fixture) : base(fixture)
         {
-            fileInfo = GetFile(@"Tests\Extensions\Support\RouteControllerWithDefaultRoute.cs");
-            inheritedFileInfo = GetFile(@"Tests\Extensions\Support\InheritedController.cs");
+            fileInfo = GetFile(@"Extensions\Support\RouteControllerWithDefaultRoute.cs",
+                @"Support\RouteAttribute.cs",
+                @"Support\AcceptVerbsAttribute.cs",
+                @"Support\FromBodyAttribute.cs",
+                @"Support\HttpDeleteAttribute.cs",
+                @"Support\HttpGetAttribute.cs",
+                @"Support\HttpPostAttribute.cs",
+                @"Support\HttpPutAttribute.cs",
+                @"Support\RoutePrefixAttribute.cs");
+            inheritedFileInfo = GetFile(
+                @"Extensions\Support\InheritedController.cs",
+                @"Extensions\Support\RouteControllerWithDefaultRoute.cs",
+                @"Extensions\Support\BaseController.cs",
+                @"Support\RouteAttribute.cs",
+                @"Support\AcceptVerbsAttribute.cs",
+                @"Support\FromBodyAttribute.cs",
+                @"Support\HttpDeleteAttribute.cs",
+                @"Support\HttpGetAttribute.cs",
+                @"Support\HttpPostAttribute.cs",
+                @"Support\HttpPutAttribute.cs",
+                @"Support\RoutePrefixAttribute.cs");
         }
 
         [Fact]
         public void Expect_to_find_parameters_on_wildcard_route_url()
         {
-            var classInfo = fileInfo.Classes.First();
+            var classInfo = fileInfo.Classes.First(p => p.Name == "RouteControllerWithDefaultRouteController");
             var methodInfo = classInfo.Methods.First(p => p.Name == "WildcardRoute");
             var result = methodInfo.Url();
             result.ShouldEqual("api/RouteControllerWithDefaultRoute/${encodeURIComponent(key)}");
@@ -40,7 +59,7 @@ namespace Typewriter.Tests.Extensions
         [Fact]
         public void Expect_to_find_url_on_named_route()
         {
-            var classInfo = fileInfo.Classes.First();
+            var classInfo = fileInfo.Classes.First(p => p.Name == "RouteControllerWithDefaultRouteController");
             var methodInfo = classInfo.Methods.First(p => p.Name == "NamedRoute");
             var result = methodInfo.Url();
             result.ShouldEqual("api/RouteControllerWithDefaultRoute/${id}");
@@ -49,7 +68,7 @@ namespace Typewriter.Tests.Extensions
         [Fact]
         public void Expect_to_find_url_on_route_in_http_attribute()
         {
-            var classInfo = fileInfo.Classes.First();
+            var classInfo = fileInfo.Classes.First(p => p.Name == "RouteControllerWithDefaultRouteController");
             var methodInfo = classInfo.Methods.First(p => p.Name == "RouteInHttpAttribute");
 
             methodInfo.Url().ShouldEqual("api/RouteControllerWithDefaultRoute/${id}");
@@ -58,7 +77,7 @@ namespace Typewriter.Tests.Extensions
         [Fact]
         public void Expect_to_find_url_on_subroute_in_http_attribute()
         {
-            var classInfo = fileInfo.Classes.First();
+            var classInfo = fileInfo.Classes.First(p => p.Name == "RouteControllerWithDefaultRouteController");
             var methodInfo = classInfo.Methods.First(p => p.Name == "SubRouteInHttpAttribute");
 
             methodInfo.Url().ShouldEqual("api/RouteControllerWithDefaultRoute/sub/${id}");
@@ -67,7 +86,7 @@ namespace Typewriter.Tests.Extensions
         [Fact]
         public void Expect_to_find_url_on_in_httpget_action_attribute()
         {
-            var classInfo = fileInfo.Classes.First();
+            var classInfo = fileInfo.Classes.First(p => p.Name == "RouteControllerWithDefaultRouteController"); ;
             var methodInfo = classInfo.Methods.First(p => p.Name == "ActionTestInheritedClassController");
 
             var result = methodInfo.Url();
@@ -76,7 +95,7 @@ namespace Typewriter.Tests.Extensions
         [Fact]
         public void Expect_to_find_url_on_BaseController_HttpGet_Parameter()
         {
-            var classInfo = inheritedFileInfo.Classes.First();
+            var classInfo = inheritedFileInfo.Classes.First(p => p.Name == "InheritedController");
             var methodInfo = classInfo.Methods.First(p => p.Name == "RoutePrefixFromBaseHttpGetWithParameter");
 
             var result = methodInfo.Url();
@@ -87,7 +106,7 @@ namespace Typewriter.Tests.Extensions
         [Fact]
         public void Expect_to_find_url_on_in_httpget_action_withparameter()
         {
-            var classInfo = fileInfo.Classes.First();
+            var classInfo = fileInfo.Classes.First(p => p.Name == "RouteControllerWithDefaultRouteController");
             var methodInfo = classInfo.Methods.First(p => p.Name == "ActionTestInheritedClassControllerPostWithParameter");
 
             var result = methodInfo.Url();
@@ -97,7 +116,7 @@ namespace Typewriter.Tests.Extensions
         [Fact]
         public void Expect_to_find_url_on_in_httppost_action_withparameter()
         {
-            var classInfo = fileInfo.Classes.First();
+            var classInfo = fileInfo.Classes.First(p => p.Name == "RouteControllerWithDefaultRouteController");
             var methodInfo = classInfo.Methods.First(p => p.Name == "ActionTestInheritedClassControllerPostWithParameter");
 
             var result = methodInfo.Url();

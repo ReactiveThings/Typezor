@@ -1,58 +1,25 @@
 ﻿using System.IO;
-using Typewriter.CodeModel.Implementation;
-using Typewriter.Metadata.Providers;
+using Typezor.CodeModel.Implementation;
 using Xunit;
-using File = Typewriter.CodeModel.File;
-using Typewriter.Configuration;
-using Typewriter.CodeModel.Configuration;
-using System;
-using Typewriter.Generation;
+using File = Typezor.CodeModel.File;
+
 
 [assembly: CollectionBehavior(DisableTestParallelization = true)]
 
-namespace Typewriter.Tests.TestInfrastructure
+namespace Typezor.Tests.TestInfrastructure
 {
     public abstract class TestBase
     {
-        protected readonly IMetadataProvider metadataProvider;
-
-        protected readonly bool isRoslyn;
-        protected readonly bool isCodeDom;
+        protected readonly RoslynMetadataProviderStub MetadataProvider;
 
         protected TestBase(ITestFixture fixture)
         {
-            this.solutionPath = fixture.SolutionPath;
-            this.SolutionDirectory = Path.Combine(new FileInfo(fixture.SolutionPath).Directory?.FullName, "src");
-            this.metadataProvider = fixture.Provider;
-
-            this.isRoslyn = fixture is RoslynFixture;
-            this.isCodeDom = false;
+            MetadataProvider = fixture.Provider;
         }
 
-        private string solutionPath;
-        protected string SolutionDirectory;
-
-        protected TemplateInfo GetProjectItem(string path)
+        protected File GetFile(params string[] path)
         {
-            return new TemplateInfo
-            {
-                Path = path,
-                SolutionPath = solutionPath,
-                //ProjectPath = ""
-            };
-        }
-
-        protected string GetFileContents(string path)
-        {
-            return System.IO.File.ReadAllText(Path.Combine(SolutionDirectory, path));
-        }
-
-        protected File GetFile(string path, Settings settings = null, Action<string[]> requestRender = null)
-        {
-            if (settings == null)
-                settings = new SettingsImpl();
-
-            var metadata = metadataProvider.GetFile(Path.Combine(SolutionDirectory, path), settings, requestRender);
+            var metadata = MetadataProvider.GetFile(path);
             return new FileImpl(metadata);
         }
     }

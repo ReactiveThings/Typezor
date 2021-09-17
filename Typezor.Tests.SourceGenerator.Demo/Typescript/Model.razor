@@ -1,0 +1,27 @@
+﻿@using System
+@using System.IO
+@using System.Linq
+@using Typezor.CodeModel
+@using File = System.IO.File
+@inherits Typezor.TemplateBase<Typezor.CodeModel.File>
+@functions
+{
+    private static Func<Class, bool> IsModel =>
+        c => c.Name.StartsWith("Class") && c.Namespace.StartsWith("Typezor.Tests.SourceGenerator");
+
+    public static string Property(Property property)
+    {
+        return $"{property.name}: any;";
+    }
+}
+@foreach (var model in Model.Classes.Where(IsModel))
+{
+    @:export interface @model.Name {
+    foreach (var property in model.Properties)
+    {
+        @:@Property(property) 
+        @String.Join(",", property.Type.Properties.Select(p => p.Name))
+    }
+    @:}
+    @Output.SaveAs(Path.Combine(Path.GetDirectoryName(TemplatePath),$"{model}.ts"))
+}

@@ -1,4 +1,4 @@
-﻿namespace Typewriter.Metadata.Interfaces
+﻿namespace Typezor.Metadata.Interfaces
 {
     public interface IAttributeArgumentMetadata
     {

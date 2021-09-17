@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-namespace Typewriter.Tests.CodeModel.Support
+namespace Typezor.Tests.CodeModel.Support
 {
     public class TypeInfo
     {

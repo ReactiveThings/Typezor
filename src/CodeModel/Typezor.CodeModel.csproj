@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <RootNamespace>Typezor</RootNamespace>
+    <AssemblyTitle>Typezor.CodeModel</AssemblyTitle>
+	<Description>Public interfaces for the Typezor metadata model</Description>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugType>full</DebugType>
+    <OutputPath>bin\$(Configuration)\</OutputPath>
+    <DocumentationFile>Typezor.CodeModel.XML</DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <OutputPath>bin\$(Configuration)\</OutputPath>
+    <DocumentationFile>Typezor.CodeModel.XML</DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ProjectGuid>{4EC6C920-D234-49F1-B17B-98A4DE24FF87}</ProjectGuid>
+    <RootNamespace>Typezor</RootNamespace>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+  </PropertyGroup>
+</Project>

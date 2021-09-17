@@ -1,17 +1,19 @@
-﻿using Typewriter.CodeModel.Attributes;
+﻿
 
-namespace Typewriter.CodeModel
+using System.Collections.Generic;
+using Typezor.Abstractions;
+
+namespace Typezor.CodeModel
 {
     /// <summary>
     /// Represents a delegate.
     /// </summary>
-    [Context("Delegate", "Delegates")]
-    public abstract class Delegate : Item
+    public abstract class Delegate : Item, IAnnotated
     {
         /// <summary>
         /// All attributes defined on the delegate.
         /// </summary>
-        public abstract AttributeCollection Attributes { get; }
+        public abstract IEnumerable<Attribute> Attributes { get; }
 
         /// <summary>
         /// The XML documentation comment of the delegate.
@@ -41,7 +43,7 @@ namespace Typewriter.CodeModel
         /// <summary>
         /// All parameters of the delegate.
         /// </summary>
-        public abstract ParameterCollection Parameters { get; }
+        public abstract IEnumerable<Parameter> Parameters { get; }
 
         /// <summary>
         /// The parent context of the delegate.
@@ -57,7 +59,7 @@ namespace Typewriter.CodeModel
         /// All generic type parameters of the delegate.
         /// TypeParameters are the type placeholders of a generic delegate e.g. &lt;T&gt;.
         /// </summary>
-        public abstract TypeParameterCollection TypeParameters { get; }
+        public abstract IEnumerable<TypeParameter> TypeParameters { get; }
 
         /// <summary>
         /// Converts the current instance to string.
@@ -66,12 +68,5 @@ namespace Typewriter.CodeModel
         {
             return instance.ToString();
         }
-    }
-
-    /// <summary>
-    /// Represents a collection of classes.
-    /// </summary>
-    public interface DelegateCollection : ItemCollection<Delegate>
-    {
     }
 }

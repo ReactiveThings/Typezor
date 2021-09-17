@@ -1,11 +1,11 @@
 ﻿using System.Linq;
 using Should;
-using Typewriter.CodeModel;
-using Typewriter.Extensions.WebApi;
-using Typewriter.Tests.TestInfrastructure;
+using Typezor.CodeModel;
+using Typezor.Extensions.WebApi;
+using Typezor.Tests.TestInfrastructure;
 using Xunit;
 
-namespace Typewriter.Tests.Extensions
+namespace Typezor.Tests.Extensions
 {
 
     [Trait("Extensions", "WebApi"), Collection(nameof(RoslynFixture))]
@@ -22,13 +22,15 @@ namespace Typewriter.Tests.Extensions
 
         protected WebApiExtensionsTests(ITestFixture fixture) : base(fixture)
         {
-            fileInfo = GetFile(@"Tests\Extensions\Support\HttpMethodController.cs");
+            fileInfo = GetFile(@"Extensions\Support\HttpMethodController.cs", 
+                @"CodeModel\Support\AttributeInfo.cs",
+                @"Support\AcceptVerbsAttribute.cs");
         }
 
         [Fact]
         public void Expect_httpmethod_to_match_convension_name()
         {
-            var classInfo = fileInfo.Classes.First();
+            var classInfo = fileInfo.Classes.First(p => p.Name == "HttpMethodController");
             var getInfo = classInfo.Methods.First(p => p.Name == "Get");
             var getAllMethod = classInfo.Methods.First(p => p.Name == "GetAll");
             var listAllMethod = classInfo.Methods.First(p => p.Name == "ListAll");
@@ -41,7 +43,7 @@ namespace Typewriter.Tests.Extensions
         [Fact]
         public void Expect_httpmethod_to_match_http_attribute()
         {
-            var classInfo = fileInfo.Classes.First();
+            var classInfo = fileInfo.Classes.First(p => p.Name == "HttpMethodController");
             var getMethod = classInfo.Methods.First(p => p.Name == "GetHttpAttibute");
 
             getMethod.HttpMethod().ShouldEqual("post");
@@ -50,7 +52,7 @@ namespace Typewriter.Tests.Extensions
         [Fact]
         public void Expect_httpmethod_to_match_acceptverbs_attribute()
         {
-            var classInfo = fileInfo.Classes.First();
+            var classInfo = fileInfo.Classes.First(p => p.Name == "HttpMethodController");
             var getMethod = classInfo.Methods.First(p => p.Name == "GetAcceptVerbsAttribute");
             var getMultipleMethod1 = classInfo.Methods.First(p => p.Name == "GetMultipleAcceptVerbsAttribute1");
             var getMultipleMethod2 = classInfo.Methods.First(p => p.Name == "GetMultipleAcceptVerbsAttribute2");

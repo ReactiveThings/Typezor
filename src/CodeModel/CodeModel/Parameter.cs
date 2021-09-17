@@ -1,17 +1,19 @@
-﻿using Typewriter.CodeModel.Attributes;
+﻿
 
-namespace Typewriter.CodeModel
+using System.Collections.Generic;
+using Typezor.Abstractions;
+
+namespace Typezor.CodeModel
 {
     /// <summary>
     /// Represents a parameter.
     /// </summary>
-    [Context("Parameter", "Parameters")]
-    public abstract class Parameter : Item
+    public abstract class Parameter : Item, IAnnotated
     {
         /// <summary>
         /// All attributes defined on the parameter.
         /// </summary>
-        public abstract AttributeCollection Attributes { get; }
+        public abstract IEnumerable<Attribute> Attributes { get; }
 
         /// <summary>
         /// The full original name of the parameter.
@@ -55,12 +57,5 @@ namespace Typewriter.CodeModel
         {
             return instance.ToString();
         }
-    }
-
-    /// <summary>
-    /// Represents a collection of parameters.
-    /// </summary>
-    public interface ParameterCollection : ItemCollection<Parameter>
-    {
     }
 }

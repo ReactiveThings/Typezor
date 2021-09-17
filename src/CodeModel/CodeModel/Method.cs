@@ -1,17 +1,19 @@
-﻿using Typewriter.CodeModel.Attributes;
+﻿
 
-namespace Typewriter.CodeModel
+using System.Collections.Generic;
+using Typezor.Abstractions;
+
+namespace Typezor.CodeModel
 {
     /// <summary>
     /// Represents a method.
     /// </summary>
-    [Context("Method", "Methods")]
-    public abstract class Method : Item
+    public abstract class Method : Item, IAnnotated
     {
         /// <summary>
         /// All attributes defined on the method.
         /// </summary>
-        public abstract AttributeCollection Attributes { get; }
+        public abstract IEnumerable<Attribute> Attributes { get; }
 
         /// <summary>
         /// The XML documentation comment of the method.
@@ -46,7 +48,7 @@ namespace Typewriter.CodeModel
         /// <summary>
         /// All parameters of the method.
         /// </summary>
-        public abstract ParameterCollection Parameters { get; }
+        public abstract IEnumerable<Parameter> Parameters { get; }
 
         /// <summary>
         /// The parent context of the method.
@@ -62,7 +64,7 @@ namespace Typewriter.CodeModel
         /// All generic type parameters of the method.
         /// TypeParameters are the type placeholders of a generic method e.g. &lt;T&gt;.
         /// </summary>
-        public abstract TypeParameterCollection TypeParameters { get; }
+        public abstract IEnumerable<TypeParameter> TypeParameters { get; }
 
         /// <summary>
         /// Converts the current instance to string.
@@ -71,12 +73,5 @@ namespace Typewriter.CodeModel
         {
             return instance.ToString();
         }
-    }
-
-    /// <summary>
-    /// Represents a collection of methods.
-    /// </summary>
-    public interface MethodCollection : ItemCollection<Method>
-    {
     }
 }

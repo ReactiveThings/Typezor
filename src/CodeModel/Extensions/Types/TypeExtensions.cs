@@ -1,7 +1,7 @@
 ﻿using System.Linq;
-using Type = Typewriter.CodeModel.Type;
+using Type = Typezor.CodeModel.Type;
 
-namespace Typewriter.Extensions.Types
+namespace Typezor.Extensions.Types
 {
     /// <summary>
     /// Extension methods for working with types.

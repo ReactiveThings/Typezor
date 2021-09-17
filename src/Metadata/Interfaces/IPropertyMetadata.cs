@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Typewriter.Metadata.Interfaces
+namespace Typezor.Metadata.Interfaces
 {
     public interface IPropertyMetadata : IFieldMetadata
     {

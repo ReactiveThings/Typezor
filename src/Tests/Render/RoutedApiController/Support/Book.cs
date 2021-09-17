@@ -1,4 +1,4 @@
-﻿namespace Typewriter.Tests.Render.RoutedApiController.Support
+﻿namespace Typezor.Tests.Render.RoutedApiController.Support
 {
     public class Book
     {

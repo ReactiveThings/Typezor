@@ -1,22 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Typewriter.CodeModel.Attributes;
+﻿using System.Collections.Generic;
+using Typezor.Abstractions;
 
-namespace Typewriter.CodeModel
+
+namespace Typezor.CodeModel
 {
     /// <summary>
     /// Represents an event.
     /// </summary>
-    [Context("Event", "Events")]
-    public abstract class Event : Item
+    public abstract class Event : Item, IAnnotated
     {
         /// <summary>
         /// All attributes defined on the event.
         /// </summary>
-        public abstract AttributeCollection Attributes { get; }
+        public abstract IEnumerable<Attribute> Attributes { get; }
 
         /// <summary>
         /// The XML documentation comment of the event.
@@ -57,10 +53,4 @@ namespace Typewriter.CodeModel
         }
     }
 
-    /// <summary>
-    /// Represents a collection of classes.
-    /// </summary>
-    public interface EventCollection : ItemCollection<Event>
-    {
-    }
 }

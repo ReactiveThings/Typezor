@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-namespace Typewriter.Tests.CodeModel.Support
+namespace Typezor.Tests.CodeModel.Support
 {
     public class PropertyInfo
     {
@@ -40,9 +40,9 @@ namespace Typewriter.Tests.CodeModel.Support
         public dynamic Dynamic { get; set; }
 
         // Enums
-        public ConsoleColor Enum { get; set; }
-        public ConsoleColor? NullableEnum1 { get; set; }
-        public Nullable<ConsoleColor> NullableEnum2 { get; set; }
+        public EnumInfo Enum { get; set; }
+        public EnumInfo? NullableEnum1 { get; set; }
+        public Nullable<EnumInfo> NullableEnum2 { get; set; }
 
         public Exception Exception { get; set; } // Class
 

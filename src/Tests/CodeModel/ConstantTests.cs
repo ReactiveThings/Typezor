@@ -1,10 +1,10 @@
 ﻿using System.Linq;
 using Should;
-using Typewriter.CodeModel;
-using Typewriter.Tests.TestInfrastructure;
+using Typezor.CodeModel;
+using Typezor.Tests.TestInfrastructure;
 using Xunit;
 
-namespace Typewriter.Tests.CodeModel
+namespace Typezor.Tests.CodeModel
 {
     
     [Trait("CodeModel", "Constants"), Collection(nameof(RoslynFixture))]
@@ -21,7 +21,7 @@ namespace Typewriter.Tests.CodeModel
 
         protected ConstantTests(ITestFixture fixture) : base(fixture)
         {
-            fileInfo = GetFile(@"Tests\CodeModel\Support\ConstantInfo.cs");
+            fileInfo = GetFile(@"CodeModel\Support\ConstantInfo.cs");
         }
 
         [Fact]
@@ -31,7 +31,7 @@ namespace Typewriter.Tests.CodeModel
             var constantInfo = classInfo.Constants.First();
 
             constantInfo.Name.ShouldEqual("StringField");
-            constantInfo.FullName.ShouldEqual("Typewriter.Tests.CodeModel.Support.ConstantInfo.StringField");
+            constantInfo.FullName.ShouldEqual("Typezor.Tests.CodeModel.Support.ConstantInfo.StringField");
             constantInfo.Parent.ShouldEqual(classInfo);
         }
 

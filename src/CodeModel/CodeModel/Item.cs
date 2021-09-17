@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Typewriter.CodeModel
+namespace Typezor.CodeModel
 {
     /// <summary>
     /// Represents an code model item.
