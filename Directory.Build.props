@@ -14,7 +14,6 @@
     <PackageTags>razor template engine cshtml codegen code generation source generators</PackageTags>
     <PackageProjectUrl>https://github.com/ReactiveThings/Typezor</PackageProjectUrl>
     <PackageReleaseNotes>https://github.com/ReactiveThings/Typezor/blob/master/Changelog.md</PackageReleaseNotes>
-    <PackageReadmeFile>Readme.md</PackageReadmeFile>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
@@ -24,7 +23,7 @@
 
 
   <ItemGroup>
-    <None Include="../Readme.md" Pack="true" PackagePath="" Visible="false" />
+
   </ItemGroup>
 
 </Project>
