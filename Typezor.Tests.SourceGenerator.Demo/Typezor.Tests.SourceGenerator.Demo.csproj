@@ -30,7 +30,8 @@
     <AdditionalFiles Include="Templates\TemplateFoo.razor" IsRazorTemplate="true" />
     <AdditionalFiles Include="Templates\TemplateBar.razor" IsRazorTemplate="true" />
     <AdditionalFiles Include="Typescript\Model.tst" />
-    <AdditionalFiles Include="Typezor.Tests.SourceGenerator.ReferencedProject.dll" IsRazorReference="true" />
+    
+    <AdditionalFiles Include="$(PKGTypezor_Tests_SourceGenerator_ReferencedProject)\lib\netstandard2.0\Typezor.Tests.SourceGenerator.ReferencedProject.dll" IsRazorReference="true" />
   </ItemGroup>
 
   <ItemGroup><!--<PackageReference Include="Typezor.SourceGenerator" Version="*" />-->
@@ -43,11 +44,11 @@
   <ItemGroup>
 	  <PackageReference Include="Typezor.Runtime" Version="0.0.1" PrivateAssets="all" />
 	  <PackageReference Include="Typezor.CodeModel" Version="0.0.1" PrivateAssets="all" />
+	  <PackageReference Include="Typezor.Tests.SourceGenerator.ReferencedProject" Version="0.0.2" GeneratePathProperty="true" />
   </ItemGroup>
 
   <ItemGroup>
 	  <ProjectReference Include="..\Typezor.SourceGenerator\Typezor.SourceGenerator.csproj" ReferenceOutputAssembly="false" OutputItemType="Analyzer" />
-    <ProjectReference Include="..\Typezor.Tests.SourceGenerator.ReferencedProject\Typezor.Tests.SourceGenerator.ReferencedProject.csproj" />
   </ItemGroup>
 
   <ItemGroup>
