@@ -4,6 +4,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text.RegularExpressions;
 using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.Diagnostics;
 using Microsoft.CSharp.RuntimeBinder;
 using Typezor;
 using Typezor.AssemblyLoading;
@@ -41,14 +42,19 @@ namespace Typezor.SourceGenerator
 
         public IEnumerable<Assembly> GetReferences(GeneratorExecutionContext context)
         {
-            foreach (var standardAssembly in StandardAssemblies())
-            {
-                yield return assemblyLoadContext.LoadFromAssemblyName(standardAssembly);
-            }
+            foreach (var assembly in GetStandardAssemblies()) yield return assembly;
 
             foreach (var parentAssembly in GetRazorReferences(context))
             {
                 yield return parentAssembly;
+            }
+        }
+
+        public IEnumerable<Assembly> GetStandardAssemblies()
+        {
+            foreach (var standardAssembly in StandardAssemblies())
+            {
+                yield return assemblyLoadContext.LoadFromAssemblyName(standardAssembly);
             }
         }
 
@@ -57,19 +63,24 @@ namespace Typezor.SourceGenerator
 
             foreach (var file in context.AdditionalFiles)
             {
-                var isRazorReference = string.Equals(
-                    context.AnalyzerConfigOptions
-                        .GetOptions(file)
-                        .TryGetAdditionalFileMetadataValue("IsRazorReference"),
-                    "true",
-                    StringComparison.OrdinalIgnoreCase
-                );
+                var isRazorReference = IsRazorReference(file, context.AnalyzerConfigOptions);
 
                 if (isRazorReference)
                 {
                     yield return assemblyLoadContext.LoadFromAssemblyPath(file.Path);
                 }
             }
+        }
+
+        public static bool IsRazorReference(AdditionalText file, AnalyzerConfigOptionsProvider analyzerConfigOptions)
+        {
+            return string.Equals(
+                analyzerConfigOptions
+                    .GetOptions(file)
+                    .TryGetAdditionalFileMetadataValue("IsRazorReference"),
+                "true",
+                StringComparison.OrdinalIgnoreCase
+            );
         }
     }
 }

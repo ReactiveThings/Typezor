@@ -15,11 +15,16 @@ namespace Typezor;
 public class TemplateDescriptor
 {
     private readonly Type _templateType;
+    private readonly string _path;
 
     /// <summary>
     /// Initializes an instance of <see cref="TemplateDescriptor"/>.
     /// </summary>
-    public TemplateDescriptor(Type templateType) => _templateType = templateType;
+    public TemplateDescriptor(Type templateType, string path)
+    {
+        _templateType = templateType;
+        _path = path;
+    }
 
     private ITemplate CreateTemplateInstance() =>  (ITemplate)(
         Activator.CreateInstance(_templateType) ??
@@ -29,7 +34,7 @@ public class TemplateDescriptor
     /// <summary>
     /// Renders the template using the specified writer.
     /// </summary>
-    public async Task RenderAsync(object model, string templateFilePath, ITemplateOutput templateOutput, CancellationToken cancellationToken = default)
+    public async Task RenderAsync(object model, ITemplateOutput templateOutput, CancellationToken cancellationToken = default)
     {
         var template = CreateTemplateInstance();
 
@@ -38,7 +43,7 @@ public class TemplateDescriptor
         template.Model = model;
 
         template.CancellationToken = cancellationToken;
-        template.TemplatePath = templateFilePath;
+        template.TemplatePath = _path;
 
         await template.ExecuteAsync();
     }
@@ -52,10 +57,11 @@ public class TemplateDescriptor
     /// </remarks>
     public static TemplateDescriptor Compile(
         string source, 
-        List<Assembly> razorReferences,
+        IEnumerable<Assembly> razorReferences,
         IAssemblyLoadContext assemblyLoadContext, 
         string templatePath, 
-        List<string> razorClasses)
+        IEnumerable<string> razorClasses, 
+        CancellationToken cancellationToken = default)
     {
         var csharpCode = Razor.Transpile(source, templatePath);
         var sources = new[] { csharpCode }.Concat(razorClasses);
@@ -63,9 +69,11 @@ public class TemplateDescriptor
 
         var type = new Compiler(assemblyLoadContext).Compile<ITemplate>(
             sources,
-            razorReferences
+            razorReferences,
+            cancellationToken
         );
 
-        return new TemplateDescriptor(type);
+        return new TemplateDescriptor(type, templatePath);
     }
+
 }

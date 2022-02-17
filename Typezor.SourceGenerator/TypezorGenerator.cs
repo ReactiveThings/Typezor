@@ -3,17 +3,55 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.Diagnostics;
-using Typezor;
 using Typezor.CodeModel.Implementation;
 using Typezor.Metadata.Roslyn;
 using Typezor.SourceGenerator.AssemblyLoading;
-using File = Typezor.CodeModel.File;
 
 namespace Typezor.SourceGenerator
 {
     [Generator]
-    public class TypezorGenerator : ISourceGenerator
+    public class TypezorGenerator : IIncrementalGenerator //, ISourceGenerator
     {
+        public void Initialize(IncrementalGeneratorInitializationContext context)
+        {
+            
+            var assemblyLoadContext = AssemblyLoadContextFactory.Create();
+
+            var razorClasses = context.AdditionalTextsProvider.Combine(context.AnalyzerConfigOptionsProvider)
+                .Where(p => IsRazorClass(p.Left,p.Right))
+                .Select((p,a) => p.Left.GetText(a)?.ToString())
+                .Where(content => !string.IsNullOrWhiteSpace(content));
+
+            var razorReferences = context.AdditionalTextsProvider.Combine(context.AnalyzerConfigOptionsProvider)
+                .Where(p => ReferenceProvider.IsRazorReference(p.Left, p.Right))
+                .Select((p, a) => assemblyLoadContext.LoadFromAssemblyPath(p.Left.Path));
+
+            var razorTemplates = context.AdditionalTextsProvider.Combine(context.AnalyzerConfigOptionsProvider)
+                .Where(p => IsRazorTemplate(p.Left, p.Right))
+                .Select((p, a) => (p.Left.Path, Text: p.Left.GetText(a)?.ToString()))
+                .Where(content => !string.IsNullOrWhiteSpace(content.Text))
+                .Combine(razorReferences.Collect().Combine(razorClasses.Collect()))
+                .Select((file, token) => TemplateDescriptor.Compile(
+                    file.Left.Text,
+                    new ReferenceProvider(assemblyLoadContext).GetStandardAssemblies().Concat(file.Right.Left),
+                    assemblyLoadContext,
+                    file.Left.Path,
+                    file.Right.Right,
+                    token));
+
+            context.RegisterSourceOutput(razorTemplates.Combine(context.CompilationProvider), (c, pair) =>
+            {
+                Log1.ExecutionContext = c;
+                if (c.CancellationToken.IsCancellationRequested) return;
+                using (new PerformanceLog("RenderAsync"))
+                {
+                    var namespaceMetadata = new FileImpl(new RoslynGlobalNamespaceMetadata(pair.Right.GlobalNamespace));
+                    var output = new SourceProductionContextOutput(c);
+                    pair.Left.RenderAsync(namespaceMetadata, output, c.CancellationToken).Wait();
+                }
+            });
+        }
+
         public void Execute(GeneratorExecutionContext context)
         {
             using (new PerformanceLog("TypezorGenerator"))
@@ -50,8 +88,7 @@ namespace Typezor.SourceGenerator
                             if (context.CancellationToken.IsCancellationRequested) return;
                             using (new PerformanceLog("    RenderAsync"))
                             {
-                                compiled.RenderAsync(namespaceMetadata, template.path, output,
-                                    context.CancellationToken).Wait();
+                                compiled.RenderAsync(namespaceMetadata, output, context.CancellationToken).Wait();
                             }
                         }
 
@@ -81,13 +118,7 @@ namespace Typezor.SourceGenerator
         {
             foreach (var file in context.AdditionalFiles)
             {
-                var isRazorTemplate = string.Equals(
-                    context.AnalyzerConfigOptions
-                        .GetOptions(file)
-                        .TryGetAdditionalFileMetadataValue("IsRazorTemplate"),
-                    "true",
-                    StringComparison.OrdinalIgnoreCase
-                );
+                var isRazorTemplate = IsRazorTemplate(file, context.AnalyzerConfigOptions);
 
                 if (isRazorTemplate)
                 {
@@ -100,25 +131,40 @@ namespace Typezor.SourceGenerator
             }
         }
 
+        private static bool IsRazorTemplate(AdditionalText file, AnalyzerConfigOptionsProvider analyzerConfigOptions)
+        {
+            return string.Equals(
+                analyzerConfigOptions
+                    .GetOptions(file)
+                    .TryGetAdditionalFileMetadataValue("IsRazorTemplate"),
+                "true",
+                StringComparison.OrdinalIgnoreCase
+            );
+        }
 
 
         private static IEnumerable<string> GetRazorClasses(GeneratorExecutionContext context)
         {
             foreach (var file in context.AdditionalFiles)
             {
-                var isRazorReference = string.Equals(
-                    context.AnalyzerConfigOptions
-                        .GetOptions(file)
-                        .TryGetAdditionalFileMetadataValue("IsRazorClass"),
-                    "true",
-                    StringComparison.OrdinalIgnoreCase
-                );
+                var isRazorReference = IsRazorClass(file, context.AnalyzerConfigOptions);
 
                 if (isRazorReference)
                 {
                     yield return file.GetText()?.ToString();
                 }
             }
+        }
+
+        private static bool IsRazorClass(AdditionalText file, AnalyzerConfigOptionsProvider analyzerConfigOptions)
+        {
+            return string.Equals(
+               
+            analyzerConfigOptions.GetOptions(file)
+                    .TryGetAdditionalFileMetadataValue("IsRazorClass"),
+                "true",
+                StringComparison.OrdinalIgnoreCase
+            );
         }
 
         public void Initialize(GeneratorInitializationContext context)

@@ -52,7 +52,7 @@ namespace Typezor.SourceGenerator.AssemblyLoading
             }
             catch (Exception e)
             {
-                Log.Warn(e.ToString());
+                //Log.Warn(e.ToString());
             }
         }
     }

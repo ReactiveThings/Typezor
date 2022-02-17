@@ -16,7 +16,7 @@ namespace Typezor.SourceGenerator
         public void Dispose()
         {
             stopwatch.Stop();
-            Log.Warn($"{name} {stopwatch.ElapsedMilliseconds}ms");
+            Log1.Warn($"{name} {stopwatch.ElapsedMilliseconds}ms");
         }
     }
 }

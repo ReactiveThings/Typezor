@@ -35,7 +35,7 @@
     <GetTargetPathDependsOn>$(GetTargetPathDependsOn);GetDependencyTargetPaths</GetTargetPathDependsOn>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 	<RootNamespace>Typezor.SourceGenerator</RootNamespace>
-    <!--<PackageVersion>$([System.DateTime]::Now.ToString("yyyy.MM.dd.HHmm"))</PackageVersion>-->
+    <PackageVersion>$([System.DateTime]::Now.ToString("yyyy.MM.dd.HHmm"))</PackageVersion>
   </PropertyGroup>
 
 	<!-- Source generators can't have public dependencies, so we have to embed them inside the package -->
