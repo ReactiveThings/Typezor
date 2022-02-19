@@ -23,7 +23,7 @@ namespace Typezor.Tests.TestInfrastructure
                 path.Select(fileName => CSharpSyntaxTree.ParseText(File.ReadAllText(fileName))),
                 new[] { MetadataReference.CreateFromFile(typeof(Binder).GetTypeInfo().Assembly.Location) },
                 new CSharpCompilationOptions(OutputKind.ConsoleApplication));
-            return new RoslynGlobalNamespaceMetadata(compilation.GlobalNamespace);
+            return new RoslynGlobalNamespaceMetadata(compilation.GlobalNamespace, new FindAllTypesVisitor());
         }
     }
 }

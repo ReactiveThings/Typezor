@@ -599,6 +599,11 @@
             All public interfaces defined in the file.
             </summary>
         </member>
+        <member name="M:Typezor.CodeModel.File.GetTypesFromNamespace(System.String[])">
+            <summary>
+            All public types.
+            </summary>
+        </member>
         <member name="T:Typezor.CodeModel.Interface">
             <summary>
             Represents an interface.

@@ -28,5 +28,10 @@ namespace Typezor.CodeModel
         /// All public interfaces defined in the file.
         /// </summary>
         public abstract IEnumerable<Interface> Interfaces { get; }
+
+        /// <summary>
+        /// All public types.
+        /// </summary>
+        public abstract File GetTypesFromNamespace(params string[] namespaces);
     }
 }

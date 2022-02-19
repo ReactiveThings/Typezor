@@ -6,11 +6,13 @@ namespace Typezor.Metadata.Roslyn
 {
     public class RoslynGlobalNamespaceMetadata : IFileMetadata
     {
+        private readonly SymbolVisitor<IEnumerable<INamedTypeSymbol>> _symbolVisitor;
         private readonly INamespaceSymbol _namespaceSymbol;
 
 
-        public RoslynGlobalNamespaceMetadata(INamespaceSymbol namespaceSymbol)
+        public RoslynGlobalNamespaceMetadata(INamespaceSymbol namespaceSymbol, SymbolVisitor<IEnumerable<INamedTypeSymbol>> symbolVisitor)
         {
+            _symbolVisitor = symbolVisitor;
             _namespaceSymbol = namespaceSymbol;
         }
 
@@ -19,11 +21,14 @@ namespace Typezor.Metadata.Roslyn
         public IEnumerable<IEnumMetadata> Enums => RoslynEnumMetadata.FromNamedTypeSymbols(GetNamespaceChildNodes());
         public IEnumerable<IInterfaceMetadata> Interfaces => RoslynInterfaceMetadata.FromNamedTypeSymbols(GetNamespaceChildNodes());
 
+        public IFileMetadata GetTypesFromNamespace(params string[] requiredNamespaces)
+        {
+            return new RoslynGlobalNamespaceMetadata(_namespaceSymbol, new FindAllTypesByNamespaceVisitor(requiredNamespaces));
+        }
 
         private IEnumerable<INamedTypeSymbol> GetNamespaceChildNodes()
         {
-            var visitor = new FindAllTypesVisitor();
-            return visitor.VisitNamespace(_namespaceSymbol);
+            return _symbolVisitor.VisitNamespace(_namespaceSymbol);
         }
     }
 }

@@ -74,6 +74,7 @@ namespace Typezor.SourceGenerator
 
         public static bool IsRazorReference(AdditionalText file, AnalyzerConfigOptionsProvider analyzerConfigOptions)
         {
+            Log1.Warn($"IsRazorReference {file.Path}");
             return string.Equals(
                 analyzerConfigOptions
                     .GetOptions(file)

@@ -25,14 +25,17 @@ namespace Typezor.SourceGenerator
 
         public string SaveAs(string filePath)
         {
-            using var _ = new PerformanceLog($"SaveAs {filePath}");
+            context.CancellationToken.ThrowIfCancellationRequested();
+            
             var f = new FileInfo(filePath);
 
             var content = builder.ToString().Trim();
 
             long count = Encoding.UTF8.GetByteCount(content) + Encoding.UTF8.GetPreamble().Length;
+            
             if (!f.Exists || f.Length != count)
             {
+                using var _ = new PerformanceLog($"SaveAs {filePath}");
                 File.WriteAllText(filePath, content, Encoding.UTF8);
             }
 
@@ -66,7 +69,7 @@ namespace Typezor.SourceGenerator
 
         public string SaveAs(string filePath)
         {
-            using var _ = new PerformanceLog($"SaveAs {filePath}");
+            
             var f = new FileInfo(filePath);
 
             var content = builder.ToString().Trim();
@@ -74,6 +77,7 @@ namespace Typezor.SourceGenerator
             long count = Encoding.UTF8.GetByteCount(content) + Encoding.UTF8.GetPreamble().Length;
             if (!f.Exists || f.Length != count)
             {
+                using var _ = new PerformanceLog($"SaveAs {filePath}");
                 File.WriteAllText(filePath, content, Encoding.UTF8);
             }
 

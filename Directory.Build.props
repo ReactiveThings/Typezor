@@ -1,7 +1,7 @@
 <Project>
 
   <PropertyGroup>
-    <Version>0.0.1</Version>
+    <Version>0.0.2</Version>
     <Company>Reactive Things</Company>
     <Copyright>Copyright (C) Reactive Things</Copyright>
     <LangVersion>latest</LangVersion>

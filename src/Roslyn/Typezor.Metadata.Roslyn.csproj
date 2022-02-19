@@ -14,7 +14,6 @@
   </PropertyGroup>
   <PropertyGroup>
     <ProjectGuid>{3D74F5FF-AD4C-40A5-9577-5ED378031FF6}</ProjectGuid>
-    <Version>1.0.18</Version>
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\CodeModel\Typezor.CodeModel.csproj" />

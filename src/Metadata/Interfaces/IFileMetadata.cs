@@ -8,5 +8,6 @@ namespace Typezor.Metadata.Interfaces
         IEnumerable<IDelegateMetadata> Delegates { get; }
         IEnumerable<IEnumMetadata> Enums { get; }
         IEnumerable<IInterfaceMetadata> Interfaces { get; }
+        IFileMetadata GetTypesFromNamespace(params string[] requiredNamespaces);
     }
 }

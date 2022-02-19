@@ -15,7 +15,10 @@ namespace Typezor;
 public class TemplateDescriptor
 {
     private readonly Type _templateType;
-    private readonly string _path;
+    /// <summary>
+    /// Template Path
+    /// </summary>
+    public string Path { get; }
 
     /// <summary>
     /// Initializes an instance of <see cref="TemplateDescriptor"/>.
@@ -23,7 +26,7 @@ public class TemplateDescriptor
     public TemplateDescriptor(Type templateType, string path)
     {
         _templateType = templateType;
-        _path = path;
+        Path = path;
     }
 
     private ITemplate CreateTemplateInstance() =>  (ITemplate)(
@@ -43,7 +46,7 @@ public class TemplateDescriptor
         template.Model = model;
 
         template.CancellationToken = cancellationToken;
-        template.TemplatePath = _path;
+        template.TemplatePath = Path;
 
         await template.ExecuteAsync();
     }
