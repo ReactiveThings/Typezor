@@ -1,4 +1,4 @@
-name: .NET
+name: PR
 
 on:
   pull_request:
@@ -26,19 +26,19 @@ jobs:
       with:
           PROJECT_FILE_PATH: Typezor.SourceGenerator/Typezor.SourceGenerator.csproj
           VERSION_FILE_PATH: Directory.Build.props
-          NUGET_SOURCE: https://nuget.pkg.github.com/ReactiveThings/index.json
+          NUGET_SOURCE: https://nuget.pkg.github.com/ReactiveThings
           NUGET_KEY: ${{secrets.GITHUB_TOKEN}}
     - name: Publish Typezor.Runtime
       uses: brandedoutcast/publish-nuget@v2.5.2
       with:
           PROJECT_FILE_PATH: Typezor.Runtime/Typezor.Runtime.csproj
           VERSION_FILE_PATH: Directory.Build.props
-          NUGET_SOURCE: https://nuget.pkg.github.com/ReactiveThings/index.json
+          NUGET_SOURCE: https://nuget.pkg.github.com/ReactiveThings
           NUGET_KEY: ${{secrets.GITHUB_TOKEN}}
     - name: Publish Typezor.CodeModel
       uses: brandedoutcast/publish-nuget@v2.5.2
       with:
           PROJECT_FILE_PATH: src/CodeModel/Typezor.CodeModel.csproj
           VERSION_FILE_PATH: Directory.Build.props
-          NUGET_SOURCE: https://nuget.pkg.github.com/ReactiveThings/index.json
+          NUGET_SOURCE: https://nuget.pkg.github.com/ReactiveThings
           NUGET_KEY: ${{secrets.GITHUB_TOKEN}}
