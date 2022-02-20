@@ -66,10 +66,10 @@ jobs:
     - name: Test
       run: dotnet test --no-build --verbosity normal --configuration Release
     - name: Pack Typezor.SourceGenerator
-      run: dotnet pack Typezor.SourceGenerator/Typezor.SourceGenerator.csproj --output nuget-packages --configuration Release
+      run: dotnet pack --no-build Typezor.SourceGenerator/Typezor.SourceGenerator.csproj --output nuget-packages --configuration Release
     - name: Pack Typezor.Runtime
-      run: dotnet pack Typezor.Runtime/Typezor.Runtime.csproj --output nuget-packages --configuration Release
+      run: dotnet pack --no-build Typezor.Runtime/Typezor.Runtime.csproj --output nuget-packages --configuration Release
     - name: Pack Typezor.CodeModel
-      run: dotnet pack src/CodeModel/Typezor.CodeModel.csproj --output nuget-packages --configuration Release
+      run: dotnet pack --no-build src/CodeModel/Typezor.CodeModel.csproj --output nuget-packages --configuration Release
     - name: Push Nuget packages
       run: dotnet nuget push **/*.nupkg --skip-duplicate --api-key ${{ github.token }} --source https://nuget.pkg.github.com/ReactiveThings
