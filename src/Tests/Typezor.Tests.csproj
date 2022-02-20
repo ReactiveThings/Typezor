@@ -26,6 +26,7 @@
     <Folder Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
+<PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.9.1" />
     <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Features" Version="4.0.1" />
     <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Workspaces" Version="4.0.1" />
     <PackageReference Include="Microsoft.CodeAnalysis.Features" Version="4.0.1" />
