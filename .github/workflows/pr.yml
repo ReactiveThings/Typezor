@@ -28,6 +28,6 @@ jobs:
     - name: Pack Typezor.CodeModel
       run: dotnet pack src/CodeModel/Typezor.CodeModel.csproj --output nuget-packages --configuration Release
     - name: Nuget add source Github
-      run: dotnet nuget add source --username USERNAME --password ${{ secrets.GITHUB_TOKEN }} --store-password-in-clear-text --name github "https://nuget.pkg.github.com/OWNER/index.json"
+      run: dotnet nuget add source --username USERNAME --password ${{ secrets.GITHUB_TOKEN }} --store-password-in-clear-text --name github "https://nuget.pkg.github.com/ReactiveThings/index.json"
     - name: Push Nuget packages
       run: dotnet nuget push **/*.nupkg --skip-duplicate --source github
