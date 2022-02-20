@@ -22,7 +22,7 @@ jobs:
     - name: Build
       run: dotnet build --no-restore --configuration Release
     - name: Test
-      run: dotnet test --no-build --verbosity normal
+      run: dotnet test --no-build --verbosity normal --configuration Release
     - name: Pack Typezor.SourceGenerator
       run: dotnet pack Typezor.SourceGenerator/Typezor.SourceGenerator.csproj --output nuget-packages --configuration Release
     - name: Pack Typezor.Runtime
