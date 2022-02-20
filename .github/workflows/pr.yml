@@ -1,0 +1,44 @@
+name: .NET
+
+on:
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 6.0.x
+    - name: Restore dependencies
+      run: dotnet restore
+    - name: Build
+      run: dotnet build --no-restore
+    - name: Test
+      run: dotnet test --no-build --verbosity normal
+    - name: Publish Typezor.SourceGenerator
+      uses: brandedoutcast/publish-nuget@v2.5.2
+      with:
+          PROJECT_FILE_PATH: Typezor.SourceGenerator/Typezor.SourceGenerator.csproj
+          VERSION_FILE_PATH: Directory.Build.props
+          NUGET_SOURCE: https://nuget.pkg.github.com/ReactiveThings/index.json
+          NUGET_KEY: ${{secrets.GITHUB_TOKEN}}
+    - name: Publish Typezor.Runtime
+      uses: brandedoutcast/publish-nuget@v2.5.2
+      with:
+          PROJECT_FILE_PATH: Typezor.Runtime/Typezor.Runtime.csproj
+          VERSION_FILE_PATH: Directory.Build.props
+          NUGET_SOURCE: https://nuget.pkg.github.com/ReactiveThings/index.json
+          NUGET_KEY: ${{secrets.GITHUB_TOKEN}}
+    - name: Publish Typezor.CodeModel
+      uses: brandedoutcast/publish-nuget@v2.5.2
+      with:
+          PROJECT_FILE_PATH: src/CodeModel/Typezor.CodeModel.csproj
+          VERSION_FILE_PATH: Directory.Build.props
+          NUGET_SOURCE: https://nuget.pkg.github.com/ReactiveThings/index.json
+          NUGET_KEY: ${{secrets.GITHUB_TOKEN}}
