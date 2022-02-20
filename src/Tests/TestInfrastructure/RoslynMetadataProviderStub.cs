@@ -20,7 +20,7 @@ namespace Typezor.Tests.TestInfrastructure
         public IFileMetadata GetFile(params string[] path)
         {
             var compilation = CSharpCompilation.Create("compilation",
-                path.Select(fileName => CSharpSyntaxTree.ParseText(File.ReadAllText(fileName))),
+                path.Select(fileName => CSharpSyntaxTree.ParseText(File.ReadAllText(fileName.Replace(@"\",@"/")))),
                 new[] { MetadataReference.CreateFromFile(typeof(Binder).GetTypeInfo().Assembly.Location) },
                 new CSharpCompilationOptions(OutputKind.ConsoleApplication));
             return new RoslynGlobalNamespaceMetadata(compilation.GlobalNamespace, new FindAllTypesVisitor());
