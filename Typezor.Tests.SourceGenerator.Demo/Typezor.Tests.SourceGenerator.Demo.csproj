@@ -26,8 +26,8 @@
     <AdditionalFiles Include="Templates\Mapping.razor" Typezor="true" />
     <AdditionalFiles Include="Templates\TemplateFoo.razor" Typezor="true" />
     <AdditionalFiles Include="Templates\TemplateBar.razor" Typezor="true" />
-    <AdditionalFiles Include="Typezor.Tests.SourceGenerator.ReferencedProject.dll" Typezor="true" />
-    <Content Remove="Typezor.Tests.SourceGenerator.ReferencedProject.dll" />
+    <!--<AdditionalFiles Include="Typezor.Tests.SourceGenerator.ReferencedProject.dll" Typezor="true" />
+    <Content Remove="Typezor.Tests.SourceGenerator.ReferencedProject.dll" />-->
     <!--<AdditionalFiles Include="$(PKGTypezor_Tests_SourceGenerator_ReferencedProject)\lib\netstandard2.0\Typezor.Tests.SourceGenerator.ReferencedProject.dll" Typezor="true" />-->
   </ItemGroup>
 
