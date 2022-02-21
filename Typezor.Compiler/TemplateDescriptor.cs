@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.CodeAnalysis;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -21,12 +22,25 @@ public class TemplateDescriptor
     public string Path { get; }
 
     /// <summary>
+    /// Diagnostics
+    /// </summary>
+    public Diagnostic[] Diagnostics { get; } = Array.Empty<Diagnostic>();
+
+    /// <summary>
     /// Initializes an instance of <see cref="TemplateDescriptor"/>.
     /// </summary>
-    public TemplateDescriptor(Type templateType, string path)
+    public TemplateDescriptor(string path, Type templateType)
     {
-        _templateType = templateType;
         Path = path;
+        _templateType = templateType;
+    }
+    /// <summary>
+    /// Initializes an instance of <see cref="TemplateDescriptor"/>.
+    /// </summary>
+    public TemplateDescriptor(string path, params Diagnostic[] diagnostics)
+    {
+        Path = path;
+        Diagnostics = diagnostics;
     }
 
     private ITemplate CreateTemplateInstance() =>  (ITemplate)(
@@ -66,17 +80,31 @@ public class TemplateDescriptor
         IEnumerable<string> razorClasses, 
         CancellationToken cancellationToken = default)
     {
-        var csharpCode = Razor.Transpile(source, templatePath);
-        var sources = new[] { csharpCode }.Concat(razorClasses);
+        try
+        {
+            var csharpCode = Razor.Transpile(source, templatePath);
+            var sources = new[] { csharpCode }.Concat(razorClasses);
 
 
-        var type = new Compiler(assemblyLoadContext).Compile<ITemplate>(
-            sources,
-            razorReferences,
-            cancellationToken
-        );
+            var type = new Compiler(assemblyLoadContext).Compile<ITemplate>(
+                sources,
+                razorReferences,
+                cancellationToken
+            );
 
-        return new TemplateDescriptor(type, templatePath);
+            return new TemplateDescriptor(templatePath, type);
+        }
+        catch (CompilationException me)
+        {
+            return new TemplateDescriptor(templatePath, me.Diagnostics);
+        }
+        catch (TranspileRazorException me)
+        {
+            return new TemplateDescriptor(templatePath, me.Diagnostics.Select(p => p.ToDiagnostic()).ToArray());
+        }
+        catch (Exception e)
+        {
+            return new TemplateDescriptor(templatePath,e.ToDiagnostic());
+        }
     }
-
 }

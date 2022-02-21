@@ -10,6 +10,25 @@ using Microsoft.AspNetCore.Razor.Language.Extensions;
 namespace Typezor;
 
 /// <summary>
+/// Exception thrown when an attempt to compile a Razor template fails.
+/// </summary>
+public class TranspileRazorException : Exception
+{
+    /// <summary>
+    /// 
+    /// </summary>
+    public readonly IReadOnlyList<RazorDiagnostic> Diagnostics;
+
+    /// <summary>
+    /// Initializes an instance of <see cref="CompilationException"/>.
+    /// </summary>
+    public TranspileRazorException(string message, IReadOnlyList<RazorDiagnostic> diagnostics) : base(message)
+    {
+        Diagnostics = diagnostics;
+    }
+}
+
+/// <summary>
 /// Methods to transpile and compile Razor templates.
 /// </summary>
 public static class Razor
@@ -74,8 +93,13 @@ public static class Razor
             Array.Empty<RazorSourceDocument>(),
             Array.Empty<TagHelperDescriptor>()
         );
-        //todo handle diagnostics
-        return codeDocument.GetCSharpDocument().GeneratedCode;
+
+        var document = codeDocument.GetCSharpDocument();
+        if (document.Diagnostics.Any(p => p.Severity == RazorDiagnosticSeverity.Error))
+        {
+            throw new TranspileRazorException($"Cannot transpile template {path}", document.Diagnostics);
+        }
+        return document.GeneratedCode;
     }
 
 }

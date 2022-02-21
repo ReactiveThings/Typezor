@@ -46,26 +46,25 @@ namespace Typezor.SourceGenerator
                             if (context.CancellationToken.IsCancellationRequested) return;
                             using (new PerformanceLog("    RenderAsync"))
                             {
-                                compiled.RenderAsync(namespaceMetadata, output, context.CancellationToken).Wait();
+                                if (compiled.Diagnostics.Any())
+                                {
+                                    foreach (var diagnostic in compiled.Diagnostics)
+                                    {
+                                        context.ReportDiagnostic(diagnostic);
+                                    }
+                                }
+                                else
+                                {
+                                    compiled.RenderAsync(namespaceMetadata, output, context.CancellationToken).Wait();
+                                }
                             }
                         }
 
                     }
                 }
-                catch (CompilationException me)
-                {
-                    foreach (var diagnostic in me.Diagnostics)
-                    {
-                        context.ReportDiagnostic(diagnostic);
-                    }
-                }
                 catch (Exception e)
                 {
-                    Log.Error(e.ToString() + e.StackTrace);
-                    if (e.InnerException != null)
-                    {
-                        Log.Error(e.InnerException.ToString());
-                    }
+                    context.ReportDiagnostic(e.ToDiagnostic());
                 }
             }
         }

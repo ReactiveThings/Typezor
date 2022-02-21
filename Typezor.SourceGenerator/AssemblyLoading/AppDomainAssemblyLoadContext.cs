@@ -11,7 +11,7 @@ namespace Typezor.SourceGenerator.AssemblyLoading
 
         public AppDomainAssemblyLoadContext()
         {
-            tempDirectory = Path.Combine(Path.GetTempPath(), "RazorSourceGenerator");
+            tempDirectory = Path.Combine(Path.GetTempPath(), "TypezorSourceGenerator");
             if (Directory.Exists(tempDirectory) == false)
             {
                 Directory.CreateDirectory(tempDirectory);
@@ -52,7 +52,7 @@ namespace Typezor.SourceGenerator.AssemblyLoading
             }
             catch (Exception e)
             {
-                //Log.Warn(e.ToString());
+                Log1.Warn(e.ToString());
             }
         }
     }
