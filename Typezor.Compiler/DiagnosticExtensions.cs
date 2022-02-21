@@ -12,10 +12,10 @@ public static class DiagnosticExtensions
     {
         if (e.InnerException != null)
         {
-            return Diagnostic.Create(new DiagnosticDescriptor("TZ001", e.InnerException.Message, e.InnerException.ToString().Replace(Environment.NewLine, ""), "TypeRazor", DiagnosticSeverity.Error, true), Location.None);
+            return Diagnostic.Create(new DiagnosticDescriptor("TZ001", e.InnerException.Message, e.InnerException.ToString().Replace(Environment.NewLine, ""), "Typezor", DiagnosticSeverity.Error, true), Location.None);
         }
 
-        return Diagnostic.Create(new DiagnosticDescriptor("TZ001", e.Message, e.ToString().Replace(Environment.NewLine, ""), "TypeRazor", DiagnosticSeverity.Error, true), Location.None);
+        return Diagnostic.Create(new DiagnosticDescriptor("TZ001", e.Message, e.ToString().Replace(Environment.NewLine, ""), "Typezor", DiagnosticSeverity.Error, true), Location.None);
     }
 
     public static Diagnostic ToDiagnostic(this RazorDiagnostic diagnostic)
@@ -24,7 +24,7 @@ public static class DiagnosticExtensions
             diagnostic.Id,
             "Razor template error",
             diagnostic.GetMessage(CultureInfo.CurrentCulture),
-            nameof(TemplateDescriptor),
+            "Typezor",
             diagnostic.Severity == RazorDiagnosticSeverity.Error
                 ? DiagnosticSeverity.Error
                 : DiagnosticSeverity.Warning, true);

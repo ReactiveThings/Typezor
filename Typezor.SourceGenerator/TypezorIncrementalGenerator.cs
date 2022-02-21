@@ -21,6 +21,8 @@ namespace Typezor.SourceGenerator
         {
             var assemblyLoadContext = AssemblyLoadContextFactory.Create();
 
+            var logging = context.AnalyzerConfigOptionsProvider.Select(EmitLogging());
+
             var razorClasses = context.AdditionalTextsProvider.Combine(context.AnalyzerConfigOptionsProvider)
                 .Where(p => p.Right.IsClass(p.Left))
                 .Select(GetText())
@@ -38,15 +40,16 @@ namespace Typezor.SourceGenerator
                 .Select(Compile(assemblyLoadContext))
                 .Where(p => p != null);
 
-            context.RegisterSourceOutput(razorTemplates.Combine(context.CompilationProvider), (c, pair) =>
+            context.RegisterSourceOutput(razorTemplates.Combine(context.CompilationProvider.Combine(logging)), (c, pair) =>
             {
                 try
                 {
-                    ILogger logger = new SourceProductionContextLogger(c);
+                    new FileLogger().Warn(pair.Right.Right.ToString());
+                    ILogger logger = new SourceProductionContextLogger(c, pair.Right.Right);
                     if (c.CancellationToken.IsCancellationRequested) return;
                     using (logger.Performance("RenderAsync"))
                     {
-                        var namespaceMetadata = new FileImpl(new RoslynGlobalNamespaceMetadata(pair.Right.GlobalNamespace, new FindAllTypesVisitor()));
+                        var namespaceMetadata = new FileImpl(new RoslynGlobalNamespaceMetadata(pair.Right.Left.GlobalNamespace, new FindAllTypesVisitor()));
                         var output = new SourceProductionContextOutput(c, logger);
                         if (pair.Left.Diagnostics.Any())
                         {
@@ -67,6 +70,20 @@ namespace Typezor.SourceGenerator
                 }
 
             });
+        }
+
+        private static Func<AnalyzerConfigOptionsProvider, CancellationToken, bool> EmitLogging()
+        {
+            return (p,_) =>
+            {
+                bool emitLogging = false;
+                if (p.GlobalOptions.TryGetValue("typezor_emit_logging", out var emitLoggingSwitch))
+                {
+                    emitLogging = emitLoggingSwitch.Equals("true", StringComparison.OrdinalIgnoreCase);
+                }
+
+                return emitLogging;
+            };
         }
 
         private static Func<((string Path, string Text) Left, (ImmutableArray<Assembly> Left, ImmutableArray<string> Right) Right), CancellationToken, TemplateDescriptor> Compile(IAssemblyLoadContext assemblyLoadContext)

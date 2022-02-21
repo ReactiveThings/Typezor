@@ -18,7 +18,7 @@ namespace Typezor.SourceGenerator.Logger
                 Diagnostic.Create(
                     new DiagnosticDescriptor("TZ001", message,
                         message.Replace(Environment.NewLine, ""),
-                        "TypeRazor",
+                        "Typezor",
                         severity,
                         true),
                     Location.None);
