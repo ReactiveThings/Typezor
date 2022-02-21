@@ -7,14 +7,19 @@ namespace Typezor.SourceGenerator.Logger
     {
         protected abstract void ReportDiagnostic(DiagnosticSeverity severity, string message);
 
-        public void Warn(string message)
+        public virtual void Warn(string message)
         {
             ReportDiagnostic(DiagnosticSeverity.Warning, message);
         }
 
-        public void Error(string message)
+        public virtual void Error(string message)
         {
             ReportDiagnostic(DiagnosticSeverity.Error, message);
+        }
+
+        public virtual void Info(string message)
+        {
+            ReportDiagnostic(DiagnosticSeverity.Info, message);
         }
 
         public IDisposable Performance(string measureName)

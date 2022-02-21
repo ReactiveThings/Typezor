@@ -19,7 +19,7 @@ namespace Typezor.SourceGenerator.Logger
         public void Dispose()
         {
             _stopwatch.Stop();
-            _logger.Warn($"{_name} {_stopwatch.ElapsedMilliseconds}ms");
+            _logger.Info($"{_name} {_stopwatch.ElapsedMilliseconds}ms");
         }
     }
 }

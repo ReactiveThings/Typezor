@@ -6,6 +6,7 @@ namespace Typezor.SourceGenerator.Logger
     {
         void Warn(string message);
         void Error(string message);
+        void Info(string message);
         IDisposable Performance(string measureName);
     }
 }
