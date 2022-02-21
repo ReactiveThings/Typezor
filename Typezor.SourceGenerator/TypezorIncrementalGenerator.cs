@@ -44,7 +44,6 @@ namespace Typezor.SourceGenerator
             {
                 try
                 {
-                    new FileLogger().Warn(pair.Right.Right.ToString());
                     ILogger logger = new SourceProductionContextLogger(c, pair.Right.Right);
                     if (c.CancellationToken.IsCancellationRequested) return;
                     using (logger.Performance("RenderAsync"))
