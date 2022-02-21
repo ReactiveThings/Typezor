@@ -1,9 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <RootNamespace>Typezor</RootNamespace>
 	<IsPackable>true</IsPackable>
-    <AssemblyTitle>Typezor.CodeModel</AssemblyTitle>
 	<Description>Public interfaces for the Typezor metadata model</Description>
   </PropertyGroup>
 </Project>

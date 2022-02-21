@@ -5,7 +5,6 @@
     <IsPackable>true</IsPackable>
     <Description>Contains runtime dependencies for Typezor</Description>
     <Nullable>annotations</Nullable>
-    <LangVersion>latest</LangVersion>
   </PropertyGroup>
 
   <ItemGroup>

@@ -1,7 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <AssemblyTitle>Typezor.Metadata.Roslyn</AssemblyTitle>
 	<Description>Roslyn implementation of the Typezor metadata model</Description>
   </PropertyGroup>
   <ItemGroup>

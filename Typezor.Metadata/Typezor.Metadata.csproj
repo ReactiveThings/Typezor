@@ -1,7 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <AssemblyTitle>Typezor.Metadata</AssemblyTitle>
 	<Description>Internal interfaces for the Typezor metadata model</Description>
   </PropertyGroup>
   <ItemGroup>
