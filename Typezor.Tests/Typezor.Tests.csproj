@@ -4,18 +4,13 @@
     <IsPackable>false</IsPackable>
   </PropertyGroup>
 	<ItemGroup>
-    <ProjectReference Include="..\..\Typezor.CodeModel.Implementation\Typezor.CodeModel.Implementation.csproj" />
-    <ProjectReference Include="..\CodeModel\Typezor.CodeModel.csproj" />
-    <ProjectReference Include="..\Metadata\Typezor.Metadata.csproj" />
-    <ProjectReference Include="..\Roslyn\Typezor.Metadata.Roslyn.csproj" />
+    <ProjectReference Include="..\Typezor.CodeModel.Implementation\Typezor.CodeModel.Implementation.csproj" />
+    <ProjectReference Include="..\Typezor.CodeModel\Typezor.CodeModel.csproj" />
+    <ProjectReference Include="..\Typezor.Metadata\Typezor.Metadata.csproj" />
+    <ProjectReference Include="..\Typezor.Roslyn\Typezor.Metadata.Roslyn.csproj" />
   </ItemGroup>
 	<ItemGroup>
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.11.0" />
-    <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Features" Version="4.0.1" />
-    <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Workspaces" Version="4.0.1" />
-    <PackageReference Include="Microsoft.CodeAnalysis.Features" Version="4.0.1" />
-    <PackageReference Include="Microsoft.CodeAnalysis.VisualBasic.Features" Version="4.0.1" />
-    <PackageReference Include="Microsoft.CodeAnalysis.VisualBasic.Workspaces" Version="4.0.1" />
     <PackageReference Include="Should-DotNetStandard" Version="1.0.0" />
     <PackageReference Include="xunit" Version="2.4.1" />
     <PackageReference Include="xunit.assert" Version="2.4.1" />

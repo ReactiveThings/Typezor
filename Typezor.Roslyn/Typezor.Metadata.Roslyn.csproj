@@ -1,12 +1,14 @@
 <Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <AssemblyTitle>Typezor.Metadata.Roslyn</AssemblyTitle>
+	<Description>Roslyn implementation of the Typezor metadata model</Description>
   </PropertyGroup>
-
   <ItemGroup>
     <ProjectReference Include="..\Typezor.CodeModel\Typezor.CodeModel.csproj" />
     <ProjectReference Include="..\Typezor.Metadata\Typezor.Metadata.csproj" />
   </ItemGroup>
-
+  <ItemGroup>
+    <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="4.0.1" />
+  </ItemGroup>
 </Project>
