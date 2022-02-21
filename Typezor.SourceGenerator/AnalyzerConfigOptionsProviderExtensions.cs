@@ -16,20 +16,17 @@ namespace Typezor.SourceGenerator
 
         public static bool IsClass(this AnalyzerConfigOptionsProvider analyzerConfigOptions, AdditionalText file)
         {
-            Log1.Warn($"IsClass {file.Path}");
             return new FileInfo(file.Path).Extension == ".cs" && analyzerConfigOptions.IsTypezorFile(file);
         }
 
         public static bool IsReference(this AnalyzerConfigOptionsProvider analyzerConfigOptions, AdditionalText file)
         {
-            Log1.Warn($"IsReference {file.Path}");
             var extension = new FileInfo(file.Path).Extension;
             return extension == ".dll" && analyzerConfigOptions.IsTypezorFile(file);
         }
 
         public static bool IsTemplate(this AnalyzerConfigOptionsProvider analyzerConfigOptions, AdditionalText file)
         {
-            Log1.Warn($"IsTemplate {file.Path}");
             var extension = new FileInfo(file.Path).Extension;
             return new[] { ".cshtml", ".razor" }.Contains(extension) && analyzerConfigOptions.IsTypezorFile(file);
         }

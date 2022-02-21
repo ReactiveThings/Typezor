@@ -5,6 +5,8 @@ using Microsoft.CodeAnalysis;
 using Typezor.CodeModel.Implementation;
 using Typezor.Metadata.Roslyn;
 using Typezor.SourceGenerator.AssemblyLoading;
+using Typezor.SourceGenerator.Logger;
+using Typezor.SourceGenerator.TemplateOutput;
 
 namespace Typezor.SourceGenerator
 {
@@ -12,12 +14,12 @@ namespace Typezor.SourceGenerator
     {
         public void Execute(GeneratorExecutionContext context)
         {
-            using (new PerformanceLog("TypezorGenerator"))
+            ILogger logger = new GeneratorExecutionContextLogger(context);
+            using (logger.Performance("TypezorGenerator"))
             {
-                Log.ExecutionContext = context;
                 try
                 {
-                    using var _ = new PerformanceLog("Execute");
+                    using var _ = logger.Performance("Execute");
                     var namespaceMetadata =
                         new FileImpl(new RoslynGlobalNamespaceMetadata(context.Compilation.GlobalNamespace, new FindAllTypesVisitor()));
 
@@ -30,21 +32,21 @@ namespace Typezor.SourceGenerator
                     var razorClasses = GetRazorClasses(context).ToList();
                     var templates = GetRazorTemplates(context);
 
-                    var output = new SourceGeneratorOutput(context);
+                    var output = new SourceGeneratorOutput(context,logger);
                     foreach (var template in templates)
                     {
                         if (context.CancellationToken.IsCancellationRequested) return;
-                        using (new PerformanceLog($"Template {template.path}"))
+                        using (logger.Performance($"Template {template.path}"))
                         {
                             TemplateDescriptor compiled;
-                            using (new PerformanceLog("    Compile"))
+                            using (logger.Performance("    Compile"))
                             {
                                 compiled = TemplateDescriptor.Compile(template.content, razorReferences,
                                     assemblyLoadContext, template.path, razorClasses);
                             }
 
                             if (context.CancellationToken.IsCancellationRequested) return;
-                            using (new PerformanceLog("    RenderAsync"))
+                            using (logger.Performance("    RenderAsync"))
                             {
                                 if (compiled.Diagnostics.Any())
                                 {
@@ -59,7 +61,6 @@ namespace Typezor.SourceGenerator
                                 }
                             }
                         }
-
                     }
                 }
                 catch (Exception e)

@@ -20,7 +20,7 @@
 	  <ProjectReference Include="..\src\Roslyn\Typezor.Metadata.Roslyn.csproj" PrivateAssets="all" />
 	  <ProjectReference Include="..\Typezor.CodeModel.Implementation\Typezor.CodeModel.Implementation.csproj" PrivateAssets="all" />
 	  <PackageReference Include="Microsoft.AspNetCore.Razor.Language" Version="6.0.0" PrivateAssets="all" GeneratePathProperty="true" />
-	  <PackageReference Include="System.Runtime.Loader" Version="4.3.0" PrivateAssets="all" GeneratePathProperty="true"/>
+	  <PackageReference Include="System.Runtime.Loader" Version="4.3.0" PrivateAssets="all" GeneratePathProperty="true" />
 
 	  <!-- Private dependency on Typezor.Compiler because it's required only during codegen -->
 	  <ProjectReference Include="..\Typezor.Compiler\Typezor.Compiler.csproj" PrivateAssets="all" />

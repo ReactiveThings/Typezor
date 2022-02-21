@@ -9,6 +9,8 @@ using Typezor.AssemblyLoading;
 using Typezor.CodeModel.Implementation;
 using Typezor.Metadata.Roslyn;
 using Typezor.SourceGenerator.AssemblyLoading;
+using Typezor.SourceGenerator.Logger;
+using Typezor.SourceGenerator.TemplateOutput;
 
 namespace Typezor.SourceGenerator
 {
@@ -40,11 +42,12 @@ namespace Typezor.SourceGenerator
             {
                 try
                 {
+                    ILogger logger = new SourceProductionContextLogger(c);
                     if (c.CancellationToken.IsCancellationRequested) return;
-                    using (new PerformanceLog("RenderAsync"))
+                    using (logger.Performance("RenderAsync"))
                     {
                         var namespaceMetadata = new FileImpl(new RoslynGlobalNamespaceMetadata(pair.Right.GlobalNamespace, new FindAllTypesVisitor()));
-                        var output = new SourceProductionContextOutput(c);
+                        var output = new SourceProductionContextOutput(c, logger);
                         if (pair.Left.Diagnostics.Any())
                         {
                             foreach (var diagnostic in pair.Left.Diagnostics)
