@@ -9,7 +9,7 @@ Typezor is Source Generator based on [Typewriter](http://frhagn.github.io/Typewr
 ## Features
 - all leading and trailing whitespaces and new lines are removed from generated text
 - if newly generated file has the same size as existing one then it is not overwritten ( This is performance optimization. In the edge case can cause outdated file content )
-- Typerazor returns all classes, interfaces and enums from compilation. For big project it can be very slow. You can quickly filter them by namespace using 
+- Typezor returns all classes, interfaces and enums from compilation. For big project it can be very slow. You can quickly filter them by namespace using 
 ``Model.GetTypesFromNamespace("your.namespace","your.second.namespace")``
 - Generated text can be saved as file ``@Output.SaveAs("path/to/file.ts")`` or added as source file to compilation ``@Output.AddSource("fileName")``
 - Razor template file (.cshtml or .razor) must be added as additional file with attribute Typerazor="true" 
