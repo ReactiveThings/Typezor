@@ -30,8 +30,8 @@ namespace Typezor.Tests.CodeModel
             var enumInfo = fileInfo.Enums.First();
 
             enumInfo.Name.ShouldEqual("EnumInfo");
-            enumInfo.FullName.ShouldEqual("Typezor.Tests.CodeModel.Support.EnumInfo");
-            enumInfo.Namespace.ShouldEqual("Typezor.Tests.CodeModel.Support");
+            enumInfo.FullName.ShouldEqual("Typezor.Tests.CodeModel.Support.Enums.EnumInfo");
+            enumInfo.Namespace.ShouldEqual("Typezor.Tests.CodeModel.Support.Enums");
             enumInfo.Parent.ShouldEqual(fileInfo);
         }
 

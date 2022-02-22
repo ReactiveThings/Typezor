@@ -213,7 +213,7 @@ namespace Typezor.Tests.CodeModel
 
             nullableEnumInfo1.Type.Name.ShouldEqual("EnumInfo");
             nullableEnumInfo1.Type.OriginalName.ShouldEqual("EnumInfo?");
-            nullableEnumInfo1.Type.FullName.ShouldEqual("Typezor.Tests.CodeModel.Support.EnumInfo?");
+            nullableEnumInfo1.Type.FullName.ShouldEqual("Typezor.Tests.CodeModel.Support.Enums.EnumInfo?");
 
             nullableEnumInfo1.Type.IsEnum.ShouldBeTrue("IsEnum");
             nullableEnumInfo1.Type.IsEnumerable.ShouldBeFalse("IsEnumerable");
@@ -227,7 +227,7 @@ namespace Typezor.Tests.CodeModel
 
             nullableEnumInfo2.Type.Name.ShouldEqual("EnumInfo");
             nullableEnumInfo2.Type.OriginalName.ShouldEqual("EnumInfo?");
-            nullableEnumInfo2.Type.FullName.ShouldEqual("Typezor.Tests.CodeModel.Support.EnumInfo?");
+            nullableEnumInfo2.Type.FullName.ShouldEqual("Typezor.Tests.CodeModel.Support.Enums.EnumInfo?");
 
             nullableEnumInfo2.Type.IsEnum.ShouldBeTrue("IsEnum");
             nullableEnumInfo2.Type.IsEnumerable.ShouldBeFalse("IsEnumerable");

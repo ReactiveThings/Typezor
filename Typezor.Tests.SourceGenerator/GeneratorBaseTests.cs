@@ -9,6 +9,18 @@ namespace Typezor.Tests.SourceGenerator;
 
 public class GeneratorBaseTests
 {
+    protected static GeneratorDriverRunResult RunGenerator(TypezorSourceGenerator generator,
+        string code, params AdditionalText[] additionalTexts)
+    {
+        var text = ImmutableArray<AdditionalText>.Empty;
+        text = text.AddRange(additionalTexts);
+
+        GeneratorDriver driver = CSharpGeneratorDriver.Create(generator);
+        driver = driver.AddAdditionalTexts(text);
+        driver = driver.WithUpdatedAnalyzerConfigOptions(new AnalyzerConfigOptionsProviderMock());
+        driver = driver.RunGeneratorsAndUpdateCompilation(CreateCompilation(code), out var outputCompilation, out var diagnostics);
+        return driver.GetRunResult();
+    }
 
     protected static GeneratorDriverRunResult RunGenerator(TypezorIncrementalGenerator generator,
         string code, params AdditionalText[] additionalTexts)

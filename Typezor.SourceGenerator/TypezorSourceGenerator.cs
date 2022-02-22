@@ -14,7 +14,8 @@ namespace Typezor.SourceGenerator
     {
         public void Execute(GeneratorExecutionContext context)
         {
-            ILogger logger = new GeneratorExecutionContextLogger(context);
+            var treatInfoAsWarning = TreatInfoAsWarning(context);
+            ILogger logger = new GeneratorExecutionContextLogger(context, treatInfoAsWarning);
             using (logger.Performance("TypezorGenerator"))
             {
                 try
@@ -32,7 +33,7 @@ namespace Typezor.SourceGenerator
                     var razorClasses = GetRazorClasses(context).ToList();
                     var templates = GetRazorTemplates(context);
 
-                    var output = new SourceGeneratorOutput(context,logger);
+                    var output = TemplateOutputFactory(context,logger);
                     foreach (var template in templates)
                     {
                         if (context.CancellationToken.IsCancellationRequested) return;
@@ -70,6 +71,12 @@ namespace Typezor.SourceGenerator
             }
         }
 
+        private static bool TreatInfoAsWarning(GeneratorExecutionContext context)
+        {
+            return context.AnalyzerConfigOptions.GlobalOptions.TryGetValue("typezor_info_as_warning", out var emitLoggingSwitch) &&
+                   emitLoggingSwitch.Equals("true", StringComparison.OrdinalIgnoreCase);
+        }
+
         private static IEnumerable<(string path, string content)> GetRazorTemplates(GeneratorExecutionContext context)
         {
             foreach (var file in context.AdditionalFiles)
@@ -104,5 +111,7 @@ namespace Typezor.SourceGenerator
         {
             // No initialization required
         }
+
+        public Func<GeneratorExecutionContext, ILogger, ITemplateOutput> TemplateOutputFactory { get; set; } = (context, logger) => new SourceGeneratorOutput(context, logger);
     }
 }
