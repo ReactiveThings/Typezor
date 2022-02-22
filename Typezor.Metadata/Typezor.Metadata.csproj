@@ -1,0 +1,9 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+	<Description>Internal interfaces for the Typezor metadata model</Description>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Typezor.CodeModel\Typezor.CodeModel.csproj" />
+  </ItemGroup>
+</Project>

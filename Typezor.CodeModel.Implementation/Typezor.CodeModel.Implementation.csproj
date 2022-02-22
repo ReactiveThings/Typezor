@@ -2,11 +2,12 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <RootNamespace>Typezor</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\src\CodeModel\Typezor.CodeModel.csproj" />
-    <ProjectReference Include="..\src\Metadata\Typezor.Metadata.csproj" />
+    <ProjectReference Include="..\Typezor.CodeModel\Typezor.CodeModel.csproj" />
+    <ProjectReference Include="..\Typezor.Metadata\Typezor.Metadata.csproj" />
   </ItemGroup>
 
 </Project>

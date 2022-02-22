@@ -1,7 +1,7 @@
 <Project>
 
   <PropertyGroup>
-    <Version>0.0.1</Version>
+    <Version>0.0.2</Version>
     <Company>Reactive Things</Company>
     <Copyright>Copyright (C) Reactive Things</Copyright>
     <LangVersion>latest</LangVersion>
@@ -14,17 +14,17 @@
     <PackageTags>razor template engine cshtml codegen code generation source generators</PackageTags>
     <PackageProjectUrl>https://github.com/ReactiveThings/Typezor</PackageProjectUrl>
     <PackageReleaseNotes>https://github.com/ReactiveThings/Typezor/blob/master/Changelog.md</PackageReleaseNotes>
-    <PackageReadmeFile>Readme.md</PackageReadmeFile>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
     <EmbedUntrackedSources>true</EmbedUntrackedSources>
     <DebugType>embedded</DebugType>
+    <RepositoryUrl>https://github.com/ReactiveThings/Typezor</RepositoryUrl>
   </PropertyGroup>
 
 
   <ItemGroup>
-    <None Include="../Readme.md" Pack="true" PackagePath="" Visible="false" />
+
   </ItemGroup>
 
 </Project>

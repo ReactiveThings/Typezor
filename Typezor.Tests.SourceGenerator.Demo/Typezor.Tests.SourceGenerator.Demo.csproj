@@ -4,7 +4,6 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <EmitCompilerGeneratedFiles>true</EmitCompilerGeneratedFiles>
     <CompilerGeneratedFilesOutputPath>$(BaseIntermediateOutputPath)\SourceGeneratorFiles</CompilerGeneratedFilesOutputPath>
-	  <LangVersion>latest</LangVersion>
   </PropertyGroup>
 
   <ItemGroup>
@@ -22,37 +21,34 @@
 	<Import Project="../Typezor.SourceGenerator/Typezor.SourceGenerator.props" />
 
   <ItemGroup>
-    <AdditionalFiles Include="EnumTemplate.tst" />
-    <AdditionalFiles Include="Template.tst" />
-    <AdditionalFiles Include="Templates\Mapping.razor">
-      <IsRazorTemplate>true</IsRazorTemplate>
-    </AdditionalFiles>
-    <AdditionalFiles Include="Templates\TemplateFoo.razor" IsRazorTemplate="true" />
-    <AdditionalFiles Include="Templates\TemplateBar.razor" IsRazorTemplate="true" />
-    <AdditionalFiles Include="Typescript\Model.tst" />
-    <AdditionalFiles Include="Typezor.Tests.SourceGenerator.ReferencedProject.dll" IsRazorReference="true" />
+
+    <AdditionalFiles Include="Templates\Mapping.razor" Typezor="true" />
+    <AdditionalFiles Include="Templates\TemplateFoo.razor" Typezor="true" />
+    <AdditionalFiles Include="Templates\TemplateBar.razor" Typezor="true" />
+    <!--<AdditionalFiles Include="Typezor.Tests.SourceGenerator.ReferencedProject.dll" Typezor="true" />
+    <Content Remove="Typezor.Tests.SourceGenerator.ReferencedProject.dll" />-->
+    <!--<AdditionalFiles Include="$(PKGTypezor_Tests_SourceGenerator_ReferencedProject)\lib\netstandard2.0\Typezor.Tests.SourceGenerator.ReferencedProject.dll" Typezor="true" />-->
   </ItemGroup>
 
   <ItemGroup><!--<PackageReference Include="Typezor.SourceGenerator" Version="*" />-->
   
-    <AdditionalFiles Include="Typescript\Model.razor">
-      <IsRazorTemplate>true</IsRazorTemplate>
-    </AdditionalFiles>
+    <AdditionalFiles Include="Typescript\Model.razor" Typezor="true" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Typezor.Runtime" Version="0.0.1" PrivateAssets="all" />
-    <PackageReference Include="Typezor.CodeModel" Version="0.0.1" PrivateAssets="all" />
+	  <PackageReference Include="Typezor.Runtime" Version="0.0.1" PrivateAssets="all" />
+	  <PackageReference Include="Typezor.CodeModel" Version="0.0.1" PrivateAssets="all" />
+	  <!--<PackageReference Include="Typezor.Tests.SourceGenerator.ReferencedProject" Version="0.0.2" GeneratePathProperty="true" />-->
   </ItemGroup>
 
   <ItemGroup>
 	  <ProjectReference Include="..\Typezor.SourceGenerator\Typezor.SourceGenerator.csproj" ReferenceOutputAssembly="false" OutputItemType="Analyzer" />
-    <ProjectReference Include="..\Typezor.Tests.SourceGenerator.ReferencedProject\Typezor.Tests.SourceGenerator.ReferencedProject.csproj" />
+	  <ProjectReference Include="..\Typezor.Tests.SourceGenerator.ReferencedProject\Typezor.Tests.SourceGenerator.ReferencedProject.csproj" />
   </ItemGroup>
 
   <ItemGroup>
     <Compile Update="Templates\TestClassImport.cs" />
-    <AdditionalFiles Include="Templates\TestClassImport.cs" IsRazorClass="true" />
+    <AdditionalFiles Include="Templates\TestClassImport.cs" Typezor="true" />
   </ItemGroup>
 
 </Project>

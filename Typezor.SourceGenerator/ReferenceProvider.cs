@@ -5,7 +5,6 @@ using System.Reflection;
 using System.Text.RegularExpressions;
 using Microsoft.CodeAnalysis;
 using Microsoft.CSharp.RuntimeBinder;
-using Typezor;
 using Typezor.AssemblyLoading;
 using Typezor.CodeModel;
 
@@ -13,11 +12,11 @@ namespace Typezor.SourceGenerator
 {
     public class ReferenceProvider
     {
-        private readonly IAssemblyLoadContext assemblyLoadContext;
+        private readonly IAssemblyLoadContext _assemblyLoadContext;
 
         public ReferenceProvider(IAssemblyLoadContext assemblyLoadContext)
         {
-            this.assemblyLoadContext = assemblyLoadContext;
+            this._assemblyLoadContext = assemblyLoadContext;
         }
 
         private IEnumerable<AssemblyName> StandardAssemblies()
@@ -41,14 +40,19 @@ namespace Typezor.SourceGenerator
 
         public IEnumerable<Assembly> GetReferences(GeneratorExecutionContext context)
         {
-            foreach (var standardAssembly in StandardAssemblies())
-            {
-                yield return assemblyLoadContext.LoadFromAssemblyName(standardAssembly);
-            }
+            foreach (var assembly in GetStandardAssemblies()) yield return assembly;
 
             foreach (var parentAssembly in GetRazorReferences(context))
             {
                 yield return parentAssembly;
+            }
+        }
+
+        public IEnumerable<Assembly> GetStandardAssemblies()
+        {
+            foreach (var standardAssembly in StandardAssemblies())
+            {
+                yield return _assemblyLoadContext.LoadFromAssemblyName(standardAssembly);
             }
         }
 
@@ -57,17 +61,11 @@ namespace Typezor.SourceGenerator
 
             foreach (var file in context.AdditionalFiles)
             {
-                var isRazorReference = string.Equals(
-                    context.AnalyzerConfigOptions
-                        .GetOptions(file)
-                        .TryGetAdditionalFileMetadataValue("IsRazorReference"),
-                    "true",
-                    StringComparison.OrdinalIgnoreCase
-                );
+                var isRazorReference = context.AnalyzerConfigOptions.IsReference(file);
 
                 if (isRazorReference)
                 {
-                    yield return assemblyLoadContext.LoadFromAssemblyPath(file.Path);
+                    yield return _assemblyLoadContext.LoadFromAssemblyPath(file.Path);
                 }
             }
         }

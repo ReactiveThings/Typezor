@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Threading;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Typezor.AssemblyLoading;
@@ -46,7 +47,7 @@ public class Compiler
 
     public Type Compile<TInterface>(
         IEnumerable<string> sources,
-        IEnumerable<Assembly> references
+        IEnumerable<Assembly> references, CancellationToken cancellationToken = default
     )
     {
         var csharpClassesAst = sources.Select(p => CSharpSyntaxTree.ParseText(p));
@@ -60,7 +61,7 @@ public class Compiler
 
 
         using var assemblyStream = new MemoryStream();
-        var csharpDocumentCompilationResult = csharpDocumentCompilation.Emit(assemblyStream);
+        var csharpDocumentCompilationResult = csharpDocumentCompilation.Emit(assemblyStream,cancellationToken: cancellationToken);
 
         if (!csharpDocumentCompilationResult.Success)
         {

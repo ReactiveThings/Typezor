@@ -2,9 +2,6 @@
   <ItemGroup>
     <CompilerVisibleProperty Include="RootNamespace" />
     <CompilerVisibleProperty Include="ProjectDir" />
-    <CompilerVisibleItemMetadata Include="AdditionalFiles" MetadataName="IsRazorTemplate" />
-    <CompilerVisibleItemMetadata Include="AdditionalFiles" MetadataName="AccessModifier" />
-    <CompilerVisibleItemMetadata Include="AdditionalFiles" MetadataName="IsRazorReference" />
-    <CompilerVisibleItemMetadata Include="AdditionalFiles" MetadataName="IsRazorClass" />
+    <CompilerVisibleItemMetadata Include="AdditionalFiles" MetadataName="Typezor" />
   </ItemGroup>
 </Project>

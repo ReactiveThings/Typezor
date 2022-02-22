@@ -2,11 +2,8 @@
 
 	<PropertyGroup>
 		<TargetFrameworks>netstandard2.0</TargetFrameworks>
-		<RootNamespace>Typezor</RootNamespace>
 		<IsPackable>true</IsPackable>
 		<Description>Contains methods to transpile and compile Razor templates</Description>
-		<GenerateDocumentationFile>true</GenerateDocumentationFile>
-		<LangVersion>latest</LangVersion>
 	</PropertyGroup>
 
 	<!-- Disable nullability warnings on older frameworks because there is no nullability info for BCL -->

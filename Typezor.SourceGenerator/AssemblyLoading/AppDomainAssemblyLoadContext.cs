@@ -1,5 +1,4 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 using System.Reflection;
 using Typezor.AssemblyLoading;
 
@@ -7,14 +6,14 @@ namespace Typezor.SourceGenerator.AssemblyLoading
 {
     public class AppDomainAssemblyLoadContext : IAssemblyLoadContext
     {
-        private readonly string tempDirectory;
+        private readonly string _tempDirectory;
 
         public AppDomainAssemblyLoadContext()
         {
-            tempDirectory = Path.Combine(Path.GetTempPath(), "RazorSourceGenerator");
-            if (Directory.Exists(tempDirectory) == false)
+            _tempDirectory = Path.Combine(Path.GetTempPath(), "TypezorSourceGenerator");
+            if (Directory.Exists(_tempDirectory) == false)
             {
-                Directory.CreateDirectory(tempDirectory);
+                Directory.CreateDirectory(_tempDirectory);
             }
         }
 
@@ -36,7 +35,7 @@ namespace Typezor.SourceGenerator.AssemblyLoading
             assemblyStream.Read(data, 0, data.Length);
 
             var filename = Path.GetRandomFileName();
-            var path = Path.Combine(tempDirectory, filename);
+            var path = Path.Combine(_tempDirectory, filename);
             File.WriteAllBytes(path, data);
             return Assembly.LoadFrom(path);
         }
@@ -44,15 +43,14 @@ namespace Typezor.SourceGenerator.AssemblyLoading
         private void CopyAssembly(Assembly assembly)
         {
             var asmSourcePath = assembly.Location;
-            var asmDestPath = Path.Combine(tempDirectory, Path.GetFileName(asmSourcePath));
+            var asmDestPath = Path.Combine(_tempDirectory, Path.GetFileName(asmSourcePath));
             try
             {
-                //File may be in use
                 File.Copy(asmSourcePath, asmDestPath, true);
             }
-            catch (Exception e)
+            catch
             {
-                Log.Warn(e.ToString());
+                // File may be in use
             }
         }
     }

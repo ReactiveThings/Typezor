@@ -1,0 +1,114 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+  </PropertyGroup>
+	<ItemGroup>
+    <ProjectReference Include="..\Typezor.CodeModel.Implementation\Typezor.CodeModel.Implementation.csproj" />
+    <ProjectReference Include="..\Typezor.CodeModel\Typezor.CodeModel.csproj" />
+    <ProjectReference Include="..\Typezor.Compiler\Typezor.Compiler.csproj" />
+    <ProjectReference Include="..\Typezor.Metadata\Typezor.Metadata.csproj" />
+    <ProjectReference Include="..\Typezor.Roslyn\Typezor.Metadata.Roslyn.csproj" />
+    <ProjectReference Include="..\Typezor.Runtime\Typezor.Runtime.csproj" />
+    <ProjectReference Include="..\Typezor.SourceGenerator\Typezor.SourceGenerator.csproj" />
+  </ItemGroup>
+	<ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.11.0" />
+    <PackageReference Include="Should-DotNetStandard" Version="1.0.0" />
+    <PackageReference Include="xunit" Version="2.4.1" />
+    <PackageReference Include="xunit.assert" Version="2.4.1" />
+	<PackageReference Include="xunit.runner.visualstudio" Version="2.4.3">
+		<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		<PrivateAssets>all</PrivateAssets>
+	</PackageReference>
+	<PackageReference Include="coverlet.collector" Version="3.1.0">
+		<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		<PrivateAssets>all</PrivateAssets>
+	</PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Update="CodeModel\Support\AttributeInfo.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Update="CodeModel\Support\ClassInfo.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Update="CodeModel\Support\ConstantInfo.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Update="CodeModel\Support\DelegateInfo.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Update="CodeModel\Support\EnumInfo.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Update="CodeModel\Support\EventInfo.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Update="CodeModel\Support\FileInfo.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Update="CodeModel\Support\IInterfaceInfo.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Update="CodeModel\Support\MethodInfo.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Update="CodeModel\Support\PartialClassInfo.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Update="CodeModel\Support\PartialClassInfo2.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Update="CodeModel\Support\PropertyInfo.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Update="CodeModel\Support\TypeInfo.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Update="Extensions\Support\BaseController.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Update="Extensions\Support\HttpMethodController.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Update="Extensions\Support\InheritedController.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Update="Extensions\Support\RouteController.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Update="Extensions\Support\RouteControllerWithDefaultRoute.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Update="Extensions\Support\RouteLessController.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Update="Support\AcceptVerbsAttribute.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Update="Support\FromBodyAttribute.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Update="Support\HttpDeleteAttribute.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Update="Support\HttpGetAttribute.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Update="Support\HttpPostAttribute.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Update="Support\HttpPutAttribute.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Update="Support\IHttpActionResult.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Update="Support\RouteAttribute.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Update="Support\RoutePrefixAttribute.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+  </ItemGroup>
+</Project>

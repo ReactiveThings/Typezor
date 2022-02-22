@@ -2,13 +2,9 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <RootNamespace>Typezor</RootNamespace>
     <IsPackable>true</IsPackable>
     <Description>Contains runtime dependencies for Typezor</Description>
-    <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <Nullable>annotations</Nullable>
-	  <LangVersion>latest</LangVersion>
-	  <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
   </PropertyGroup>
 
   <ItemGroup>

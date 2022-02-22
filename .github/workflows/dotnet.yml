@@ -1,0 +1,39 @@
+name: Release
+
+on:
+  push:
+    branches: [ main ]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
+    - name: Install GitVersion
+      uses: gittools/actions/gitversion/setup@v0.9.7
+      with:
+        versionSpec: '5.x'
+    - name: Determine Version
+      id:   gitversion
+      uses: gittools/actions/gitversion/execute@v0.9.7
+      with:
+        useConfigFile: true
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 6.0.x
+    - name: Restore dependencies
+      run: dotnet restore
+    - name: Build
+      run: dotnet build --no-restore --configuration Release /p:Version=${{ steps.gitversion.outputs.fullSemVer }}
+    - name: Test
+      run: dotnet test --no-build --verbosity normal --configuration Release
+    - name: Pack Typezor.SourceGenerator
+      run: dotnet pack --no-build Typezor.SourceGenerator/Typezor.SourceGenerator.csproj --output nuget-packages --configuration Release /p:Version=${{ steps.gitversion.outputs.fullSemVer }}
+    - name: Pack Typezor.Runtime
+      run: dotnet pack --no-build Typezor.Runtime/Typezor.Runtime.csproj --output nuget-packages --configuration Release /p:Version=${{ steps.gitversion.outputs.fullSemVer }}
+    - name: Pack Typezor.CodeModel
+      run: dotnet pack --no-build Typezor.CodeModel/Typezor.CodeModel.csproj --output nuget-packages --configuration Release /p:Version=${{ steps.gitversion.outputs.fullSemVer }}
+    - name: Push Nuget packages
+      run: dotnet nuget push **/*.nupkg --skip-duplicate --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json

@@ -23,5 +23,10 @@ namespace Typezor.CodeModel.Implementation
 
         private IEnumerable<Interface> _interfaces;
         public override IEnumerable<Interface> Interfaces => _interfaces ?? (_interfaces = InterfaceImpl.FromMetadata(_metadata.Interfaces, this));
+        
+        public override File GetTypesFromNamespace(params string[] namespaces)
+        {
+            return new FileImpl(_metadata.GetTypesFromNamespace(namespaces));
+        }
     }
 }
