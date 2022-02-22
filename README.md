@@ -34,3 +34,7 @@ Typezor is Source Generator based on [Typewriter](http://frhagn.github.io/Typewr
   is_global = true 
   typezor_info_as_warning = true
   ```
+- You can disable code generation during typing using DesignTimeBuild msbuild variable. Code will be generated only during build
+ ```
+ <AdditionalFiles Include="templates\template.cshtml" IsRazorTemplate="true" Condition="'$(DesignTimeBuild)'!='true'"/>
+ ```
