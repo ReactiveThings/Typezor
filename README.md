@@ -3,6 +3,24 @@
 # Typezor
 Typezor is Source Generator based on [Typewriter](http://frhagn.github.io/Typewriter) and [MiniRazor](https://github.com/Tyrrrz/MiniRazor) that generates TypeScript files from c# code files using TypeScript Templates.
 
+```
+@namespace My.Namespace
+@using System.Linq
+@inherits Typezor.TemplateBase<Typezor.CodeModel.File>
+
+@foreach (var c in Model.GetTypesFromNamespace("My.Namespace").Classes.Where(p => p.IsAbstract))
+{
+<text>
+namespace My.Namespace.Implementations
+    public class @(c.Name)Implementation : @c.Name
+    {
+    }
+}
+</text>
+@Output.AddSource($"{c.Name}Implementation")
+}
+```
+
 ## Restrictions
 - DocComment doesn't work for types from external libraries. It is known source generators and analyzers issue: https://github.com/dotnet/roslyn/issues/23673
 
