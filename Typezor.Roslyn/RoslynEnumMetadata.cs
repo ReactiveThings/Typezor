@@ -27,7 +27,10 @@ namespace Typezor.Metadata.Roslyn
         
         public static IEnumerable<IEnumMetadata> FromNamedTypeSymbols(IEnumerable<INamedTypeSymbol> symbols)
         {
-            return symbols.Where(s => s.DeclaredAccessibility == Accessibility.Public).Select(s => new RoslynEnumMetadata(s));
+            return symbols
+                .Where(p => p.TypeKind == TypeKind.Enum)
+                .Where(s => s.DeclaredAccessibility == Accessibility.Public)
+                .Select(s => new RoslynEnumMetadata(s));
         }
     }
 }

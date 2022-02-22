@@ -47,7 +47,10 @@ namespace Typezor.Metadata.Roslyn
 
         public static IEnumerable<IInterfaceMetadata> FromNamedTypeSymbols(IEnumerable<INamedTypeSymbol> symbols, IFileMetadata file = null)
         {
-            return symbols.Where(s => s.DeclaredAccessibility == Accessibility.Public).Select(s => new RoslynInterfaceMetadata(s));
+            return symbols
+                .Where(p => p.TypeKind == TypeKind.Interface)
+                .Where(s => s.DeclaredAccessibility == Accessibility.Public)
+                .Select(s => new RoslynInterfaceMetadata(s));
         }
     }
 }

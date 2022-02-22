@@ -64,7 +64,9 @@ namespace Typezor.Metadata.Roslyn
 
         public static IEnumerable<IClassMetadata> FromNamedTypeSymbols(IEnumerable<INamedTypeSymbol> symbols)
         {
-            return symbols.Where(s => s.DeclaredAccessibility == Accessibility.Public && s.ToDisplayString() != "object").Select(s => new RoslynClassMetadata(s));
+            return symbols.Where(p => p.TypeKind == TypeKind.Class)
+                .Where(s => s.DeclaredAccessibility == Accessibility.Public && s.ToDisplayString() != "object")
+                .Select(s => new RoslynClassMetadata(s));
         }
     }
 }
