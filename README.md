@@ -12,6 +12,7 @@ Typezor is Source Generator based on [Typewriter](http://frhagn.github.io/Typewr
 {
 <text>
 namespace My.Namespace.Implementations
+{
     public class @(c.Name)Implementation : @c.Name
     {
     }
