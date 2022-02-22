@@ -32,11 +32,11 @@ namespace My.Namespace.Implementations
   </PropertyGroup>
 
   <ItemGroup>
-     <!-- Add typezor source generator -->
+    <!-- Add typezor source generator -->
     <PackageReference Include="Typezor.SourceGenerator" Version="0.3.1" PrivateAssets="analyzer" />
-     <!-- Add typezor libraries to enable intelisense in template files -->
+    <!-- Add typezor libraries to enable intelisense in template files -->
     <PackageReference Include="Typezor.Runtime" Version="0.3.1" PrivateAssets="all" />
-	<PackageReference Include="Typezor.CodeModel" Version="0.3.1" PrivateAssets="all" />
+    <PackageReference Include="Typezor.CodeModel" Version="0.3.1" PrivateAssets="all" />
       
     <!-- Include a single template -->
     <AdditionalFiles Include="templates/template.cshtml" Typezor="true" />
