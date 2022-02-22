@@ -50,10 +50,10 @@ namespace My.Namespace.Implementations
     <!-- Include code from .cs file -->
     <AdditionalFiles Include="templates/shared.cs" Typezor="true" /> 
 
-    <!-- Include code from dll library -->
+    <!-- Include library from dll library ( only .net Standard 2.0 libraries are supported ) -->
     <AdditionalFiles Include="libName.dll" Typezor="true" />
       
-    <!-- Include code from nuget package -->
+    <!-- Include library from nuget package ( only .net Standard 2.0 libraries are supported ) -->
     <PackageReference Include="Your.External.Lib.Name" Version="1.0.0" GeneratePathProperty="true" PrivateAssets="all" />
     <AdditionalFiles Include="$(PKGYour_External_Lib_Name)\lib\netstandard2.0\Your.External.Lib.Name.dll" Typezor="true" />
 
@@ -83,11 +83,11 @@ namespace My.Namespace.Implementations
   ```
   <AdditionalFiles Include="templates/shared.cs" Typezor="true" />
   ```
-- External libraries used in template can be imported by adding dll file 
+- External libraries used in template can be imported by adding dll file ( only .net Standard 2.0 libraries are supported )
   ```
   <AdditionalFiles Include="libName.dll" Typezor="true" />
   ``` 
-- External nuget packages can be used 
+- External nuget packages can be used ( only .net Standard 2.0 libraries are supported )
   ```
   <PackageReference Include="Your.External.Lib.Name" Version="1.0.0" GeneratePathProperty="true" PrivateAssets="all" />
   <AdditionalFiles Include="$(PKGYour_External_Lib_Name)\lib\netstandard2.0\Your.External.Lib.Name.dll" Typezor="true" />
