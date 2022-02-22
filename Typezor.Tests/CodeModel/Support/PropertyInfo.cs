@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using Typezor.Tests.CodeModel.Support.Class;
+using Typezor.Tests.CodeModel.Support.Enums;
+using Typezor.Tests.CodeModel.Support.Interfaces;
 
 namespace Typezor.Tests.CodeModel.Support
 {

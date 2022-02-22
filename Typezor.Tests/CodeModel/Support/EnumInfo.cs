@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Typezor.Tests.CodeModel.Support
+namespace Typezor.Tests.CodeModel.Support.Enums
 {
     /// <summary>
     /// summary
@@ -37,5 +37,20 @@ namespace Typezor.Tests.CodeModel.Support
         public enum NestedEnumInfo
         {
         }
+    }
+}
+namespace Typezor.Tests.CodeModel.Support.Enums.NestedNamespace
+{
+    public enum EnumInNestedNamespaceInfo
+    {
+
+    }
+}
+
+namespace Typezor.Tests.CodeModel.Support.Enums.NestedNamespace.Nested
+{
+    public enum EnumInTwoNestedNamespaceInfo
+    {
+
     }
 }

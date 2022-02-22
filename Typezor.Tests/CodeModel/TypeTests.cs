@@ -36,8 +36,8 @@ namespace Typezor.Tests.CodeModel
             var typeInfo = propertyInfo.Type;
 
             typeInfo.Name.ShouldEqual("ClassInfo");
-            typeInfo.FullName.ShouldEqual("Typezor.Tests.CodeModel.Support.ClassInfo");
-            typeInfo.Namespace.ShouldEqual("Typezor.Tests.CodeModel.Support");
+            typeInfo.FullName.ShouldEqual("Typezor.Tests.CodeModel.Support.Class.ClassInfo");
+            typeInfo.Namespace.ShouldEqual("Typezor.Tests.CodeModel.Support.Class");
             typeInfo.Parent.ShouldEqual(propertyInfo);
         }
 

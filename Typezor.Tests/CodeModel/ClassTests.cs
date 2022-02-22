@@ -33,8 +33,8 @@ namespace Typezor.Tests.CodeModel
             var classInfo = fileInfo.Classes.First();
 
             classInfo.Name.ShouldEqual("ClassInfo");
-            classInfo.FullName.ShouldEqual("Typezor.Tests.CodeModel.Support.ClassInfo");
-            classInfo.Namespace.ShouldEqual("Typezor.Tests.CodeModel.Support");
+            classInfo.FullName.ShouldEqual("Typezor.Tests.CodeModel.Support.Class.ClassInfo");
+            classInfo.Namespace.ShouldEqual("Typezor.Tests.CodeModel.Support.Class");
             classInfo.Parent.ShouldEqual(fileInfo);
         }
 

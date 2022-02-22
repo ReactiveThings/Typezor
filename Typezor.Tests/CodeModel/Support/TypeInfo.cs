@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using Typezor.Tests.CodeModel.Support.Class;
 
 namespace Typezor.Tests.CodeModel.Support
 {

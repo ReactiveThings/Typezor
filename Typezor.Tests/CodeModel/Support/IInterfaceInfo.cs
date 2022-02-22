@@ -1,4 +1,4 @@
-﻿namespace Typezor.Tests.CodeModel.Support
+﻿namespace Typezor.Tests.CodeModel.Support.Interfaces
 {
     /// <summary>
     /// summary
@@ -29,5 +29,21 @@
         public interface INestedInterfaceInfo
         {
         }
+    }
+}
+
+namespace Typezor.Tests.CodeModel.Support.Interfaces.NestedNamespace
+{
+    public interface InterfaceInNestedNamespaceInfo
+    {
+
+    }
+}
+
+namespace Typezor.Tests.CodeModel.Support.Interfaces.NestedNamespace.Nested
+{
+    public interface InterfaceInTwoNestedNamespaceInfo
+    {
+
     }
 }

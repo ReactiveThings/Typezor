@@ -1,5 +1,7 @@
-﻿#pragma warning disable 67
-namespace Typezor.Tests.CodeModel.Support
+﻿using Typezor.Tests.CodeModel.Support.Interfaces;
+
+#pragma warning disable 67
+namespace Typezor.Tests.CodeModel.Support.Class
 {
     /// <summary>
     /// summary
@@ -66,5 +68,21 @@ namespace Typezor.Tests.CodeModel.Support
 
     public class InheritGenericClassInfo : GenericClassInfo<string>
     {
+    }
+}
+
+namespace Typezor.Tests.CodeModel.Support.Class.NestedNamespace
+{
+    public class ClassInNestedNamespaceInfo
+    {
+
+    }
+}
+
+namespace Typezor.Tests.CodeModel.Support.Class.NestedNamespace.NestedNamespace
+{
+    public class ClassInTwoNestedNamespaceInfo
+    {
+
     }
 }
