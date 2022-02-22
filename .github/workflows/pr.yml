@@ -20,6 +20,8 @@ jobs:
     - name: Determine Version
       id:   gitversion
       uses: gittools/actions/gitversion/execute@v0.9.7
+      with:
+        useConfigFile: true
     - name: Setup .NET
       uses: actions/setup-dotnet@v1
       with:
