@@ -28,6 +28,7 @@ namespace My.Namespace.Implementations
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>net6.0</TargetFramework>
+    <!-- Save generated C# source documents as files -->
     <EmitCompilerGeneratedFiles>true</EmitCompilerGeneratedFiles>
     <CompilerGeneratedFilesOutputPath>$(BaseIntermediateOutputPath)\SourceGeneratorFiles</CompilerGeneratedFilesOutputPath>
   </PropertyGroup>
@@ -61,6 +62,14 @@ namespace My.Namespace.Implementations
   </ItemGroup>
 
   <!-- ... -->
+    <!-- Remove generated files during Clean -->
+    <Target Name="CleanGeneratedFiles" AfterTargets="Clean">
+        <ItemGroup>
+            <GeneratedFiles Include="generated\*.*" />
+        </ItemGroup>
+        <Message Text="Deleting generated files" Importance="high" />
+        <Delete Files="@(GeneratedFiles)" />
+    </Target>
 
 </Project>
 ```
