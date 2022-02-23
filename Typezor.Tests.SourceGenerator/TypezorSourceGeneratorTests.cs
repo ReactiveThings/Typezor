@@ -178,7 +178,7 @@ namespace Typezor.Tests
         var text = ImmutableArray<AdditionalText>.Empty;
         text = text.AddRange(additionalTexts);
 
-        GeneratorDriver driver = CSharpGeneratorDriver.Create(generator);
+        GeneratorDriver driver = CSharpGeneratorDriver.Create(new []{ generator }, optionsProvider: new AnalyzerConfigOptionsProviderMock());
         driver = driver.AddAdditionalTexts(text);
         driver = driver.RunGeneratorsAndUpdateCompilation(CreateCompilation(code), out var outputCompilation, out var diagnostics);
         return driver.GetRunResult();
