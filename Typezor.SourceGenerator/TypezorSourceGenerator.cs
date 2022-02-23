@@ -10,7 +10,6 @@ using Typezor.SourceGenerator.TemplateOutput;
 
 namespace Typezor.SourceGenerator
 {
-    [Generator]
     public class TypezorSourceGenerator : ISourceGenerator
     {
         public void Execute(GeneratorExecutionContext context)

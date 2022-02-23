@@ -10,13 +10,10 @@
   </PropertyGroup>
 	
 	<ItemGroup>
-		<None Include="Logger\SourceProductionContextLogger.cs" />
-		<None Include="TemplateOutput\SourceProductionContextOutput.cs" />
 		<None Include="Typezor.SourceGenerator.props" Pack="true" PackagePath="build" />
-		<None Include="TypezorIncrementalGenerator.cs" />
 	</ItemGroup>
 	<ItemGroup>
-	  <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="3.11.0" PrivateAssets="all" GeneratePathProperty="true" />
+	  <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="4.0.1" PrivateAssets="all" GeneratePathProperty="true" />
 	  
 	  <ProjectReference Include="..\Typezor.Metadata\Typezor.Metadata.csproj" PrivateAssets="all" />
 	  <ProjectReference Include="..\Typezor.Roslyn\Typezor.Metadata.Roslyn.csproj" PrivateAssets="all" />
@@ -52,11 +49,6 @@
 		<None Include="../Typezor.Runtime/bin/$(Configuration)/$(TargetFramework)/Typezor.Runtime.dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
 		<None Include="$(PKGMicrosoft_AspNetCore_Razor_Language)/lib/$(TargetFramework)/*.dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
 		<None Include="$(PKGSystem_Runtime_Loader)/lib/$(TargetFramework)/*.dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
-	</ItemGroup>
-	<ItemGroup>
-	  <Compile Remove="Logger\SourceProductionContextLogger.cs" />
-	  <Compile Remove="TemplateOutput\SourceProductionContextOutput.cs" />
-	  <Compile Remove="TypezorIncrementalGenerator.cs" />
 	</ItemGroup>
 
 	<Target Name="GetDependencyTargetPaths">

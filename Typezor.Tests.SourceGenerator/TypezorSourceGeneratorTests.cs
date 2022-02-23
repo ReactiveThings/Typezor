@@ -1,16 +1,13 @@
-using System.Collections.Immutable;
 using System.IO;
 using System.Linq;
-using System.Reflection;
 using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.CSharp;
 using Typezor.SourceGenerator;
 using Typezor.Tests.SourceGenerator.Mocks;
 using Xunit;
 
 namespace Typezor.Tests.SourceGenerator;
 
-public class TypezorSourceGeneratorTests
+public class TypezorSourceGeneratorTests : GeneratorBaseTests
 {
     [Fact]
     public void WhenTemplateIsProvidedThenCsharpSourceIsAddedToCompilation()
@@ -171,22 +168,4 @@ namespace Typezor.Tests
         Assert.Equal("GeneratedClass1", sourceOutput.Key);
         Assert.Equal(expected, sourceOutput.Value);
     }
-
-    protected static GeneratorDriverRunResult RunGenerator(TypezorSourceGenerator generator,
-        string code, params AdditionalText[] additionalTexts)
-    {
-        var text = ImmutableArray<AdditionalText>.Empty;
-        text = text.AddRange(additionalTexts);
-
-        GeneratorDriver driver = CSharpGeneratorDriver.Create(new []{ generator }, optionsProvider: new AnalyzerConfigOptionsProviderMock());
-        driver = driver.AddAdditionalTexts(text);
-        driver = driver.RunGeneratorsAndUpdateCompilation(CreateCompilation(code), out var outputCompilation, out var diagnostics);
-        return driver.GetRunResult();
-    }
-
-    protected static Compilation CreateCompilation(string source)
-        => CSharpCompilation.Create("compilation",
-            new[] { CSharpSyntaxTree.ParseText(source) },
-            new[] { MetadataReference.CreateFromFile(typeof(Binder).GetTypeInfo().Assembly.Location) },
-            new CSharpCompilationOptions(OutputKind.ConsoleApplication));
 }
