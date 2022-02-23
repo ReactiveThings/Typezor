@@ -7,7 +7,7 @@ using Xunit;
 
 namespace Typezor.Tests.SourceGenerator;
 
-public class TypezorIncrementalGeneratorTests : GeneratorBaseTests
+public class TypezorIncrementalGeneratorTests
 {
     [Fact]
     public void WhenTemplateIsProvidedThenCsharpSourceIsAddedToCompilation()
@@ -168,4 +168,23 @@ namespace Typezor.Tests
         Assert.Equal("GeneratedClass1", sourceOutput.Key);
         Assert.Equal(expected, sourceOutput.Value);
     }
+
+    protected static GeneratorDriverRunResult RunGenerator(TypezorIncrementalGenerator generator,
+        string code, params AdditionalText[] additionalTexts)
+    {
+        var text = ImmutableArray<AdditionalText>.Empty;
+        text = text.AddRange(additionalTexts);
+
+        GeneratorDriver driver = CSharpGeneratorDriver.Create(generator);
+        driver = driver.AddAdditionalTexts(text);
+        driver = driver.WithUpdatedAnalyzerConfigOptions(new AnalyzerConfigOptionsProviderMock());
+        driver = driver.RunGeneratorsAndUpdateCompilation(CreateCompilation(code), out var outputCompilation, out var diagnostics);
+        return driver.GetRunResult();
+    }
+
+    protected static Compilation CreateCompilation(string source)
+        => CSharpCompilation.Create("compilation",
+            new[] { CSharpSyntaxTree.ParseText(source) },
+            new[] { MetadataReference.CreateFromFile(typeof(Binder).GetTypeInfo().Assembly.Location) },
+            new CSharpCompilationOptions(OutputKind.ConsoleApplication));
 }
