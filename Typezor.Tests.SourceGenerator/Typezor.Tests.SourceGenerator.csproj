@@ -8,6 +8,16 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="IncrementalGeneratorBaseTests.cs" />
+    <Compile Remove="TypezorIncrementalGeneratorTests.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="IncrementalGeneratorBaseTests.cs" />
+    <None Include="TypezorIncrementalGeneratorTests.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.11.0" />
     <PackageReference Include="xunit" Version="2.4.1" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.4.3">
@@ -18,7 +28,7 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.CodeAnalysis" Version="4.0.1" />
+    <PackageReference Include="Microsoft.CodeAnalysis" Version="3.11.0" />
   </ItemGroup>
 
   <ItemGroup>
