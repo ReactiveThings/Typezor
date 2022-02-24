@@ -78,7 +78,7 @@ namespace My.Namespace.Implementations
 - DocComment returns empty string when build is performed using dotnet command. It is working only in Visual Studio.
 - DocComment returns empty string for types from external libraries. It is known source generators and analyzers issue: https://github.com/dotnet/roslyn/issues/23673
 - Requires .NET SDK 6.0.100
-- Include dll libraries doesn't work with sdk 6.0.200 because of bug in SDK [issue](https://developercommunity.visualstudio.com/t/NET-SDK-60200-breaks-build-due-to-CS2/1667603?ref=native&refTime=1645007418972&refUserId=91f26041-a17a-4035-a156-3704387e57e3)
+- Include dll libraries doesn't work with sdk 6.0.200 because of bug in SDK [issue](https://developercommunity.visualstudio.com/t/NET-SDK-60200-breaks-build-due-to-CS2/1667603?ref=native&refTime=1645007418972&refUserId=91f26041-a17a-4035-a156-3704387e57e3) fixed in [PR](https://github.com/dotnet/roslyn/pull/59660)
 - You can use it in Visual Studio 17.0.4 or later
 
 ## Features
