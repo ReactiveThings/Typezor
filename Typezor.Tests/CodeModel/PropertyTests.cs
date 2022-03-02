@@ -116,6 +116,64 @@ namespace Typezor.Tests.CodeModel
             }
         }
 
+        [Theory]
+        [InlineData("NullableString")]
+        [InlineData("NullableObject")]
+        [InlineData("NullableDynamic")]
+        [InlineData("NullableException")]
+        [InlineData("NullableArray")]
+        [InlineData("NullableEnumerable")]
+        [InlineData("NullableStringArray")]
+        [InlineData("NullableEnumerableString")]
+        [InlineData("NullableListString")]
+        [InlineData("NullableEnumerableInt")]
+        [InlineData("NullableEnumerableNullableInt")]
+        [InlineData("NullableClass")]
+        [InlineData("NullableBaseClass")]
+        [InlineData("NullableGenericClass")]
+        [InlineData("NullableInterface")]
+        public void Expect_annotated_reference_type_properties_to_be_nullable(string property)
+        {
+            var propertyInfo = GetFirstProperty(property);
+            propertyInfo.Type.IsNullable.ShouldBeTrue();
+        }
+
+        [Theory]
+        [InlineData("String")]
+        [InlineData("Object")]
+        [InlineData("Dynamic")]
+        [InlineData("Exception")]
+        [InlineData("Array")]
+        [InlineData("Enumerable")]
+        [InlineData("StringArray")]
+        [InlineData("EnumerableString")]
+        [InlineData("ListString")]
+        [InlineData("EnumerableInt")]
+        [InlineData("EnumerableNullableInt")]
+        [InlineData("Class")]
+        [InlineData("BaseClass")]
+        [InlineData("GenericClass")]
+        [InlineData("Interface")]
+        [InlineData("EnumerableOfNullableString")]
+        [InlineData("ArrayOfNullableString")]
+        [InlineData("GenericOfNullableClass")]
+        public void Expect_not_annotated_reference_type_properties_to_be_not_nullable(string property)
+        {
+            var propertyInfo = GetFirstProperty(property);
+            propertyInfo.Type.IsNullable.ShouldBeFalse();
+        }
+
+        [Theory]
+        [InlineData("EnumerableOfNullableString")]
+        [InlineData("GenericOfNullableClass")]
+        [InlineData("ArrayOfNullableString")]
+        public void Expect_annotated_reference_type_inGeneric_types_are_nullable(string property)
+        {
+            var propertyInfo = GetFirstProperty(property);
+            propertyInfo.Type.IsNullable.ShouldBeFalse();
+            propertyInfo.Type.TypeArguments.Single().IsNullable.ShouldBeTrue();
+        }
+
         [Fact]
         public void Expect_datetime_properties_to_be_primitive()
         {
@@ -355,6 +413,15 @@ namespace Typezor.Tests.CodeModel
         public void Expect_string_properties_not_to_be_enumerable()
         {
             var stringInfo = GetFirstProperty("String");
+
+            stringInfo.Type.IsEnumerable.ShouldBeFalse();
+            stringInfo.Type.IsNullable.ShouldBeFalse();
+        }
+
+        [Fact]
+        public void Expect_nullable_string_properties_not_to_be_enumerable()
+        {
+            var stringInfo = GetFirstProperty("NullableString");
 
             stringInfo.Type.IsEnumerable.ShouldBeFalse();
         }

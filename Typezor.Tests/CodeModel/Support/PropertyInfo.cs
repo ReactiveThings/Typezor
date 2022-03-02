@@ -69,6 +69,27 @@ namespace Typezor.Tests.CodeModel.Support
         public BaseClassInfo BaseClass { get; set; }
         public GenericClassInfo<string> GenericClass { get; set; }
         public IInterfaceInfo Interface { get; set; }
+
+        // Nullable annotations
+        public string? NullableString { get; set; }
+        public object? NullableObject { get; set; }
+        public dynamic? NullableDynamic { get; set; }
+        public Exception? NullableException { get; set; } // Class
+        public Array? NullableArray { get; set; }
+        public IEnumerable? NullableEnumerable { get; set; }
+        public string[]? NullableStringArray { get; set; }
+        public IEnumerable<string>? NullableEnumerableString { get; set; }
+        public List<string>? NullableListString { get; set; }
+        public IEnumerable<int>? NullableEnumerableInt { get; set; }
+        public IEnumerable<int?>? NullableEnumerableNullableInt { get; set; }
+        public ClassInfo? NullableClass { get; set; }
+        public BaseClassInfo? NullableBaseClass { get; set; }
+        public GenericClassInfo<string>? NullableGenericClass { get; set; }
+        public IInterfaceInfo? NullableInterface { get; set; }
+
+        public IEnumerable<string?> EnumerableOfNullableString { get; set; }
+        public string?[] ArrayOfNullableString { get; set; }
+        public GenericClassInfo<string?> GenericOfNullableClass { get; set; }
     }
 
     public class GenericPropertyInfo<T>
