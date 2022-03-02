@@ -33,6 +33,7 @@ namespace Typezor.Metadata.Roslyn
         public string FullName => _symbol.ToDisplayString();
         public bool IsAbstract => _symbol.IsAbstract;
         public bool IsGeneric => _symbol.TypeParameters.Any();
+        public bool IsRecord => _symbol.IsRecord;
         public string Namespace => _symbol.GetNamespace();
 
         public ITypeMetadata Type => RoslynTypeMetadata.FromTypeSymbol(_symbol);

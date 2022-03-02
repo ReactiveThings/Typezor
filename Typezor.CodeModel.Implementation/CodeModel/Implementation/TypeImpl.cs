@@ -29,6 +29,7 @@ namespace Typezor.CodeModel.Implementation
         public override string FullName => _metadata.FullName;
         public override string Namespace => _metadata.Namespace;
         public override bool IsGeneric => _metadata.IsGeneric;
+        public override bool IsRecord => _metadata.IsRecord;
         public override bool IsEnum => _metadata.IsEnum;
         public override bool IsEnumerable => _metadata.IsEnumerable;
         public override bool IsNullable => _metadata.IsNullable;

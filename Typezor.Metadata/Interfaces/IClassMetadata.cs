@@ -7,6 +7,7 @@ namespace Typezor.Metadata.Interfaces
         string DocComment { get; }
         bool IsAbstract { get; }
         bool IsGeneric { get; }
+        bool IsRecord { get; }
         string Namespace { get; }
         ITypeMetadata Type { get; }
         IEnumerable<IAttributeMetadata> Attributes { get; }
