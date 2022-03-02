@@ -45,18 +45,18 @@ namespace Typezor.Tests.CodeModel.Support
         // Enums
         public EnumInfo Enum { get; set; }
         public EnumInfo? NullableEnum1 { get; set; }
-        public Nullable<EnumInfo> NullableEnum2 { get; set; }
+        public Nullable<EnumInfo> NullableEnum2 { get; set; } = null!;
 
         public Exception Exception { get; set; } // Class
 
         // Untyped collections
-        public Array Array { get; set; }
+        public Array Array { get; set; } = null!;
         public IEnumerable Enumerable { get; set; } = null!;
 
         // Typed collections
-        public string[] StringArray { get; set; }
-        public IEnumerable<string> EnumerableString { get; set; }
-        public List<string> ListString { get; set; }
+        public string[] StringArray { get; set; } = null!;
+        public IEnumerable<string> EnumerableString { get; set; } = null!;
+        public List<string> ListString { get; set; } = null!;
 
         // Nullable
         public int? NullableInt1 { get; set; } = null!;
