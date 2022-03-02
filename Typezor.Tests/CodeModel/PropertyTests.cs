@@ -434,7 +434,7 @@ namespace Typezor.Tests.CodeModel
                 .First(p => p.Name == "Generic");
 
             genericInfo.Type.Name.ShouldEqual("T");
-            genericInfo.Type.FullName.ShouldEqual("T");
+            genericInfo.Type.FullName.ShouldEqual("T?");
         }
 
         [Fact]

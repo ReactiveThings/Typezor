@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using Typezor.Tests.CodeModel.Support.Class;
 using Typezor.Tests.CodeModel.Support.Enums;
 using Typezor.Tests.CodeModel.Support.Interfaces;
-
+#nullable enable
 namespace Typezor.Tests.CodeModel.Support
 {
     public class PropertyInfo
@@ -12,16 +12,16 @@ namespace Typezor.Tests.CodeModel.Support
         /// <summary>
         /// summary
         /// </summary>
-        public string GetterOnly { get; }
+        public string GetterOnly { get; } = null!;
         public string SetterOnly { set { } }
-        public string PrivateGetter { private get; set; }
-        public string PrivateSetter { get; private set; }
+        public string PrivateGetter { private get; set; } = null!;
+        public string PrivateSetter { get; private set; } = null!;
 
         // Primitive types
         [AttributeInfo]
         public bool Bool { get; set; }
         public char Char { get; set; }
-        public string String { get; set; }
+        public string String { get; set; } = null!;
         public byte Byte { get; set; }
         public sbyte Sbyte { get; set; }
         public int Int { get; set; }
@@ -39,8 +39,8 @@ namespace Typezor.Tests.CodeModel.Support
         public DateTimeOffset DateTimeOffset { get; set; }
         public Guid Guid { get; set; }
         public TimeSpan TimeSpan { get; set; }
-        public object Object { get; set; }
-        public dynamic Dynamic { get; set; }
+        public object Object { get; set; } = null!;
+        public dynamic Dynamic { get; set; } = null!;
 
         // Enums
         public EnumInfo Enum { get; set; }
@@ -51,7 +51,7 @@ namespace Typezor.Tests.CodeModel.Support
 
         // Untyped collections
         public Array Array { get; set; }
-        public IEnumerable Enumerable { get; set; }
+        public IEnumerable Enumerable { get; set; } = null!;
 
         // Typed collections
         public string[] StringArray { get; set; }
@@ -59,16 +59,16 @@ namespace Typezor.Tests.CodeModel.Support
         public List<string> ListString { get; set; }
 
         // Nullable
-        public int? NullableInt1 { get; set; }
-        public Nullable<int> NullableInt2 { get; set; }
-        public IEnumerable<int> EnumerableInt { get; set; }
-        public IEnumerable<int?> EnumerableNullableInt { get; set; }
+        public int? NullableInt1 { get; set; } = null!;
+        public Nullable<int> NullableInt2 { get; set; } = null!;
+        public IEnumerable<int> EnumerableInt { get; set; } = null!;
+        public IEnumerable<int?> EnumerableNullableInt { get; set; } = null!;
 
         // Defined types
-        public ClassInfo Class { get; set; }
-        public BaseClassInfo BaseClass { get; set; }
-        public GenericClassInfo<string> GenericClass { get; set; }
-        public IInterfaceInfo Interface { get; set; }
+        public ClassInfo Class { get; set; } = null!;
+        public BaseClassInfo BaseClass { get; set; } = null!;
+        public GenericClassInfo<string> GenericClass { get; set; } = null!;
+        public IInterfaceInfo Interface { get; set; } = null!;
 
         // Nullable annotations
         public string? NullableString { get; set; }
@@ -87,14 +87,14 @@ namespace Typezor.Tests.CodeModel.Support
         public GenericClassInfo<string>? NullableGenericClass { get; set; }
         public IInterfaceInfo? NullableInterface { get; set; }
 
-        public IEnumerable<string?> EnumerableOfNullableString { get; set; }
-        public string?[] ArrayOfNullableString { get; set; }
-        public GenericClassInfo<string?> GenericOfNullableClass { get; set; }
+        public IEnumerable<string?> EnumerableOfNullableString { get; set; } = null!;
+        public string?[] ArrayOfNullableString { get; set; } = null!;
+        public GenericClassInfo<string?> GenericOfNullableClass { get; set; } = null!;
     }
 
     public class GenericPropertyInfo<T>
     {
-        public T Generic { get; set; }
-        public IEnumerable<T> EnumerableGeneric { get; set; }
+        public T? Generic { get; set; }
+        public IEnumerable<T> EnumerableGeneric { get; set; } = null!;
     }
 }
