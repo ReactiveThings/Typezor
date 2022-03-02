@@ -47,7 +47,7 @@ namespace Typezor.Tests.CodeModel.Support
         public EnumInfo? NullableEnum1 { get; set; }
         public Nullable<EnumInfo> NullableEnum2 { get; set; } = null!;
 
-        public Exception Exception { get; set; } // Class
+        public Exception Exception { get; set; } = null!
 
         // Untyped collections
         public Array Array { get; set; } = null!;
