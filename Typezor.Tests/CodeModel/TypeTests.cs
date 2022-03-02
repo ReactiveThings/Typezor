@@ -43,6 +43,13 @@ namespace Typezor.Tests.CodeModel
         }
 
         [Fact]
+        public void Expect_file_scoped_namespace_to_match_namespace()
+        {
+            var classInfo = fileInfo.Classes.First(p => p.Name == "TypeInfo");
+            classInfo.Namespace.ShouldEqual("Typezor.Tests.CodeModel.Support");
+        }
+
+        [Fact]
         public void Expect_type_name_to_match_record_name()
         {
             var classInfo = fileInfo.Classes.First(p => p.Name == "TypeInfo");
