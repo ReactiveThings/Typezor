@@ -34,6 +34,7 @@ namespace Typezor.SourceGenerator.TemplateOutput
 
             if (!f.Exists || f.Length != count)
             {
+                if (f.DirectoryName != null) System.IO.Directory.CreateDirectory(f.DirectoryName);
                 using var _ = Logger.Performance($"SaveAs {filePath}");
                 File.WriteAllText(filePath, content, Encoding.UTF8);
             }
