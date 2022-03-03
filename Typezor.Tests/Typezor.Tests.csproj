@@ -2,6 +2,7 @@
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
 	<SonarQubeTestProject>true</SonarQubeTestProject>
+	<SonarQubeExclude>true</SonarQubeExclude>
   </PropertyGroup>
 	<ItemGroup>
     <ProjectReference Include="..\Typezor.CodeModel.Implementation\Typezor.CodeModel.Implementation.csproj" />
