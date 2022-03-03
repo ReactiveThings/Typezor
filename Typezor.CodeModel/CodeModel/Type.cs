@@ -83,6 +83,11 @@ namespace Typezor.CodeModel
         public abstract bool IsGeneric { get; }
 
         /// <summary>
+        /// Determines if the type is a record.
+        /// </summary>
+        public abstract bool IsRecord { get; }
+
+        /// <summary>
         /// Determines if the type is a Guid.
         /// </summary>
         public abstract bool IsGuid { get; }

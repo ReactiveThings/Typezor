@@ -23,6 +23,7 @@ namespace Typezor.Metadata.Roslyn
         public string FullName => symbol.GetFullName() + (IsNullable? "?" : string.Empty);
         public bool IsAbstract => (symbol as INamedTypeSymbol)?.IsAbstract ?? false;
         public bool IsGeneric => (symbol as INamedTypeSymbol)?.TypeParameters.Any() ?? false;
+        public bool IsRecord => symbol.IsRecord;
         public bool IsDefined => symbol.Locations.Any(l => l.IsInSource);
         public bool IsValueTuple => symbol.Name == "" && symbol.BaseType?.Name == "ValueType" && symbol.BaseType.ContainingNamespace.Name == "System";
 
@@ -153,6 +154,7 @@ namespace Typezor.Metadata.Roslyn
         public bool IsEnum => false;
         public bool IsEnumerable => false;
         public bool IsGeneric => false;
+        public bool IsRecord => false;
         public bool IsNullable => false;
         public bool IsTask => true;
         public bool IsDefined => false;

@@ -23,6 +23,7 @@ namespace Typezor.Tests.CodeModel
         protected TypeTests(ITestFixture fixture) : base(fixture)
         {
             fileInfo = GetFile(@"CodeModel\Support\TypeInfo.cs",
+                @"CodeModel\Support\RecordInfo.cs",
                 @"CodeModel\Support\ClassInfo.cs",
                 @"CodeModel\Support\AttributeInfo.cs",
                 @"CodeModel\Support\IInterfaceInfo.cs");
@@ -38,6 +39,27 @@ namespace Typezor.Tests.CodeModel
             typeInfo.Name.ShouldEqual("ClassInfo");
             typeInfo.FullName.ShouldEqual("Typezor.Tests.CodeModel.Support.Class.ClassInfo");
             typeInfo.Namespace.ShouldEqual("Typezor.Tests.CodeModel.Support.Class");
+            typeInfo.Parent.ShouldEqual(propertyInfo);
+        }
+
+        [Fact]
+        public void Expect_file_scoped_namespace_to_match_namespace()
+        {
+            var classInfo = fileInfo.Classes.First(p => p.Name == "TypeInfo");
+            classInfo.Namespace.ShouldEqual("Typezor.Tests.CodeModel.Support");
+        }
+
+        [Fact]
+        public void Expect_type_name_to_match_record_name()
+        {
+            var classInfo = fileInfo.Classes.First(p => p.Name == "TypeInfo");
+            var propertyInfo = classInfo.Properties.First(p => p.Name == "Record");
+            var typeInfo = propertyInfo.Type;
+
+            typeInfo.Name.ShouldEqual("RecordInfo");
+            typeInfo.FullName.ShouldEqual("Typezor.Tests.CodeModel.Support.Record.RecordInfo");
+            typeInfo.Namespace.ShouldEqual("Typezor.Tests.CodeModel.Support.Record");
+            typeInfo.IsRecord.ShouldBeTrue();
             typeInfo.Parent.ShouldEqual(propertyInfo);
         }
 

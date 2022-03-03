@@ -70,6 +70,11 @@ namespace Typezor.CodeModel
         public abstract bool IsGeneric { get; }
 
         /// <summary>
+        /// Determines if the class is a record.
+        /// </summary>
+        public abstract bool IsRecord { get; }
+
+        /// <summary>
         /// All methods defined in the class.
         /// </summary>
         public abstract IEnumerable<Method> Methods { get; }

@@ -1,6 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-	  <TargetFramework>net6.0</TargetFramework>
+    <TargetFramework>net6.0</TargetFramework>
+    <SonarQubeTestProject>true</SonarQubeTestProject>
+    <SonarQubeExclude>true</SonarQubeExclude>
   </PropertyGroup>
 	<ItemGroup>
     <ProjectReference Include="..\Typezor.CodeModel.Implementation\Typezor.CodeModel.Implementation.csproj" />
@@ -27,6 +29,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Update="CodeModel\Support\AttributeInfo.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Update="CodeModel\Support\RecordInfo.cs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
     <Compile Update="CodeModel\Support\ClassInfo.cs">
