@@ -25,15 +25,15 @@ jobs:
         dotnet-version: 6.0.x
     - name: Restore dependencies
       run: dotnet restore
-    - name: Build
-      run: dotnet build --no-restore --configuration Release /p:Version=${{ steps.gitversion.outputs.fullSemVer }}
     - name: Test
       run: dotnet test --no-build --verbosity normal --configuration Release
+    - name: Build
+      run: dotnet build --no-restore --configuration Release /p:Version=${{ steps.gitversion.outputs.fullSemVer }} /p:AssemblyVersion=${{ steps.gitversion.outputs.Major }}.0.0.0
     - name: Pack Typezor.SourceGenerator
-      run: dotnet pack --no-build Typezor.SourceGenerator/Typezor.SourceGenerator.csproj --output nuget-packages --configuration Release /p:Version=${{ steps.gitversion.outputs.fullSemVer }}
+      run: dotnet pack --no-build Typezor.SourceGenerator/Typezor.SourceGenerator.csproj --output nuget-packages --configuration Release
     - name: Pack Typezor.Runtime
-      run: dotnet pack --no-build Typezor.Runtime/Typezor.Runtime.csproj --output nuget-packages --configuration Release /p:Version=${{ steps.gitversion.outputs.fullSemVer }}
+      run: dotnet pack --no-build Typezor.Runtime/Typezor.Runtime.csproj --output nuget-packages --configuration Release
     - name: Pack Typezor.CodeModel
-      run: dotnet pack --no-build Typezor.CodeModel/Typezor.CodeModel.csproj --output nuget-packages --configuration Release /p:Version=${{ steps.gitversion.outputs.fullSemVer }}
+      run: dotnet pack --no-build Typezor.CodeModel/Typezor.CodeModel.csproj --output nuget-packages --configuration Release
     - name: Push Nuget packages
       run: dotnet nuget push **/*.nupkg --skip-duplicate --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json
