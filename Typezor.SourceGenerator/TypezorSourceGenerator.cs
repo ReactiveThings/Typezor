@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using Microsoft.CodeAnalysis;
 using Typezor.CodeModel.Implementation;
@@ -14,6 +15,7 @@ namespace Typezor.SourceGenerator
     {
         public void Execute(GeneratorExecutionContext context)
         {
+            Debugger.Launch();
             var treatInfoAsWarning = TreatInfoAsWarning(context);
             ILogger logger = new GeneratorExecutionContextLogger(context, treatInfoAsWarning);
             using (logger.Performance("TypezorGenerator"))

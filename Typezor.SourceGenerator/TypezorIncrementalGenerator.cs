@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Immutable;
+using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using System.Threading;
@@ -21,6 +22,7 @@ namespace Typezor.SourceGenerator
 
         public void Initialize(IncrementalGeneratorInitializationContext context)
         {
+            Debugger.Launch();
             var assemblyLoadContext = AssemblyLoadContextFactory.Create();
 
             var logging = context.AnalyzerConfigOptionsProvider.Select(EmitLogging());
