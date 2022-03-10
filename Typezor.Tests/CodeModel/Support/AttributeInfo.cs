@@ -54,5 +54,8 @@ namespace Typezor.Tests.CodeModel.Support
 
         [AttributeInfo(typeof(AttributeTestClass))]
         public string Type { get; set; }
+
+        [AttributeInfo(typeof(AttributeTestClass[]))]
+        public string ArrayType { get; set; }
     }
 }
