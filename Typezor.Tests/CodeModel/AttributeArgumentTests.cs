@@ -108,5 +108,16 @@ namespace Typezor.Tests.CodeModel
             integerArgument.TypeValue.Name.ShouldEqual("AttributeTestClass");
             integerArgument.Type.OriginalName.ShouldEqual("Type");
         }
+
+        [Fact]
+        public void Expect_attributes_with_array_type_parameter_to_have_a_proper_value()
+        {
+            var propertyInfo = classInfo.Properties.First(p => p.Name == "ArrayType");
+            var attributeInfo = propertyInfo.Attributes.First();
+
+            var integerArgument = attributeInfo.Arguments.Single();
+            integerArgument.TypeValue.Name.ShouldEqual("AttributeTestClass[]");
+            integerArgument.Type.OriginalName.ShouldEqual("Type");
+        }
     }
 }
