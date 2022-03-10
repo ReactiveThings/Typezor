@@ -15,7 +15,7 @@ namespace Typezor.Metadata.Roslyn
 
         public ITypeMetadata Type => RoslynTypeMetadata.FromTypeSymbol(typeConstant.Type);
 
-        public ITypeMetadata TypeValue => typeConstant.Kind == TypedConstantKind.Type ? RoslynTypeMetadata.FromTypeSymbol((INamedTypeSymbol)typeConstant.Value) : null;
+        public ITypeMetadata TypeValue => typeConstant.Kind == TypedConstantKind.Type ? RoslynTypeMetadata.FromTypeSymbol((ITypeSymbol)typeConstant.Value) : null;
         public object Value => typeConstant.Kind == TypedConstantKind.Array ? typeConstant.Values.Select(prop => prop.Value).ToArray() : typeConstant.Value;
     }
 }
