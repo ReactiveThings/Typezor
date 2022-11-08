@@ -1,7 +1,7 @@
 [![Quality gate](https://sonarcloud.io/api/project_badges/quality_gate?project=ReactiveThings_Typezor)](https://sonarcloud.io/summary/new_code?id=ReactiveThings_Typezor)
 
 # Typezor
-Typezor is Source Generator based on [Typewriter](http://frhagn.github.io/Typewriter) and [MiniRazor](https://github.com/Tyrrrz/MiniRazor) that generates TypeScript files from c# code files using TypeScript Templates.
+Typezor is Source Generator based on [Typewriter](http://frhagn.github.io/Typewriter) and [MiniRazor](https://github.com/Tyrrrz/MiniRazor) that generates TypeScript and C# files from c# source code using Razor Templates.
 
 ```razor
 @namespace My.Namespace
