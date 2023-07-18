@@ -15,6 +15,7 @@ namespace Typezor.Metadata.Roslyn
         }
         private static SymbolDisplayFormat MinimallyQualifiedFormat { get; } =
     new SymbolDisplayFormat(
+        typeQualificationStyle: SymbolDisplayTypeQualificationStyle.NameAndContainingTypesAndNamespaces,
         globalNamespaceStyle: SymbolDisplayGlobalNamespaceStyle.Omitted,
         genericsOptions: SymbolDisplayGenericsOptions.IncludeTypeParameters,
         memberOptions:
