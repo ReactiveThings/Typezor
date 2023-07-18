@@ -7,7 +7,13 @@ using Xunit;
 
 namespace Typezor.Tests.CodeModel
 {
-
+    [Trait("CodeModel", "Attribute"), Collection(nameof(RoslynFixture))]
+    public class RoslynAttributeTests : ClassTests
+    {
+        public RoslynAttributeTests(RoslynFixture fixture) : base(fixture)
+        {
+        }
+    }
 
     public abstract class AttributeTests : TestBase
     {

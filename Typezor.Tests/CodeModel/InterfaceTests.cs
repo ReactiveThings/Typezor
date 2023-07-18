@@ -6,6 +6,13 @@ using Xunit;
 
 namespace Typezor.Tests.CodeModel
 {
+    [Trait("CodeModel", "Interface"), Collection(nameof(RoslynFixture))]
+    public class RoslynInterfaceTests : MethodTests
+    {
+        public RoslynInterfaceTests(RoslynFixture fixture) : base(fixture)
+        {
+        }
+    }
 
     public abstract class InterfaceTests : TestBase
     {
