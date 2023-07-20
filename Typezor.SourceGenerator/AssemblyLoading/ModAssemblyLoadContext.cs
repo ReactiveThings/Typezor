@@ -7,20 +7,20 @@ namespace Typezor.SourceGenerator.AssemblyLoading
 {
     public class ModAssemblyLoadContext : IAssemblyLoadContext
     {
+        private static readonly AssemblyLoadContext currentContext = AssemblyLoadContext.GetLoadContext(typeof(ITemplateOutput).Assembly);
         Assembly IAssemblyLoadContext.LoadFromAssemblyPath(string filePath)
         {
-            
-            return AssemblyLoadContext.GetLoadContext(typeof(ITemplateOutput).Assembly).LoadFromAssemblyPath(filePath);
+            return currentContext.LoadFromAssemblyPath(filePath);
         }
 
         Assembly IAssemblyLoadContext.LoadFromAssemblyName(AssemblyName getName)
         {
-            return AssemblyLoadContext.GetLoadContext(typeof(ITemplateOutput).Assembly).LoadFromAssemblyName(getName);
+            return currentContext.LoadFromAssemblyName(getName);
         }
 
         Assembly IAssemblyLoadContext.LoadFromStream(Stream assemblyStream)
         {
-            return AssemblyLoadContext.GetLoadContext(typeof(ITemplateOutput).Assembly).LoadFromStream(assemblyStream);
+            return currentContext.LoadFromStream(assemblyStream);
         }
     }
 }
