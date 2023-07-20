@@ -20,7 +20,7 @@ namespace Typezor.Tests.CodeModel
 
         protected MethodTests(ITestFixture fixture) : base(fixture)
         {
-            fileInfo = GetFile(@"CodeModel\Support\MethodInfo.cs");
+            fileInfo = GetFile(@"CodeModel\Support\MethodInfo.cs", @"CodeModel\Support\AttributeInfo.cs");
         }
 
         [Fact]
@@ -31,7 +31,7 @@ namespace Typezor.Tests.CodeModel
 
             methodInfo.Name.ShouldEqual("Method");
             methodInfo.FullName.ShouldEqual("Typezor.Tests.CodeModel.Support.MethodInfo.Method");
-            //methodInfo.Parent.ShouldEqual(classInfo);
+            (methodInfo.Parent as Class).FullName.ShouldEqual(classInfo.FullName);
         }
 
         [Fact]
@@ -52,8 +52,7 @@ namespace Typezor.Tests.CodeModel
 
             methodInfo.Attributes.Count().ShouldEqual(1);
             attributeInfo.Name.ShouldEqual("AttributeInfo");
-            //TODO FullName doesn't contains namespace
-            //attributeInfo.FullName.ShouldEqual("Typezor.Tests.CodeModel.Support.AttributeInfoAttribute");
+            attributeInfo.FullName.ShouldEqual("Typezor.Tests.CodeModel.Support.AttributeInfoAttribute");
         }
 
         [Fact]
@@ -67,7 +66,7 @@ namespace Typezor.Tests.CodeModel
             parameterInfo.FullName.ShouldEqual("string");
         }
 
-        
+        [Fact]
         public void Expect_to_find_parameter_attributes()
         {
             var methodInfo = GetMethod("Method");
@@ -76,8 +75,7 @@ namespace Typezor.Tests.CodeModel
 
             parameterInfo.Attributes.Count().ShouldEqual(1);
             attributeInfo.Name.ShouldEqual("AttributeInfo");
-            //TODO FullName do not return namespace
-            //attributeInfo.FullName.ShouldEqual("Typezor.Tests.CodeModel.Support.AttributeInfoAttribute");
+            attributeInfo.FullName.ShouldEqual("Typezor.Tests.CodeModel.Support.AttributeInfoAttribute");
         }
 
         [Fact]

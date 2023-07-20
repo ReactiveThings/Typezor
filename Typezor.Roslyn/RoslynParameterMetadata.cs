@@ -13,18 +13,11 @@ namespace Typezor.Metadata.Roslyn
         {
             this.symbol = symbol;
         }
-        private static SymbolDisplayFormat MinimallyQualifiedFormat { get; } =
+        private static SymbolDisplayFormat ParamTypeFormat { get; } =
     new SymbolDisplayFormat(
         typeQualificationStyle: SymbolDisplayTypeQualificationStyle.NameAndContainingTypesAndNamespaces,
         globalNamespaceStyle: SymbolDisplayGlobalNamespaceStyle.Omitted,
         genericsOptions: SymbolDisplayGenericsOptions.IncludeTypeParameters,
-        memberOptions:
-            SymbolDisplayMemberOptions.IncludeParameters |
-            SymbolDisplayMemberOptions.IncludeType |
-            SymbolDisplayMemberOptions.IncludeRef |
-            SymbolDisplayMemberOptions.IncludeContainingType,
-        kindOptions:
-            SymbolDisplayKindOptions.IncludeMemberKeyword,
         parameterOptions:
             SymbolDisplayParameterOptions.IncludeType |
             SymbolDisplayParameterOptions.IncludeParamsRefOut |
@@ -36,7 +29,7 @@ namespace Typezor.Metadata.Roslyn
             SymbolDisplayMiscellaneousOptions.IncludeNullableReferenceTypeModifier);
 
         public string Name => symbol.Name;
-        public string FullName => symbol.ToDisplayString(MinimallyQualifiedFormat);
+        public string FullName => symbol.ToDisplayString(ParamTypeFormat);
         public bool HasDefaultValue => symbol.HasExplicitDefaultValue;
         public string DefaultValue => GetDefaultValue();
         public IEnumerable<IAttributeMetadata> Attributes => RoslynAttributeMetadata.FromAttributeData(symbol.GetAttributes());

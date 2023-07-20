@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using Microsoft.CodeAnalysis;
@@ -23,6 +24,12 @@ namespace Typezor.Tests.TestInfrastructure
                 path.Select(fileName => CSharpSyntaxTree.ParseText(File.ReadAllText(fileName.Replace(@"\",@"/")))),
                 new[] { MetadataReference.CreateFromFile(typeof(Binder).GetTypeInfo().Assembly.Location) },
                 new CSharpCompilationOptions(OutputKind.ConsoleApplication));
+
+            foreach (var d in compilation.GetDiagnostics())
+            {
+                Console.WriteLine(CSharpDiagnosticFormatter.Instance.Format(d));
+            }
+
             return new RoslynGlobalNamespaceMetadata(compilation.GlobalNamespace, new FindAllTypesVisitor());
         }
     }
