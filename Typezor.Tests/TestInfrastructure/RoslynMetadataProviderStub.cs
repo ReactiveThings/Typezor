@@ -25,11 +25,6 @@ namespace Typezor.Tests.TestInfrastructure
                 new[] { MetadataReference.CreateFromFile(typeof(Binder).GetTypeInfo().Assembly.Location) },
                 new CSharpCompilationOptions(OutputKind.ConsoleApplication));
 
-            foreach (var d in compilation.GetDiagnostics())
-            {
-                Console.WriteLine(CSharpDiagnosticFormatter.Instance.Format(d));
-            }
-
             return new RoslynGlobalNamespaceMetadata(compilation.GlobalNamespace, new FindAllTypesVisitor());
         }
     }
