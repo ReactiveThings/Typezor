@@ -31,6 +31,7 @@ namespace My.Namespace.Implementations
     <!-- Save generated C# source documents as files -->
     <EmitCompilerGeneratedFiles>true</EmitCompilerGeneratedFiles>
     <CompilerGeneratedFilesOutputPath>$(BaseIntermediateOutputPath)\SourceGeneratorFiles</CompilerGeneratedFilesOutputPath>
+    <UseRazorSourceGenerator>false</UseRazorSourceGenerator>
   </PropertyGroup>
 
   <ItemGroup>
@@ -77,9 +78,16 @@ namespace My.Namespace.Implementations
 ## Restrictions
 - DocComment returns empty string when build is performed using dotnet command. It is working only in Visual Studio.
 - DocComment returns empty string for types from external libraries. It is known source generators and analyzers issue: https://github.com/dotnet/roslyn/issues/23673
-- Requires .NET SDK 6.0.100 or later. Tested also with SDK 7.0.304
+- Requires .NET SDK 6.0.100 or later. Works also with SDK 7.0.304
 - Include dll libraries doesn't work with sdk 6.0.200 because of bug in SDK [issue](https://developercommunity.visualstudio.com/t/NET-SDK-60200-breaks-build-due-to-CS2/1667603?ref=native&refTime=1645007418972&refUserId=91f26041-a17a-4035-a156-3704387e57e3) fixed in [PR](https://github.com/dotnet/roslyn/pull/59660)
 - You can use it in Visual Studio 17.0.4 or later
+- If you see an error after compilation "Error	CS8785	Generator 'RazorSourceGenerator' failed to generate source" you can fix it by adding UseRazorSourceGenerator with value false to .csproj file
+
+```xml 
+<PropertyGroup>
+  <UseRazorSourceGenerator>false</UseRazorSourceGenerator>
+</PropertyGroup>
+```
 
 ## Features
 - all leading and trailing whitespaces and new lines are removed from generated text
