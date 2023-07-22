@@ -13,6 +13,7 @@
 
 	<ItemGroup>
 		<PackageReference Include="Microsoft.AspNetCore.Razor.Language" Version="6.0.20" />
+		<!--Do not update Microsoft.CodeAnalysis.CSharp. It will break previous VS 2022 versions https://www.damirscorner.com/blog/posts/20221014-VersionsOfSourceGeneratorDependencies.html-->
 		<PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="4.0.1" />
 		<PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
 		<PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1" PrivateAssets="all" />
