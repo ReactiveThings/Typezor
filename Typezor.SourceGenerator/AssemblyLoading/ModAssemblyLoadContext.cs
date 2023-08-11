@@ -1,26 +1,26 @@
-﻿using System.Reflection;
+﻿using System.IO;
+using System.Reflection;
 using System.Runtime.Loader;
-using Typezor;
 using Typezor.AssemblyLoading;
-using Typezor.CodeModel;
 
 namespace Typezor.SourceGenerator.AssemblyLoading
 {
-    public class ModAssemblyLoadContext : AssemblyLoadContext, IAssemblyLoadContext
+    public class ModAssemblyLoadContext : IAssemblyLoadContext
     {
-        protected override Assembly Load(AssemblyName assemblyName)
+        private static readonly AssemblyLoadContext currentContext = AssemblyLoadContext.GetLoadContext(typeof(ITemplateOutput).Assembly);
+        Assembly IAssemblyLoadContext.LoadFromAssemblyPath(string filePath)
         {
-            if (typeof(File).Assembly.GetName().FullName == assemblyName.FullName)
-            {
-                return typeof(File).Assembly;
-            }
+            return currentContext.LoadFromAssemblyPath(filePath);
+        }
 
-            if (typeof(ITemplate).Assembly.GetName().FullName == assemblyName.FullName)
-            {
-                return typeof(ITemplate).Assembly;
-            }
+        Assembly IAssemblyLoadContext.LoadFromAssemblyName(AssemblyName getName)
+        {
+            return currentContext.LoadFromAssemblyName(getName);
+        }
 
-            return Default.LoadFromAssemblyName(assemblyName);
+        Assembly IAssemblyLoadContext.LoadFromStream(Stream assemblyStream)
+        {
+            return currentContext.LoadFromStream(assemblyStream);
         }
     }
 }

@@ -1,11 +1,19 @@
 ﻿using System.Linq;
 using Should;
 using Typezor.CodeModel;
+using Typezor.CodeModel.Implementation;
 using Typezor.Tests.TestInfrastructure;
 using Xunit;
 
 namespace Typezor.Tests.CodeModel
 {
+    [Trait("CodeModel", "Interface"), Collection(nameof(RoslynFixture))]
+    public class RoslynInterfaceTests : InterfaceTests
+    {
+        public RoslynInterfaceTests(RoslynFixture fixture) : base(fixture)
+        {
+        }
+    }
 
     public abstract class InterfaceTests : TestBase
     {
@@ -13,7 +21,7 @@ namespace Typezor.Tests.CodeModel
 
         protected InterfaceTests(ITestFixture fixture) : base(fixture)
         {
-            fileInfo = GetFile(@"CodeModel\Support\IInterfaceInfo.cs");
+            fileInfo = GetFile(@"CodeModel\Support\IInterfaceInfo.cs", @"CodeModel\Support\AttributeInfo.cs");
         }
 
         [Fact]
@@ -22,9 +30,9 @@ namespace Typezor.Tests.CodeModel
             var interfaceInfo = fileInfo.Interfaces.First();
 
             interfaceInfo.Name.ShouldEqual("IInterfaceInfo");
-            interfaceInfo.FullName.ShouldEqual("Typezor.Tests.CodeModel.Support.IInterfaceInfo");
-            interfaceInfo.Namespace.ShouldEqual("Typezor.Tests.CodeModel.Support");
-            interfaceInfo.Parent.ShouldEqual(fileInfo);
+            interfaceInfo.FullName.ShouldEqual("Typezor.Tests.CodeModel.Support.Interfaces.IInterfaceInfo");
+            interfaceInfo.Namespace.ShouldEqual("Typezor.Tests.CodeModel.Support.Interfaces");
+            interfaceInfo.Parent.ShouldImplement<File>();
         }
 
         [Fact]

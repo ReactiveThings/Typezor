@@ -6,6 +6,13 @@ using Xunit;
 
 namespace Typezor.Tests.CodeModel
 {
+    [Trait("CodeModel", "Method"), Collection(nameof(RoslynFixture))]
+    public class RoslynMethodTests : MethodTests
+    {
+        public RoslynMethodTests(RoslynFixture fixture) : base(fixture)
+        {
+        }
+    }
 
     public abstract class MethodTests : TestBase
     {
@@ -13,7 +20,7 @@ namespace Typezor.Tests.CodeModel
 
         protected MethodTests(ITestFixture fixture) : base(fixture)
         {
-            fileInfo = GetFile(@"CodeModel\Support\MethodInfo.cs");
+            fileInfo = GetFile(@"CodeModel\Support\MethodInfo.cs", @"CodeModel\Support\AttributeInfo.cs");
         }
 
         [Fact]
@@ -24,7 +31,7 @@ namespace Typezor.Tests.CodeModel
 
             methodInfo.Name.ShouldEqual("Method");
             methodInfo.FullName.ShouldEqual("Typezor.Tests.CodeModel.Support.MethodInfo.Method");
-            methodInfo.Parent.ShouldEqual(classInfo);
+            (methodInfo.Parent as Class).FullName.ShouldEqual(classInfo.FullName);
         }
 
         [Fact]
@@ -56,6 +63,7 @@ namespace Typezor.Tests.CodeModel
 
             methodInfo.Parameters.Count().ShouldEqual(1);
             parameterInfo.Name.ShouldEqual("parameter");
+            parameterInfo.FullName.ShouldEqual("string");
         }
 
         [Fact]
